@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Judge v2</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+<body class="container-fluid">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">WebSiteName</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Page 1-1</a></li>
+                    <li><a href="#">Page 1-2</a></li>
+                    <li><a href="#">Page 1-3</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Page 2</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/users/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="row tm-mt-big">
+    <div class="col-12 mx-auto tm-login-col">
+        <div class="bg-white tm-block">
+            <div class="row mt-2">
+                <div class="col-12">
+                    <form th:action="@{/users/register}" th:method="POST"
+                          class="tm-login-form" enctype="multipart/form-data">
+
+                        <div class="mx-auto text-center">
+                            <small class="text-danger"></small>
+                            <br/>
+                        </div>
+
+                        <div class="input-group mt-3">
+                            <label for="firstName"
+                                   class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">First name</label>
+                            <input name="firstName" type="text"
+                                   class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7"
+                                   id="firstName" placeholder="Enter first name">
+                            <div class="mx-auto">
+
+                                <small class="text-danger"></small>
+
+                            </div>
+                        </div>
+
+                        <div class="input-group mt-3">
+                            <label for="lastName"
+                                   class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Last name</label>
+                            <input name="lastName" type="text"
+                                   class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7"
+                                   id="lastName" placeholder="Enter Last name">
+                            <div class="mx-auto">
+
+                                <small class="text-danger"></small>
+
+                            </div>
+                        </div>
+
+                        <div class="input-group mt-3">
+                            <label for="username"
+                                   class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Username</label>
+                            <input name="username" type="text"
+                                   class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7"
+                                   id="username" placeholder="Enter username">
+                            <div class="mx-auto">
+
+                                <small class="text-danger"></small>
+
+                            </div>
+                        </div>
+                        <div class="input-group mt-3">
+                            <label for="password"
+                                   class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Password</label>
+                            <input name="password" type="password" class="form-control validate"
+                                   id="password" placeholder="Enter password">
+                            <div class="mx-auto">
+
+                                <small class="text-danger"></small>
+
+                            </div>
+                        </div>
+                        <div class="input-group mt-3">
+                            <label for="confirmPassword" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Confirm
+                                Password</label>
+                            <input name="confirmPassword" type="password" class="form-control validate"
+                                   id="confirmPassword" placeholder="Confirm password">
+                        </div>
+                        <div class="mx-auto">
+
+                            <small class="text-danger"></small>
+
+                        </div>
+                        <div class="input-group mt-3">
+                            <label for="email"
+                                   class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Email</label>
+                            <input name="email" type="email" class="form-control validate"
+                                   id="email" placeholder="Enter email">
+                        </div>
+                        <div class="mx-auto">
+
+                            <small class="text-danger"></small>
+
+                        </div>
+                        <div class="custom-file mt-3">
+                            <label for="file" class="custom-file-label">User Photo</label>
+                            <input name="file" type="file" class="file-upload" id="file"
+                                   placeholder="Choose user photo jpeg/png" accept="image/*">
+                        </div>
+                        <div class="mx-auto">
+                            <small class="text-danger"></small>
+
+                        </div>
+                        <div class="input-group mt-3">
+                            <button type="submit" class="btn btn-primary d-inline-block mx-auto">Register</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
