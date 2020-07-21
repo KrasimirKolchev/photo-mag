@@ -1,8 +1,4 @@
-package com.krasimirkolchev.photomag.models.bondingModels;
-
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.NotNull;
+package com.krasimirkolchev.photomag.models.bindingModels;
 
 public class UserLoginBindingModel {
     private String username;

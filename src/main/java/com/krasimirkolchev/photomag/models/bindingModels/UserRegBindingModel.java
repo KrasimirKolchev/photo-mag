@@ -1,4 +1,4 @@
-package com.krasimirkolchev.photomag.models.bondingModels;
+package com.krasimirkolchev.photomag.models.bindingModels;
 
 public class UserRegBindingModel {
     private String username;

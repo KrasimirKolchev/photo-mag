@@ -1,32 +1,21 @@
-package com.krasimirkolchev.photomag.models.entities;
+package com.krasimirkolchev.photomag.models.bindingModels;
 
 import com.krasimirkolchev.photomag.models.entities.enums.ProductCategory;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "products")
-public class Product extends BaseEntity {
+public class ProductAddBindingModel {
     private String name;
     private String description;
     private Double price;
     private Integer quantity;
     private ProductCategory productCategory;
-    private List<String> productGallery;
+    private List<MultipartFile> productGallery;
 
-    public Product() {
+    public ProductAddBindingModel() {
     }
 
-    public Product(String name, String description, Double price, Integer quantity, ProductCategory productCategory) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.quantity = quantity;
-        this.productCategory = productCategory;
-    }
-
-    @Column(name = "name",unique = true, nullable = false)
     public String getName() {
         return name;
     }
@@ -35,7 +24,6 @@ public class Product extends BaseEntity {
         this.name = name;
     }
 
-    @Column(name = "description", nullable = false)
     public String getDescription() {
         return description;
     }
@@ -44,7 +32,6 @@ public class Product extends BaseEntity {
         this.description = description;
     }
 
-    @Column(name = "price", nullable = false)
     public Double getPrice() {
         return price;
     }
@@ -53,7 +40,6 @@ public class Product extends BaseEntity {
         this.price = price;
     }
 
-    @Column(name = "quantity", nullable = false)
     public Integer getQuantity() {
         return quantity;
     }
@@ -62,7 +48,6 @@ public class Product extends BaseEntity {
         this.quantity = quantity;
     }
 
-    @Enumerated
     public ProductCategory getProductCategory() {
         return productCategory;
     }
@@ -71,12 +56,11 @@ public class Product extends BaseEntity {
         this.productCategory = productCategory;
     }
 
-    @ElementCollection
-    public List<String> getProductGallery() {
+    public List<MultipartFile> getProductGallery() {
         return productGallery;
     }
 
-    public void setProductGallery(List<String> productGallery) {
+    public void setProductGallery(List<MultipartFile> productGallery) {
         this.productGallery = productGallery;
     }
 }

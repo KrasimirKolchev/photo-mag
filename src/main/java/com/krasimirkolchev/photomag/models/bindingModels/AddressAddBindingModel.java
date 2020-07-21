@@ -1,11 +1,11 @@
-package com.krasimirkolchev.photomag.models.bondingModels;
+package com.krasimirkolchev.photomag.models.bindingModels;
 
-public class AddressAssBindingModel {
+public class AddressAddBindingModel {
     private String street;
     private String city;
     private String country;
 
-    public AddressAssBindingModel() {
+    public AddressAddBindingModel() {
     }
 
     public String getStreet() {

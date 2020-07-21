@@ -1,7 +1,7 @@
 package com.krasimirkolchev.photomag.web;
 
-import com.krasimirkolchev.photomag.models.bondingModels.UserLoginBindingModel;
-import com.krasimirkolchev.photomag.models.bondingModels.UserRegBindingModel;
+import com.krasimirkolchev.photomag.models.bindingModels.UserLoginBindingModel;
+import com.krasimirkolchev.photomag.models.bindingModels.UserRegBindingModel;
 import com.krasimirkolchev.photomag.models.entities.User;
 import com.krasimirkolchev.photomag.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -56,7 +56,7 @@ public class UserController {
         try {
             User user = this.userService.registerUser(this.modelMapper.map(userRegBindingModel, User.class), file);
 
-            return "home";
+            return "redirect:/login";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();

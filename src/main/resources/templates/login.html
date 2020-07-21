@@ -1,45 +1,66 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>LOGIN USER</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="row tm-mt-big">
-    <div class="col-12 mx-auto tm-login-col">
-        <div class="bg-white tm-block">
+
+<nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
+
+
+<div class="container-fluid bg">
+    <div class="container">
+        <h2 class="form-title text-right text-white">Login User</h2>
+        <form th:object="${userLoginBindingModel}" th:action="@{/users/login}" th:method="POST"
+              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" style="left: 800px">
+
+            <p th:if="${#fields.hasGlobalErrors()}">Incorrect username or password!</p>
+
+
             <div class="row">
-            </div>
-            <div class="row mt-2">
-                <div class="col-12">
-                    <form th:action="@{/users/login}" th:method="POST"
-                          th:object="${userLoginBindingModel}" class="tm-login-form">
-                        <div class="text-center">
-                            <small th:if="${param.error}" class="text-danger col-12 text-center">Invalid username or password!</small>
-                            <br/>
-                        </div>
-                        <hr/>
-                        <div class="input-group">
-                            <label for="username" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Username</label>
-                            <input th:field="*{username}" th:errorclass="bg-danger" name="username" type="text"
-                                   class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7"
-                                   id="username" placeholder="Username" required>
-                        </div>
-                        <div class="input-group mt-3">
-                            <label for="password" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Password</label>
-                            <input name="password" type="password" class="form-control validate"
-                                   th:errorclass="bg-danger"
-                                   id="password" placeholder="Password" required>
-                        </div>
-                        <div class="input-group mt-3">
-                            <button type="submit" class="btn btn-primary d-inline-block mx-auto">Login</button>
-                        </div>
-                    </form>
+                <div class="form-group col-md-12 mb-3">
+                    <label for="username" class="text-white font-weight-bold">Username</label>
+                    <input th:field="*{username}" id="username" name="username" type="text" class="form-control"
+                           placeholder="Username" />
+                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="errors alert alert-danger">Username name is required.</p>
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="password" class="text-white font-weight-bold">Password</label>
+                    <input id="password" type="text" name="password" class="form-control"
+                           placeholder="Password" />
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="errors alert alert-danger">Password is required.</p>
+                </div>
+            </div>
+
+            <div class="btn">
+                <div class="col col-md-6">
+                    <div class="button-holder d-flex justify-content-center">
+                        <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
+                    </div>
+                </div>
+            </div>
+
+        </form>
     </div>
 </div>
 
 </body>
 </html>
+
+

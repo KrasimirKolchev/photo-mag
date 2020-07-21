@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ADD PRODUCT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
+
+
+<div class="container-fluid bg">
+    <div class="container">
+        <h2 class="form-title text-right text-white">Add Product</h2>
+        <form th:object="${productAddBindingModel}" th:action="@{/products/add}" th:method="POST"
+              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" style="left: 800px">
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="name" class="text-white font-weight-bold">Product name</label>
+                    <input th:field="*{name}" id="name" name="name" type="text" class="form-control"
+                           placeholder="name" />
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">First name is required.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="description" class="text-white font-weight-bold">description</label>
+                    <input th:field="*{description}" id="description" name="description" type="text" class="form-control"
+                           placeholder="description" />
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="errors alert alert-danger">Last name is required.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="price" class="text-white font-weight-bold">price</label>
+                    <input id="price" type="number" min="0.0" name="price" class="form-control"
+                           placeholder="price" />
+                    <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="errors alert alert-danger">Password is required.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="quantity" class="text-white font-weight-bold">quantity</label>
+                    <input id="quantity" type="number" min="0" step="1" name="quantity" class="form-control"
+                           placeholder="quantity" />
+                    <p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" class="errors alert alert-danger">Password is required.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="productCategory" class="text-white font-weight-bold">reward</label>
+                    <select id="productCategory" name="productCategory">
+                        <option value="">Select Category</option>
+                        <option th:each="c : ${productCategory}" th:value="${c}" th:text="${c}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}" class="errors alert alert-danger">Username name is required.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="productGallery" class="file-label text-white font-weight-bold">contest photo</label>
+                    <input name="productGallery" type="file" class="file-input form-control-file" id="productGallery"
+                           placeholder="Choose productGallery" accept="image/*" required multiple>
+                </div>
+            </div>
+
+
+            <div class="btn">
+                <div class="col col-md-8">
+                    <div class="button-holder d-flex justify-content-center">
+                        <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
+

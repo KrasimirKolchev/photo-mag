@@ -1,13 +1,13 @@
 package com.krasimirkolchev.photomag.repositories;
 
-import com.krasimirkolchev.photomag.models.entities.Photo;
+import com.krasimirkolchev.photomag.models.entities.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface PhotoRepository extends JpaRepository<Photo, String> {
+public interface OrderRepository extends JpaRepository<Order, String> {
 
-    List<Photo> findAllByUser_Id(String id);
+    List<Order> getAllByUser_Id(String userId);
 }

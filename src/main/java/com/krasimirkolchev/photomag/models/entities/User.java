@@ -1,6 +1,5 @@
 package com.krasimirkolchev.photomag.models.entities;
 
-import com.krasimirkolchev.photomag.models.entities.enums.UserRank;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -14,12 +13,11 @@ public class User extends BaseEntity implements UserDetails {
     private String email;
     private String firstName;
     private String lastName;
-    private Photo profilePhoto;
+    private String profilePhoto;
     private Set<Role> authorities;
-//    private UserRank userRank;
     private Set<Address> addresses;
-    private List<Product> boughtProducts;
-    private List<Photo> gallery;
+    private List<Order> userOrders;
+    private List<String> gallery;
     private List<Contest> contests;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
@@ -29,7 +27,7 @@ public class User extends BaseEntity implements UserDetails {
 
     public User() {
         this.addresses = new LinkedHashSet<>();
-        this.boughtProducts = new ArrayList<>();
+        this.userOrders = new ArrayList<>();
         this.gallery = new ArrayList<>();
         this.contests = new ArrayList<>();
         this.isAccountNonExpired = true;
@@ -45,7 +43,7 @@ public class User extends BaseEntity implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.addresses = new LinkedHashSet<>();
-        this.boughtProducts = new ArrayList<>();
+        this.userOrders = new ArrayList<>();
         this.gallery = new ArrayList<>();
         this.contests = new ArrayList<>();
         this.isAccountNonExpired = true;
@@ -99,16 +97,17 @@ public class User extends BaseEntity implements UserDetails {
         this.lastName = lastName;
     }
 
-    @OneToOne
-    public Photo getProfilePhoto() {
+    @Column(name = "profile_photo")
+    public String getProfilePhoto() {
         return profilePhoto;
     }
 
-    public void setProfilePhoto(Photo profilePhoto) {
+    public void setProfilePhoto(String profilePhoto) {
         this.profilePhoto = profilePhoto;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @Override
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     public Set<Role> getAuthorities() {
         return authorities;
     }
@@ -117,17 +116,7 @@ public class User extends BaseEntity implements UserDetails {
         this.authorities = authorities;
     }
 
-//    @Enumerated(EnumType.ORDINAL)
-//    @Column(name = "user_rank")
-//    public UserRank getUserRank() {
-//        return userRank;
-//    }
-//
-//    public void setUserRank(UserRank userRank) {
-//        this.userRank = userRank;
-//    }
-
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public Set<Address> getAddresses() {
         return addresses;
     }
@@ -136,21 +125,21 @@ public class User extends BaseEntity implements UserDetails {
         this.addresses = addresses;
     }
 
-    @OneToMany
-    public List<Product> getBoughtProducts() {
-        return boughtProducts;
+    @OneToMany(mappedBy = "user")
+    public List<Order> getUserOrders() {
+        return userOrders;
     }
 
-    public void setBoughtProducts(List<Product> boughtProducts) {
-        this.boughtProducts = boughtProducts;
+    public void setUserOrders(List<Order> userOrders) {
+        this.userOrders = userOrders;
     }
 
-    @OneToMany
-    public List<Photo> getGallery() {
+    @ElementCollection
+    public List<String> getGallery() {
         return gallery;
     }
 
-    public void setGallery(List<Photo> gallery) {
+    public void setGallery(List<String> gallery) {
         this.gallery = gallery;
     }
 

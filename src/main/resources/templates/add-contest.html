@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ADD CONTEST</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
+
+<div class="container-fluid bg">
+    <div class="container">
+        <h2 class="form-title text-right text-white">Create Contest</h2>
+        <form th:object="${contestCreateBindingModel}" th:action="@{/contests/create}" th:method="POST"
+              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" style="left: 800px">
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="title" class="text-white font-weight-bold">Title</label>
+                    <input th:field="*{title}" id="title" name="title" type="text" class="form-control"
+                           placeholder="Title" />
+                    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="errors alert alert-danger">First name is required.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="description" class="text-white font-weight-bold">description</label>
+                    <input th:field="*{description}" id="description" name="description" type="text" class="form-control"
+                           placeholder="description" />
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="errors alert alert-danger">Last name is required.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="duration" class="text-white font-weight-bold">duration</label>
+                    <input id="duration" type="number" min="2" max="5" step="1" name="duration" class="form-control"
+                           placeholder="duration" />
+                    <p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="errors alert alert-danger">Password is required.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="reward" class="text-white font-weight-bold">reward</label>
+                    <input th:field="*{reward}" id="reward" name="reward" type="text" class="form-control"
+                           placeholder="reward" />
+                    <p th:if="${#fields.hasErrors('reward')}" th:errors="*{reward}" class="errors alert alert-danger">Username name is required.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="contestPhoto" class="file-label text-white font-weight-bold">contest photo</label>
+                    <input name="contestPhoto" type="file" class="file-input form-control-file" id="contestPhoto"
+                           placeholder="Choose contest photo" accept="image/*" required>
+                </div>
+            </div>
+
+
+            <div class="btn">
+                <div class="col col-md-8">
+                    <div class="button-holder d-flex justify-content-center">
+                        <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
+

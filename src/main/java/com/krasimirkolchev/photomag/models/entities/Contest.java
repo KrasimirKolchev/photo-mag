@@ -1,7 +1,7 @@
 package com.krasimirkolchev.photomag.models.entities;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -10,10 +10,11 @@ import java.util.Set;
 public class Contest extends BaseEntity {
     private String title;
     private String description;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private Date startDate;
+    private Integer duration;
     private String reward;//can be entity
-    private List<Photo> galleryPhotos;
+    private String contestPhoto;
+    private List<String> galleryPhotos;
     private Set<User> users;
 
     public Contest() {
@@ -38,21 +39,21 @@ public class Contest extends BaseEntity {
     }
 
     @Column(name = "start_date", nullable = false)
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    @Column(name = "end_date", nullable = false)
-    public LocalDateTime getEndDate() {
-        return endDate;
+    @Column(name = "duration", nullable = false)
+    public Integer getDuration() {
+        return duration;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
     @Column(name = "reward", nullable = false)
@@ -64,12 +65,21 @@ public class Contest extends BaseEntity {
         this.reward = reward;
     }
 
-    @OneToMany
-    public List<Photo> getGalleryPhotos() {
+    @Column(name = "contest_photo")
+    public String getContestPhoto() {
+        return contestPhoto;
+    }
+
+    public void setContestPhoto(String contestPhoto) {
+        this.contestPhoto = contestPhoto;
+    }
+
+    @ElementCollection
+    public List<String> getGalleryPhotos() {
         return galleryPhotos;
     }
 
-    public void setGalleryPhotos(List<Photo> galleryPhotos) {
+    public void setGalleryPhotos(List<String> galleryPhotos) {
         this.galleryPhotos = galleryPhotos;
     }
 

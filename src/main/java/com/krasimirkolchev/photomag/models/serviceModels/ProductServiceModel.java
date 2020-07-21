@@ -1,15 +1,18 @@
-package com.krasimirkolchev.photomag.models.bondingModels;
+package com.krasimirkolchev.photomag.models.serviceModels;
 
 import com.krasimirkolchev.photomag.models.entities.enums.ProductCategory;
 
-public class ProductAddindingModel {
+import java.util.List;
+
+public class ProductServiceModel {
     private String name;
     private String description;
     private Double price;
     private Integer quantity;
     private ProductCategory productCategory;
+    private List<String> productGallery;
 
-    public ProductAddindingModel() {
+    public ProductServiceModel() {
     }
 
     public String getName() {
@@ -50,5 +53,13 @@ public class ProductAddindingModel {
 
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
+    }
+
+    public List<String> getProductGallery() {
+        return productGallery;
+    }
+
+    public void setProductGallery(List<String> productGallery) {
+        this.productGallery = productGallery;
     }
 }

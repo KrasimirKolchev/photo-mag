@@ -3,7 +3,7 @@ package com.krasimirkolchev.photomag.models.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "address")
+@Table(name = "addresses")
 public class Address extends BaseEntity {
     private String street;
     private String city;

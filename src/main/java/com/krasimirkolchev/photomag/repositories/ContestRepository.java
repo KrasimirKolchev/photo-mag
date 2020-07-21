@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface ContestRepository extends JpaRepository<Contest, String> {
-    List<Contest> getAllByEndDateIsAfterOrderByStartDate(LocalDateTime endDate);
+
 
 }

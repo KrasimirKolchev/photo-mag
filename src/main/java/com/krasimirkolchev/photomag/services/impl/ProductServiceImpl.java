@@ -1,11 +1,10 @@
 package com.krasimirkolchev.photomag.services.impl;
 
-import com.cloudinary.Cloudinary;
 import com.krasimirkolchev.photomag.models.entities.Product;
 import com.krasimirkolchev.photomag.models.entities.User;
 import com.krasimirkolchev.photomag.models.entities.enums.ProductCategory;
+import com.krasimirkolchev.photomag.models.serviceModels.ProductServiceModel;
 import com.krasimirkolchev.photomag.repositories.ProductRepository;
-import com.krasimirkolchev.photomag.services.PhotoService;
 import com.krasimirkolchev.photomag.services.ProductService;
 import com.krasimirkolchev.photomag.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -20,30 +19,26 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
-    private final PhotoService photoService;
+    private final CloudinaryServiceImpl cloudinaryService;
     private final UserService userService;
     private final ModelMapper modelMapper;
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository, UserService userService, ModelMapper modelMapper
-            , PhotoService photoService) {
+            , CloudinaryServiceImpl cloudinaryService) {
         this.productRepository = productRepository;
         this.userService = userService;
         this.modelMapper = modelMapper;
-        this.photoService = photoService;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @Override
-    public Product addProduct(Product product, MultipartFile file) throws IOException {
+    public ProductServiceModel addProduct(ProductServiceModel productServiceModel, List<MultipartFile> files) throws IOException {
 
-        Product prod = product; //map service model
+        Product product = this.modelMapper.map(productServiceModel, Product.class);
+        product.setProductGallery((this.cloudinaryService.createPhotos(files, product.getName())));
 
-        if (file == null || file.isEmpty() || file.getOriginalFilename().length() == 0) {
-            throw new FileNotFoundException("File is empty!");
-        }
-
-        prod.getProductGallery().add(this.photoService.createPhoto(file, prod.getName()));
-        return this.productRepository.save(product);
+        return this.modelMapper.map(this.productRepository.save(product), ProductServiceModel.class);
     }
 
     @Override
@@ -52,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
         //check user if have money
 
         User user = this.userService.getUserByUsername(username);
-        user.setBoughtProducts(List.of(product));
+//        user.setBoughtProducts(List.of(product));
 
         product.setQuantity(product.getQuantity() - 1);
 

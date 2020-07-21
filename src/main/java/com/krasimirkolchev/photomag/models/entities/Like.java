@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "likes")
 public class Like extends BaseEntity {
     private User user;
-    private Photo photo;
+    private String photo;
     private Contest contest;
 
     public Like() {
@@ -21,12 +21,12 @@ public class Like extends BaseEntity {
         this.user = user;
     }
 
-    @OneToOne
-    public Photo getPhoto() {
+    @Column(name = "photo")
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Photo photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 

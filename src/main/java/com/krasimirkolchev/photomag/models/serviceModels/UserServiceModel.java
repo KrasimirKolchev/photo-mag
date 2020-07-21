@@ -1,15 +1,16 @@
-package com.krasimirkolchev.photomag.models.bondingModels;
+package com.krasimirkolchev.photomag.models.serviceModels;
 
 import java.time.LocalDateTime;
 
-public class ContestCreateBindingModel {
+public class UserServiceModel extends BaseServiceModel {
     private String title;
     private String description;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private String reward;
+    private String reward;//can be entity
+    private String contestPhoto;
 
-    public ContestCreateBindingModel() {
+    public UserServiceModel() {
     }
 
     public String getTitle() {
@@ -50,5 +51,13 @@ public class ContestCreateBindingModel {
 
     public void setReward(String reward) {
         this.reward = reward;
+    }
+
+    public String getContestPhoto() {
+        return contestPhoto;
+    }
+
+    public void setContestPhoto(String contestPhoto) {
+        this.contestPhoto = contestPhoto;
     }
 }
