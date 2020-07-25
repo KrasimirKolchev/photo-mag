@@ -24,62 +24,58 @@
 
 <div class="container-fluid bg">
     <div class="container">
-        <h2 class="form-title text-right text-white">Add Product</h2>
+        <h2 class="form-title text-right text-white" style="margin-right: 200px">Add Product</h2>
         <form th:object="${productAddBindingModel}" th:action="@{/products/add}" th:method="POST"
-              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" style="left: 800px">
+              class="main-form product-form mx-auto col-md-8 d-flex flex-column justify-content-center" enctype="multipart/form-data" style="left: 450px">
             <div class="row">
-                <div class="form-group col-md-12 mb-3">
+                <div class="form-group col-md-6 mb-3">
                     <label for="name" class="text-white font-weight-bold">Product name</label>
                     <input th:field="*{name}" id="name" name="name" type="text" class="form-control"
                            placeholder="name" />
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">First name is required.</p>
                 </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-12 mb-3">
-                    <label for="description" class="text-white font-weight-bold">description</label>
-                    <input th:field="*{description}" id="description" name="description" type="text" class="form-control"
-                           placeholder="description" />
-                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="errors alert alert-danger">Last name is required.</p>
+                <div class="form-group col-md-6 mb-3">
+                    <label for="productCategory" class="text-white font-weight-bold">reward</label>
+                    <select id="productCategory" name="productCategory" class="form-control">
+                        <option value="">Select Category</option>
+                        <option th:each="c : ${productCategory}" th:value="${c.id}" th:text="${c.name}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}" class="errors alert alert-danger">Username name is required.</p>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-12 mb-3">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="quantity" class="text-white font-weight-bold">quantity</label>
+                    <input id="quantity" type="number" min="0" step="1" name="quantity" class="form-control"
+                           placeholder="quantity" />
+                    <p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" class="errors alert alert-danger">Password is required.</p>
+                </div>
+                <div class="form-group col-md-6 mb-3">
                     <label for="price" class="text-white font-weight-bold">price</label>
-                    <input id="price" type="number" min="0.0" name="price" class="form-control"
+                    <input id="price" type="number" min="0.0" step=".01" name="price" class="form-control"
                            placeholder="price" />
                     <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="errors alert alert-danger">Password is required.</p>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
-                    <label for="quantity" class="text-white font-weight-bold">quantity</label>
-                    <input id="quantity" type="number" min="0" step="1" name="quantity" class="form-control"
-                           placeholder="quantity" />
-                    <p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" class="errors alert alert-danger">Password is required.</p>
+                    <label for="description" class="text-white font-weight-bold">description</label>
+                    <textarea rows="8" wrap="hard"  th:field="*{description}" id="description" name="description" type="text" class="form-control"
+                              placeholder="description"></textarea>
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="errors alert alert-danger">Last name is required.</p>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="margin: 0">
                 <div class="form-group col-md-12 mb-3">
-                    <label for="productCategory" class="text-white font-weight-bold">reward</label>
-                    <select id="productCategory" name="productCategory">
-                        <option value="">Select Category</option>
-                        <option th:each="c : ${productCategory}" th:value="${c}" th:text="${c}"></option>
-                    </select>
-                    <p th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}" class="errors alert alert-danger">Username name is required.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-12 mb-3">
-                    <label for="productGallery" class="file-label text-white font-weight-bold">contest photo</label>
-                    <input name="productGallery" type="file" class="file-input form-control-file" id="productGallery"
+                    <label for="productGallery" class="custom-file-label text-white font-weight-bold">contest photo</label>
+                    <input name="productGallery" type="file" class="custom-file-input form-control-file" id="productGallery"
                            placeholder="Choose productGallery" accept="image/*" required multiple>
                 </div>
             </div>
 
 
             <div class="btn">
-                <div class="col col-md-8">
+                <div class="col col-md-12">
                     <div class="button-holder d-flex justify-content-center">
                         <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
                     </div>

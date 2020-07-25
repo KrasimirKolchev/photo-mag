@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ADD ADDRESS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
+
+
+<div class="container-fluid bg">
+    <div class="container">
+        <h2 class="form-title text-right text-white">Add address</h2>
+        <form th:object="${addressAddBindingModel}" th:action="@{/users/addresses/add}" th:method="POST"
+              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" style="left: 800px">
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="name" class="text-white font-weight-bold">Country</label>
+                    <input th:field="*{country}" id="country" name="country" type="text" class="form-control"
+                           placeholder="Country name" />
+                    <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="errors alert alert-danger">Country name is required.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="city" class="text-white font-weight-bold">description</label>
+                    <input th:field="*{city}" id="city" name="city" type="text" class="form-control"
+                           placeholder="city" />
+                    <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="errors alert alert-danger">City is required.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="street" class="text-white font-weight-bold">price</label>
+                    <input th:field="*{street}" id="street" type="text" name="street" class="form-control"
+                           placeholder="Street" />
+                    <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="errors alert alert-danger">Street is required.</p>
+                </div>
+            </div>
+
+            <div class="btn">
+                <div class="col col-md-8">
+                    <div class="button-holder d-flex justify-content-center">
+                        <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
+

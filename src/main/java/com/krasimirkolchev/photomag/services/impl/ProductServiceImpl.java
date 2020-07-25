@@ -2,9 +2,9 @@ package com.krasimirkolchev.photomag.services.impl;
 
 import com.krasimirkolchev.photomag.models.entities.Product;
 import com.krasimirkolchev.photomag.models.entities.User;
-import com.krasimirkolchev.photomag.models.entities.enums.ProductCategory;
 import com.krasimirkolchev.photomag.models.serviceModels.ProductServiceModel;
 import com.krasimirkolchev.photomag.repositories.ProductRepository;
+import com.krasimirkolchev.photomag.services.ProductCategoryService;
 import com.krasimirkolchev.photomag.services.ProductService;
 import com.krasimirkolchev.photomag.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,23 +19,26 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CloudinaryServiceImpl cloudinaryService;
+    private final ProductCategoryService productCategoryService;
     private final UserService userService;
     private final ModelMapper modelMapper;
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository, UserService userService, ModelMapper modelMapper
-            , CloudinaryServiceImpl cloudinaryService) {
+            , CloudinaryServiceImpl cloudinaryService, ProductCategoryService productCategoryService) {
         this.productRepository = productRepository;
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.cloudinaryService = cloudinaryService;
+        this.productCategoryService = productCategoryService;
     }
 
     @Override
     public ProductServiceModel addProduct(ProductServiceModel productServiceModel, List<MultipartFile> files) throws IOException {
 
         Product product = this.modelMapper.map(productServiceModel, Product.class);
-        product.setProductGallery((this.cloudinaryService.createPhotos(files, product.getName())));
+        product.setProductGallery((this.cloudinaryService.createPhotos(files, "products", product.getName())));
+        product.setMainPhoto(product.getProductGallery().get(0));
 
         return this.modelMapper.map(this.productRepository.save(product), ProductServiceModel.class);
     }
@@ -56,11 +58,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findByCategory(String category) {
-        return this.productRepository.getAllByProductCategoryEquals(ProductCategory.valueOf(category));
+        return this.productRepository.getAllByProductCategory_NameAndQuantityIsGreaterThan(category, 0);
     }
 
     @Override
     public boolean canBoughProduct(String id) {
         return this.productRepository.getOne(id).getQuantity() > 0;
+    }
+
+    @Override
+    public List<Product> getProductsByCategoryName(String name) {
+        return this.productRepository.getAllByProductCategory_NameAndQuantityIsGreaterThan(name, 0);
+    }
+
+    @Override
+    public ProductServiceModel getProductById(String id) {
+        return this.modelMapper
+                .map(this.productRepository.getOne(id), ProductServiceModel.class);
     }
 }

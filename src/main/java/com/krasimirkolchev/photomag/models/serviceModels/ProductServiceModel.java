@@ -1,15 +1,16 @@
 package com.krasimirkolchev.photomag.models.serviceModels;
 
-import com.krasimirkolchev.photomag.models.entities.enums.ProductCategory;
+import com.krasimirkolchev.photomag.models.entities.ProductCategory;
 
 import java.util.List;
 
-public class ProductServiceModel {
+public class ProductServiceModel extends BaseServiceModel {
     private String name;
     private String description;
     private Double price;
     private Integer quantity;
     private ProductCategory productCategory;
+    private String mainPhoto;
     private List<String> productGallery;
 
     public ProductServiceModel() {
@@ -53,6 +54,14 @@ public class ProductServiceModel {
 
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
+    }
+
+    public String getMainPhoto() {
+        return mainPhoto;
+    }
+
+    public void setMainPhoto(String mainPhoto) {
+        this.mainPhoto = mainPhoto;
     }
 
     public List<String> getProductGallery() {

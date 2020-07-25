@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
+
+<div class="bg">
+    <div class="container-fluid emp-profile">
+        <div th:object="${user}">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        <img th:src="*{profilePhoto}" alt="Profile Image"/>
+<!--                        <div class="file btn btn-lg btn-primary">-->
+<!--                            Change Photo-->
+<!--                            <input type="file" name="file"/>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="profile-head">
+                        <h3 th:if="${#lists.isEmpty(user.gallery)}">No photos in gallery!</h3>
+                        <div th:each="photo : ${user.gallery}" class="gallery">
+                            <a target="_blank" th:href="${photo}">
+                                <img th:src="${photo}" alt="Gallery photo" width="600" height="400">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 profile-info" style="padding-left: 75px">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Username</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p th:text="*{username}"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p th:text="|*{firstName} *{lastName}|"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Email</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p th:text="*{email}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
+
+<div class="bg">
+    <div class="container">
+
+        <div class="container shopping-cart" th:object="${shoppingCart}">
+            <div class="shopping-cart cart-head">
+<!--                <div class="row">-->
+<!--                    <div class="col-sm-12">-->
+<!--                        <h2 class="text-center">Shopping Cart</h2>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        Product Image
+                    </div>
+                    <div class="col-sm-6">
+                        Product Name
+                    </div>
+                    <div class="col-sm-2">
+                        Product qty
+                    </div>
+                    <div class="col-sm-2">
+                        Product price
+                    </div>
+                </div>
+            </div>
+            <div class="shopping-cart cart-body" th:each="item : *{cartItem}">
+                <div class="row cart-item">
+                    <div class="col-sm-2">
+                        <img th:src="${item.item.mainPhoto}" class="img-thumbnail"  alt="Product img">
+                    </div>
+                    <div class="col-sm-6">
+                        <p th:text="${item.item.name}">
+                    </div>
+                    <div class="col-sm-2">
+                        <p th:text="${item.quantity}">
+                    </div>
+                    <div class="col-sm-2">
+                        <p th:text="${item.subTotal}">
+                    </div>
+                </div>
+            </div>
+            <div class="shopping-cart cart-foot">
+                <div class="row justify-content-end">
+                    <div class="col-sm-1">
+                        <p>Total:</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <p th:text="*{totalCartAmount}"><span>$</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+
+

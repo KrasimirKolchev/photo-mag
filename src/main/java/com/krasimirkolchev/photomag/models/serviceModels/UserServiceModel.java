@@ -1,63 +1,113 @@
 package com.krasimirkolchev.photomag.models.serviceModels;
 
-import java.time.LocalDateTime;
+import com.krasimirkolchev.photomag.models.entities.Contest;
+import com.krasimirkolchev.photomag.models.entities.Role;
+import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
+
+import java.util.List;
+import java.util.Set;
 
 public class UserServiceModel extends BaseServiceModel {
-    private String title;
-    private String description;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private String reward;//can be entity
-    private String contestPhoto;
+    private String username;
+    private String password;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String profilePhoto;
+    private Set<Role> authorities;
+    private Set<AddressServiceModel> addresses;
+    private List<String> gallery;
+    private List<Contest> contests;
+    private ShoppingCart shoppingCart;
 
     public UserServiceModel() {
     }
 
-    public String getTitle() {
-        return title;
+    public String getUsername() {
+        return username;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPassword() {
+        return password;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public LocalDateTime getStartDate() {
-        return startDate;
+    public String getEmail() {
+        return email;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public LocalDateTime getEndDate() {
-        return endDate;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getReward() {
-        return reward;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setReward(String reward) {
-        this.reward = reward;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getContestPhoto() {
-        return contestPhoto;
+    public String getProfilePhoto() {
+        return profilePhoto;
     }
 
-    public void setContestPhoto(String contestPhoto) {
-        this.contestPhoto = contestPhoto;
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
+    public Set<Role> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Role> authorities) {
+        this.authorities = authorities;
+    }
+
+    public Set<AddressServiceModel> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<AddressServiceModel> addresses) {
+        this.addresses = addresses;
+    }
+
+    public List<String> getGallery() {
+        return gallery;
+    }
+
+    public void setGallery(List<String> gallery) {
+        this.gallery = gallery;
+    }
+
+    public List<Contest> getContests() {
+        return contests;
+    }
+
+    public void setContests(List<Contest> contests) {
+        this.contests = contests;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 }

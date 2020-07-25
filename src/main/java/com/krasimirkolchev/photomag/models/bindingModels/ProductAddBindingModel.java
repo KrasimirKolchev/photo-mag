@@ -1,6 +1,6 @@
 package com.krasimirkolchev.photomag.models.bindingModels;
 
-import com.krasimirkolchev.photomag.models.entities.enums.ProductCategory;
+import com.krasimirkolchev.photomag.models.entities.ProductCategory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public class ProductAddBindingModel {
     private String description;
     private Double price;
     private Integer quantity;
-    private ProductCategory productCategory;
+    private String productCategory;
     private List<MultipartFile> productGallery;
 
     public ProductAddBindingModel() {
@@ -48,11 +48,11 @@ public class ProductAddBindingModel {
         this.quantity = quantity;
     }
 
-    public ProductCategory getProductCategory() {
+    public String getProductCategory() {
         return productCategory;
     }
 
-    public void setProductCategory(ProductCategory productCategory) {
+    public void setProductCategory(String productCategory) {
         this.productCategory = productCategory;
     }
 

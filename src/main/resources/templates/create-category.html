@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ADD CATEGORY</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
+
+
+<div class="container-fluid bg">
+    <div class="container">
+        <h2 class="form-title text-right text-white">Add Product</h2>
+        <form th:object="${categoryAddBindingModel}" th:action="@{/categories/add}" th:method="POST"
+              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" style="left: 800px">
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="name" class="text-white font-weight-bold">Product name</label>
+                    <input th:field="*{name}" id="name" name="name" type="text" class="form-control"
+                           placeholder="name" />
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">First name is required.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="photo" class="file-label text-white font-weight-bold">category photo</label>
+                    <input name="photo" type="file" class="file-input form-control-file" id="photo"
+                           placeholder="Choose photo" accept="image/*" required>
+                </div>
+            </div>
+
+
+            <div class="btn">
+                <div class="col col-md-8">
+                    <div class="button-holder d-flex justify-content-center">
+                        <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
+

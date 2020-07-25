@@ -1,13 +1,17 @@
 package com.krasimirkolchev.photomag.services.impl;
 
 import com.krasimirkolchev.photomag.models.entities.Address;
+import com.krasimirkolchev.photomag.models.serviceModels.AddressServiceModel;
 import com.krasimirkolchev.photomag.repositories.AddressRepository;
 import com.krasimirkolchev.photomag.services.AddressService;
+import com.krasimirkolchev.photomag.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -20,20 +24,21 @@ public class AddressServiceImpl implements AddressService {
         this.modelMapper = modelMapper;
     }
 
-    @Override
-    public Address createAddress(Address address) {
-        //map service to binding
+//    @Override
+//    public AddressServiceModel createAddress(AddressServiceModel addressServiceModel) {
+//        Address address = this.modelMapper.map(addressServiceModel, Address.class);
+//        return this.modelMapper.map(this.addressRepository.save(address), AddressServiceModel.class);
+//    }
 
-        return this.addressRepository.save(address);
+    @Override
+    public AddressServiceModel getAddressByUserId(String id) {
+        return this.modelMapper.map(this.addressRepository.getOne(id), AddressServiceModel.class);
     }
 
     @Override
-    public Address getAddress(String id) {
-        return this.addressRepository.getOne(id);
-    }
-
-    @Override
-    public List<Address> getAllAddresses() {
-        return this.addressRepository.findAll();
+    public List<AddressServiceModel> getAllAddressesByUserId() {
+        return this.addressRepository.findAll()
+                .stream().map(a -> this.modelMapper.map(a, AddressServiceModel.class))
+                .collect(Collectors.toList());
     }
 }

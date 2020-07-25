@@ -1,7 +1,5 @@
 package com.krasimirkolchev.photomag.models.entities;
 
-import com.krasimirkolchev.photomag.models.entities.enums.ProductCategory;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,20 +11,13 @@ public class Product extends BaseEntity {
     private Double price;
     private Integer quantity;
     private ProductCategory productCategory;
+    private String mainPhoto;
     private List<String> productGallery;
 
     public Product() {
     }
 
-    public Product(String name, String description, Double price, Integer quantity, ProductCategory productCategory) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.quantity = quantity;
-        this.productCategory = productCategory;
-    }
-
-    @Column(name = "name",unique = true, nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     public String getName() {
         return name;
     }
@@ -35,7 +26,7 @@ public class Product extends BaseEntity {
         this.name = name;
     }
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     public String getDescription() {
         return description;
     }
@@ -62,13 +53,22 @@ public class Product extends BaseEntity {
         this.quantity = quantity;
     }
 
-    @Enumerated
+    @ManyToOne
     public ProductCategory getProductCategory() {
         return productCategory;
     }
 
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
+    }
+
+    @Column(name = "main_photo", nullable = false)
+    public String getMainPhoto() {
+        return mainPhoto;
+    }
+
+    public void setMainPhoto(String mainPhoto) {
+        this.mainPhoto = mainPhoto;
     }
 
     @ElementCollection

@@ -1,5 +1,7 @@
 package com.krasimirkolchev.photomag.models.bindingModels;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class UserRegBindingModel {
     private String username;
     private String password;
@@ -7,6 +9,7 @@ public class UserRegBindingModel {
     private String email;
     private String firstName;
     private String lastName;
+    private MultipartFile file;
 
     public UserRegBindingModel() {
     }
@@ -59,4 +62,11 @@ public class UserRegBindingModel {
         this.lastName = lastName;
     }
 
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
 }

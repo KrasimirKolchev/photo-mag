@@ -1,13 +1,14 @@
 package com.krasimirkolchev.photomag.models.entities;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity {
     private String username;
     private String password;
     private String email;
@@ -16,24 +17,14 @@ public class User extends BaseEntity implements UserDetails {
     private String profilePhoto;
     private Set<Role> authorities;
     private Set<Address> addresses;
-    private List<Order> userOrders;
     private List<String> gallery;
     private List<Contest> contests;
-    private boolean isAccountNonExpired;
-    private boolean isAccountNonLocked;
-    private boolean isCredentialsNonExpired;
-    private boolean isEnabled;
-
+    private ShoppingCart shoppingCart;
 
     public User() {
         this.addresses = new LinkedHashSet<>();
-        this.userOrders = new ArrayList<>();
         this.gallery = new ArrayList<>();
         this.contests = new ArrayList<>();
-        this.isAccountNonExpired = true;
-        this.isAccountNonLocked = true;
-        this.isCredentialsNonExpired = true;
-        this.isEnabled = true;
     }
 
     public User(String username, String password, String email, String firstName, String lastName) {
@@ -43,13 +34,8 @@ public class User extends BaseEntity implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.addresses = new LinkedHashSet<>();
-        this.userOrders = new ArrayList<>();
         this.gallery = new ArrayList<>();
         this.contests = new ArrayList<>();
-        this.isAccountNonExpired = true;
-        this.isAccountNonLocked = true;
-        this.isCredentialsNonExpired = true;
-        this.isEnabled = true;
     }
 
     @Column(name = "username", unique = true, nullable = false)
@@ -106,7 +92,6 @@ public class User extends BaseEntity implements UserDetails {
         this.profilePhoto = profilePhoto;
     }
 
-    @Override
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     public Set<Role> getAuthorities() {
         return authorities;
@@ -123,15 +108,6 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
-    }
-
-    @OneToMany(mappedBy = "user")
-    public List<Order> getUserOrders() {
-        return userOrders;
-    }
-
-    public void setUserOrders(List<Order> userOrders) {
-        this.userOrders = userOrders;
     }
 
     @ElementCollection
@@ -152,39 +128,12 @@ public class User extends BaseEntity implements UserDetails {
         this.contests = contests;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    @OneToOne(targetEntity = ShoppingCart.class)
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
     }
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        isAccountNonExpired = accountNonExpired;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        isAccountNonLocked = accountNonLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        isCredentialsNonExpired = credentialsNonExpired;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 }

@@ -21,10 +21,10 @@ public class CloudinaryServiceImpl {
     }
 
 
-    public String createPhoto(MultipartFile file, String dir) throws IOException {
+    public String createPhoto(MultipartFile file, String dirLoc, String dirName) throws IOException {
 
         Map params = ObjectUtils.asMap(
-                "public_id", String.format("users/%s/gallery/%s", dir, file.getOriginalFilename()),
+                "public_id", String.format("%s/%s/gallery/%s", dirLoc, dirName, file.getOriginalFilename()),
                 "overwrite", true,
                 "notification_url", "https://mysite/notify_endpoint",
                 "resource_type", "image"
@@ -33,13 +33,13 @@ public class CloudinaryServiceImpl {
         return this.cloudinary.uploader().upload(file.getBytes(), params).get("url").toString();
     }
 
-    public List<String> createPhotos(List<MultipartFile> files, String dir) throws IOException {
+    public List<String> createPhotos(List<MultipartFile> files, String dirLoc, String dirName) throws IOException {
 
         List<String> urls = new ArrayList<>();
 
         for (MultipartFile file : files) {
             Map params = ObjectUtils.asMap(
-                    "public_id", String.format("users/%s/gallery/%s", dir, file.getOriginalFilename()),
+                    "public_id", String.format("%s/%s/gallery/%s", dirLoc, dirName, file.getOriginalFilename()),
                     "overwrite", true,
                     "notification_url", "https://mysite/notify_endpoint",
                     "resource_type", "image"

@@ -16,4 +16,8 @@ public interface ProductService {
     List<Product> findByCategory(String category);
 
     boolean canBoughProduct(String id);
+
+    List<Product> getProductsByCategoryName(String name);
+
+    ProductServiceModel getProductById(String id);
 }

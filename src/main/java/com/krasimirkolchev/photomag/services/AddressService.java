@@ -1,14 +1,16 @@
 package com.krasimirkolchev.photomag.services;
 
 import com.krasimirkolchev.photomag.models.entities.Address;
+import com.krasimirkolchev.photomag.models.serviceModels.AddressServiceModel;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface AddressService {
 
-    Address createAddress(Address address);
+//    AddressServiceModel createAddress(AddressServiceModel addressServiceModel);
 
-    Address getAddress(String id);
+    AddressServiceModel getAddressByUserId(String id);
 
-    List<Address> getAllAddresses();
+    List<AddressServiceModel> getAllAddressesByUserId();
 }

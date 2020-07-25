@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
+
+<div class="bg">
+    <div class="container-fluid product-details">
+        <form th:action="@{/shopping-cart}" th:method="POST" th:onject="${cartItem}">
+        <div th:object="${product}">
+            <div class="row">
+                <h3 th:text="*{name}">Product name</h3>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="product-gallery">
+                        <div id="carousel-thumb" class="carousel slide">
+                            <!--Slides-->
+                            <div class="carousel-inner">
+
+                                <div th:each="photo, iterstat : *{productGallery}" class="item"
+                                     th:classappend="${iterstat.index} == 0 ? 'item active' : 'item'">
+                                    <img class="d-md-block w-100" th:src="${photo}" alt="Slide">
+                                </div>
+
+                            </div>
+                            <!--/.Slides-->
+                            <!--Controls-->
+                            <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            <!--/.Controls-->
+                            <ol class="carousel-indicators list-inline">
+
+                                <li th:each="photo, iterstat : *{productGallery}" data-target="#carousel-thumb" class="list-inline-item"
+                                    th:attr="data-slide-to=${iterstat.index}" th:classappend="${iterstat.index} == 0 ? 'item active' : 'item'">
+                                    <img class="d-md-block img-fluid" th:src="${photo}" alt=""></li>
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="col-sm-8"><h4>Specifications</h4></div>
+                    <div class="col-sm-6"><p th:text="*{description}"> ... </p></div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-sm-2">
+                    <label for="quantity" class="text-white font-weight-bold">quantity</label>
+                    <input th:field="${cartItem.quantity}" id="quantity" type="number" min="0" th:max="*{quantity} > 5 ? 5 : *{quantity}"
+                           step="1" name="quantity" class="form-control" placeholder="quantity" />
+                    <input type="hidden" name="id" id="id" th:value="${product.id}"/>
+                </div>
+                <div class="col-sm-2">
+
+                    <div class="btn">
+                        <div class="col">
+                            <div class="button-holder d-flex justify-content-center">
+                                <input type="submit" class="btn btn-info btn-lg" value="Add To Cart">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
+
