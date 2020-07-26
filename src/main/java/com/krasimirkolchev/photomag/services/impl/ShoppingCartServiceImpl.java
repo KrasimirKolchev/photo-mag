@@ -5,6 +5,7 @@ import com.krasimirkolchev.photomag.models.entities.CartItem;
 import com.krasimirkolchev.photomag.models.entities.Product;
 import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
 import com.krasimirkolchev.photomag.models.entities.User;
+import com.krasimirkolchev.photomag.models.serviceModels.CartItemServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.repositories.ShoppingCartRepository;
 import com.krasimirkolchev.photomag.services.CartItemService;
@@ -65,6 +66,29 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         this.shoppingCartRepository.save(shoppingCart);
         this.userService.saveUser(this.modelMapper.map(user, User.class));
+        this.productService.decreaseProductQty(cartItem.getItem(), cartItem.getQuantity());
+    }
+
+    @Override
+    public void removeItemFromCart(String itemId, String username) {
+        ShoppingCart shoppingCart = this.modelMapper
+                .map(this.userService.getUserByUsername(username), UserServiceModel.class).getShoppingCart();
+
+        CartItemServiceModel cartItemServiceModel = this.cartItemService.getItemById(itemId);
+
+        for (int i = 0; i < shoppingCart.getCartItem().size(); i++) {
+            if (shoppingCart.getCartItem().get(i).getItem().getId().equals(cartItemServiceModel.getItem().getId())) {
+                shoppingCart.getCartItem().remove(i);
+                break;
+            }
+        }
+
+        shoppingCart.setTotalCartAmount(shoppingCart.getCartItem().stream().mapToDouble(CartItem::getSubTotal).sum());
+
+        this.shoppingCartRepository.save(shoppingCart);
+        this.cartItemService.deleteItem(cartItemServiceModel.getId());
+        this.productService.increaseProductQuantity(cartItemServiceModel.getItem(), cartItemServiceModel.getQuantity());
+
     }
 
 

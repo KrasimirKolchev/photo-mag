@@ -23,7 +23,7 @@
 
 <div class="bg">
     <div class="container-fluid product-details">
-        <form th:action="@{/shopping-cart}" th:method="POST" th:onject="${cartItem}">
+        <form th:action="@{/shopping-cart/add}" th:method="POST" th:onject="${cartItem}">
         <div th:object="${product}">
             <div class="row">
                 <h3 th:text="*{name}">Product name</h3>

@@ -2,6 +2,7 @@ package com.krasimirkolchev.photomag.services.impl;
 
 import com.krasimirkolchev.photomag.models.entities.Product;
 import com.krasimirkolchev.photomag.models.entities.User;
+import com.krasimirkolchev.photomag.models.serviceModels.CartItemServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.ProductServiceModel;
 import com.krasimirkolchev.photomag.repositories.ProductRepository;
 import com.krasimirkolchev.photomag.services.ProductCategoryService;
@@ -44,26 +45,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product buyProduct(String ProductId, String username) {
-        Product product = this.productRepository.getOne(ProductId);
-        //check user if have money
-
-        User user = this.userService.getUserByUsername(username);
-//        user.setBoughtProducts(List.of(product));
-
-        product.setQuantity(product.getQuantity() - 1);
-
-        return this.productRepository.save(product);
-    }
-
-    @Override
     public List<Product> findByCategory(String category) {
         return this.productRepository.getAllByProductCategory_NameAndQuantityIsGreaterThan(category, 0);
-    }
-
-    @Override
-    public boolean canBoughProduct(String id) {
-        return this.productRepository.getOne(id).getQuantity() > 0;
     }
 
     @Override
@@ -75,5 +58,18 @@ public class ProductServiceImpl implements ProductService {
     public ProductServiceModel getProductById(String id) {
         return this.modelMapper
                 .map(this.productRepository.getOne(id), ProductServiceModel.class);
+    }
+
+    @Override
+    public void decreaseProductQty(Product product, Integer quantity) {
+        product.setQuantity(product.getQuantity() - quantity);
+        this.productRepository.save(product);
+    }
+
+    @Override
+    public void increaseProductQuantity(Product product, Integer quantity) {
+        ProductServiceModel product1 = this.getProductById(product.getId());
+        product1.setQuantity(product1.getQuantity() + quantity);
+        this.productRepository.save(this.modelMapper.map(product1, Product.class));
     }
 }
