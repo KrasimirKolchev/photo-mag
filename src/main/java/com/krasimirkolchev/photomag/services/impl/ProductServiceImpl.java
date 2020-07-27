@@ -61,15 +61,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void decreaseProductQty(Product product, Integer quantity) {
+    public void decreaseProductQty(ProductServiceModel product, Integer quantity) {
         product.setQuantity(product.getQuantity() - quantity);
-        this.productRepository.save(product);
+        this.productRepository.save(this.modelMapper.map(product, Product.class));
     }
 
     @Override
-    public void increaseProductQuantity(Product product, Integer quantity) {
-        ProductServiceModel product1 = this.getProductById(product.getId());
-        product1.setQuantity(product1.getQuantity() + quantity);
-        this.productRepository.save(this.modelMapper.map(product1, Product.class));
+    public void increaseProductQuantity(ProductServiceModel productServiceModel, Integer quantity) {
+        ProductServiceModel product = this.getProductById(productServiceModel.getId());
+        product.setQuantity(product.getQuantity() + quantity);
+        this.productRepository.save(this.modelMapper.map(product, Product.class));
     }
 }

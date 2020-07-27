@@ -1,15 +1,18 @@
 package com.krasimirkolchev.photomag.models.entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "items")
-public class CartItem extends BaseEntity {
+@Table(name = "order_items")
+public class OrderItems extends BaseEntity {
     private Product item;
     private Integer quantity;
     private Double subTotal;
 
-    public CartItem() {
+    public OrderItems() {
     }
 
     @ManyToOne

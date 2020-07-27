@@ -1,5 +1,5 @@
 <div class="container-fluid" xmlns:th="http://www.thymeleaf.org">
-    <div class="navbar-header col-2">
+    <div class="navbar-header col-1">
         <a class="navbar-brand" href="/">Photo Mag</a>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -7,29 +7,31 @@
             aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="navbar-nav mr-auto col-8">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/products/add">Add product</a></li>
-        <li class="nav-item"><a class="nav-link" href="/products/categories">CATEGORIES</a></li>
-        <li class="nav-item"><a class="nav-link" href="/contests/create">Create contest</a></li>
-        <li class="nav-item"><a class="nav-link" href="/categories/add">Add category</a></li>
-        <li class="nav-item"><a class="nav-link" href="/users/profile">User profile</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Page 1</a></li>
-    </ul>
-    <ul class="navbar-nav mr-0 col-3">
-        <li class="nav-item"><a class="nav-link" href="/shopping-cart"><span class="glyphicon glyphicon-shopping-cart"></span>
-            Shopping Cart</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="/users/register"><span class="glyphicon glyphicon-user"></span>
-            Sign Up</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="/users/login"><span class="glyphicon glyphicon-log-in"></span>
-            Login</a>
-        </li>
-<!--        <li class="nav-item"><a class="nav-link" href="/users/logout"><span class="glyphicon glyphicon-log-out"></span>-->
-<!--            Login</a>-->
-<!--        </li>-->
-    </ul>
+    <div id="navbarResponsive" class="col-11 collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto col-9">
+            <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/products/add">Add product</a></li>
+            <li class="nav-item"><a class="nav-link" href="/products/categories">CATEGORIES</a></li>
+            <li class="nav-item"><a class="nav-link" href="/contests/create">Create contest</a></li>
+            <li class="nav-item"><a class="nav-link" href="/categories/add">Add category</a></li>
+            <li class="nav-item"><a class="nav-link" href="/users/profile">User profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Page 1</a></li>
+        </ul>
+        <ul class="navbar-nav mr-0 col-3 justify-content-end">
+            <li class="nav-item"><a class="nav-link" href="/shopping-cart"><span class="glyphicon glyphicon-shopping-cart"></span>
+                Shopping Cart</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="/users/register"><span class="glyphicon glyphicon-user"></span>
+                Sign Up</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="/users/login"><span class="glyphicon glyphicon-log-in"></span>
+                Login</a>
+            </li>
+            <!--        <li class="nav-item"><a class="nav-link" href="/users/logout"><span class="glyphicon glyphicon-log-out"></span>-->
+            <!--            Login</a>-->
+            <!--        </li>-->
+        </ul>
+    </div>
 </div>
 
 

@@ -6,6 +6,8 @@ import com.krasimirkolchev.photomag.models.entities.Product;
 import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
 import com.krasimirkolchev.photomag.models.entities.User;
 import com.krasimirkolchev.photomag.models.serviceModels.CartItemServiceModel;
+import com.krasimirkolchev.photomag.models.serviceModels.ProductServiceModel;
+import com.krasimirkolchev.photomag.models.serviceModels.ShoppingCartServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.repositories.ShoppingCartRepository;
 import com.krasimirkolchev.photomag.services.CartItemService;
@@ -39,57 +41,64 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         UserServiceModel user = this.modelMapper
                 .map(this.userService.getUserByUsername(username), UserServiceModel.class);
 
-        ShoppingCart shoppingCart = null;
+        ShoppingCartServiceModel shoppingCart = null;
 
         if (user.getShoppingCart() == null) {
-            user.setShoppingCart( new ShoppingCart());
-        }
-            shoppingCart = user.getShoppingCart();
-
-
-        CartItem cartItem = this.modelMapper.map(cartItemAddBindModel, CartItem.class);
-        cartItem.setItem(this.modelMapper.map(this.productService.getProductById(cartItemAddBindModel.getId()), Product.class));
-
-        if (shoppingCart.getCartItem().size() > 0) {
-            for (int i = 0; i < shoppingCart.getCartItem().size(); i++) {
-                if (shoppingCart.getCartItem().get(i).getItem().getId().equals(cartItem.getItem().getId())) {
-                    CartItem item = shoppingCart.getCartItem().get(i);
-                    item.setQuantity(shoppingCart.getCartItem().get(i).getQuantity() + cartItem.getQuantity());
-                    this.cartItemService.saveItem(item);
-                    break;
-                }
-            }
+            shoppingCart = this.modelMapper
+                    .map(this.shoppingCartRepository.save(new ShoppingCart()), ShoppingCartServiceModel.class);
+            user.setShoppingCart(shoppingCart);
+            this.userService.saveUser(this.modelMapper.map(user, User.class));
         } else {
-            shoppingCart.getCartItem().add(this.cartItemService.saveItem(cartItem));
+            shoppingCart = user.getShoppingCart();
         }
-        shoppingCart.setTotalCartAmount(shoppingCart.getCartItem().stream().mapToDouble(CartItem::getSubTotal).sum());
 
-        this.shoppingCartRepository.save(shoppingCart);
-        this.userService.saveUser(this.modelMapper.map(user, User.class));
-        this.productService.decreaseProductQty(cartItem.getItem(), cartItem.getQuantity());
+        CartItemServiceModel item = shoppingCart.getItems().stream()
+                .filter(ci -> ci.getItem().getId().equals(cartItemAddBindModel.getId()))
+                .findFirst()
+                .orElse(null);
+
+        ProductServiceModel productServiceModel = this.productService.getProductById(cartItemAddBindModel.getId());
+
+        if (item == null) {
+            item = this.modelMapper.map(cartItemAddBindModel, CartItemServiceModel.class);
+            item.setItem(productServiceModel);
+            shoppingCart.getItems().add(this.cartItemService.saveItem(item));
+        } else {
+            item.setQuantity(item.getQuantity() + cartItemAddBindModel.getQuantity());
+            this.cartItemService.saveItem(item);
+        }
+
+
+        shoppingCart.setTotalCartAmount(shoppingCart.getItems()
+                .stream()
+                .mapToDouble(CartItemServiceModel::getSubTotal)
+                .sum());
+
+        this.shoppingCartRepository.save(this.modelMapper.map(shoppingCart, ShoppingCart.class));
+        this.productService.decreaseProductQty(item.getItem(), item.getQuantity());
     }
 
     @Override
     public void removeItemFromCart(String itemId, String username) {
-        ShoppingCart shoppingCart = this.modelMapper
+        ShoppingCartServiceModel shoppingCart = this.modelMapper
                 .map(this.userService.getUserByUsername(username), UserServiceModel.class).getShoppingCart();
 
         CartItemServiceModel cartItemServiceModel = this.cartItemService.getItemById(itemId);
 
-        for (int i = 0; i < shoppingCart.getCartItem().size(); i++) {
-            if (shoppingCart.getCartItem().get(i).getItem().getId().equals(cartItemServiceModel.getItem().getId())) {
-                shoppingCart.getCartItem().remove(i);
+        for (int i = 0; i < shoppingCart.getItems().size(); i++) {
+            if (shoppingCart.getItems().get(i).getItem().getId().equals(cartItemServiceModel.getItem().getId())) {
+                shoppingCart.getItems().remove(i);
                 break;
             }
         }
 
-        shoppingCart.setTotalCartAmount(shoppingCart.getCartItem().stream().mapToDouble(CartItem::getSubTotal).sum());
+        shoppingCart.setTotalCartAmount(shoppingCart.getItems()
+                .stream()
+                .mapToDouble(CartItemServiceModel::getSubTotal).sum());
 
-        this.shoppingCartRepository.save(shoppingCart);
+        this.shoppingCartRepository.save(this.modelMapper.map(shoppingCart, ShoppingCart.class));
         this.cartItemService.deleteItem(cartItemServiceModel.getId());
         this.productService.increaseProductQuantity(cartItemServiceModel.getItem(), cartItemServiceModel.getQuantity());
-
     }
-
 
 }

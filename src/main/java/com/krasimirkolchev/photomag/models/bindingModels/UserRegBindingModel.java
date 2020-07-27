@@ -14,6 +14,7 @@ public class UserRegBindingModel {
     public UserRegBindingModel() {
     }
 
+
     public String getUsername() {
         return username;
     }

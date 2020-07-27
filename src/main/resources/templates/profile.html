@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title></title>
+    <title>PROFILE</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
@@ -28,15 +28,12 @@
                 <div class="col-md-4">
                     <div class="profile-img">
                         <img th:src="*{profilePhoto}" alt="Profile Image"/>
-<!--                        <div class="file btn btn-lg btn-primary">-->
-<!--                            Change Photo-->
-<!--                            <input type="file" name="file"/>-->
-<!--                        </div>-->
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="profile-head">
-                        <h3 th:if="${#lists.isEmpty(user.gallery)}">No photos in gallery!</h3>
+                    <div class="profile-head border border-light">
+                        <h3 th:if="${#lists.isEmpty(user.gallery)}" class="text-center text-white">No photos in
+                            gallery!</h3>
                         <div th:each="photo : ${user.gallery}" class="gallery">
                             <a target="_blank" th:href="${photo}">
                                 <img th:src="${photo}" alt="Gallery photo" width="600" height="400">
@@ -45,14 +42,17 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                    <div class="btn btn-info btn-md">
+                        <a class="text-dark" href="/orders/all">Bought Products</a>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 profile-info" style="padding-left: 75px">
+                <div class="col-md-4 profile-info text-center">
+                    <h4 class="text-white text-center">Profile info</h4>
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Username</label>
+                            <p>Username</p>
                         </div>
                         <div class="col-md-6">
                             <p th:text="*{username}"></p>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Name</label>
+                            <p>Name</p>
                         </div>
                         <div class="col-md-6">
                             <p th:text="|*{firstName} *{lastName}|"></p>
@@ -68,10 +68,48 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Email</label>
+                            <p>Email</p>
                         </div>
                         <div class="col-md-6">
                             <p th:text="*{email}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4 profile-info text-center">
+                    <br>
+                    <h4 class="text-white text-center">Addresses</h4>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>Country</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p>City</p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>Address</p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" th:if="${#sets.isEmpty(user.addresses)}">
+                        <p class="text-center">You have no addresses!</p>
+                    </div>
+                    <div class="row" th:each="address : *{addresses}">
+                        <div class="col-md-2">
+                            <p th:text="${address.country}">Country</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p th:text="${address.city}">City</p>
+                        </div>
+                        <div class="col-md-8">
+                            <p th:text="${address.street}">Address</p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="btn-holder">
+                            <div class="btn btn-info btn-md">
+                                <a class="text-dark" href="/users/addresses/add">Add address</a>
+                            </div>
                         </div>
                     </div>
                 </div>

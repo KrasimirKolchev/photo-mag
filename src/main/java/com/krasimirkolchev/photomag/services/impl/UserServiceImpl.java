@@ -2,7 +2,6 @@ package com.krasimirkolchev.photomag.services.impl;
 
 import com.krasimirkolchev.photomag.models.bindingModels.AddressAddBindingModel;
 import com.krasimirkolchev.photomag.models.entities.Address;
-import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
 import com.krasimirkolchev.photomag.models.entities.User;
 import com.krasimirkolchev.photomag.models.entities.UserPrincipal;
 import com.krasimirkolchev.photomag.models.serviceModels.AddressServiceModel;

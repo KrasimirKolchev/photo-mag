@@ -1,11 +1,11 @@
 package com.krasimirkolchev.photomag.models.serviceModels;
 
-public class CartItemServiceModel extends BaseServiceModel {
+public class OrderItemServiceModel extends BaseServiceModel {
     private ProductServiceModel item;
     private Integer quantity;
     private Double subTotal;
 
-    public CartItemServiceModel() {
+    public OrderItemServiceModel() {
     }
 
     public ProductServiceModel getItem() {

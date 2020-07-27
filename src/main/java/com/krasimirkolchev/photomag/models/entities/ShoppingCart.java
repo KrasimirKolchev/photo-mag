@@ -7,20 +7,21 @@ import java.util.List;
 @Entity
 @Table(name = "shopping_cart")
 public class ShoppingCart extends BaseEntity {
-    private List<CartItem> cartItem;
+    private List<CartItem> items;
     private Double totalCartAmount;
 
     public ShoppingCart() {
-        this.cartItem = new ArrayList<>();
+        this.items = new ArrayList<>();
+        this.totalCartAmount = 0.0;
     }
 
-    @ManyToMany(targetEntity = CartItem.class, cascade = CascadeType.MERGE)
-    public List<CartItem> getCartItem() {
-        return cartItem;
+    @ManyToMany
+    public List<CartItem> getItems() {
+        return items;
     }
 
-    public void setCartItem(List<CartItem> cartItem) {
-        this.cartItem = cartItem;
+    public void setItems(List<CartItem> items) {
+        this.items = items;
     }
 
     @Column(name = "total_cart_amount")

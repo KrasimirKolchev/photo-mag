@@ -18,7 +18,7 @@ public class UserServiceModel extends BaseServiceModel {
     private Set<AddressServiceModel> addresses;
     private List<String> gallery;
     private List<Contest> contests;
-    private ShoppingCart shoppingCart;
+    private ShoppingCartServiceModel shoppingCart;
 
     public UserServiceModel() {
     }
@@ -103,11 +103,11 @@ public class UserServiceModel extends BaseServiceModel {
         this.contests = contests;
     }
 
-    public ShoppingCart getShoppingCart() {
+    public ShoppingCartServiceModel getShoppingCart() {
         return shoppingCart;
     }
 
-    public void setShoppingCart(ShoppingCart shoppingCart) {
+    public void setShoppingCart(ShoppingCartServiceModel shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
 }

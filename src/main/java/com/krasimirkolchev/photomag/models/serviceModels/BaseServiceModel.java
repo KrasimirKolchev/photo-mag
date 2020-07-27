@@ -1,6 +1,6 @@
 package com.krasimirkolchev.photomag.models.serviceModels;
 
-public class BaseServiceModel {
+public abstract class BaseServiceModel {
     private String id;
 
     public BaseServiceModel() {

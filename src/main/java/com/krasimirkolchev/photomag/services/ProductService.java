@@ -18,7 +18,7 @@ public interface ProductService {
 
     ProductServiceModel getProductById(String id);
 
-    void decreaseProductQty(Product item, Integer quantity);
+    void decreaseProductQty(ProductServiceModel product, Integer quantity);
 
-    void increaseProductQuantity(Product product, Integer quantity);
+    void increaseProductQuantity(ProductServiceModel product, Integer quantity);
 }
