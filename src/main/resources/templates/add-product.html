@@ -24,9 +24,9 @@
 
 <div class="container-fluid bg">
     <div class="container">
-        <h2 class="form-title text-right text-white" style="margin-right: 200px">Add Product</h2>
+        <h2 class="form-title text-left text-white">Add Product</h2>
         <form th:object="${productAddBindingModel}" th:action="@{/products/add}" th:method="POST"
-              class="main-form product-form mx-auto col-md-8 d-flex flex-column justify-content-center" enctype="multipart/form-data" style="left: 450px">
+              class="main-form product-form mx-auto col-md-8 d-flex flex-column justify-content-center" enctype="multipart/form-data">
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="name" class="text-white font-weight-bold">Product name</label>

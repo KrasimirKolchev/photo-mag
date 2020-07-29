@@ -29,14 +29,12 @@
             </div>
         </div>
 
-        <th:block th:if="${#lists.isEmpty(shoppingCart.items)}">
+        <th:block th:if="${shoppingCart != null} ">
             <div class="row">
                 <div class="col-sm-12">
-                    <h3 class=" text-white text-center">Your shopping cart is empty</h3>
+                    <h3 th:if="${#lists.isEmpty(shoppingCart.items)}" class="text-white text-center">Your shopping cart is empty</h3>
                 </div>
             </div>
-        </th:block>
-
 
             <div class="container shopping-cart" th:object="${shoppingCart}">
                 <div class="shopping-cart cart-head">
@@ -82,13 +80,8 @@
             <div class="row justify-content-end">
 
                 <th:block th:unless="${#lists.isEmpty(shoppingCart.items)}">
-                    <form action='/shopping-cart/charge' method='POST' id='checkout-form'
-                          th:object="${orderAddBindingModel}">
+                    <form action='/shopping-cart/charge' method='POST' id='checkout-form'>
                         <input type='hidden' th:value='${amount}' name='amount'/>
-                        <input type="hidden" th:field="*{orderItems}" th:value="${shoppingCart.items}"
-                               th:name="orderItems"/>
-                        <input type="hidden" th:field="*{totalAmount}" th:value="${shoppingCart.totalCartAmount}"
-                               th:name="totalAmount"/>
                         <label>Price:<span th:text='|${amount/100} &euro;|'></span></label>
                         <!-- NOTE: data-key/data-amount/data-currency will be rendered by Thymeleaf -->
                         <script
@@ -98,7 +91,7 @@
                                 data-name='Photo Mag'
                                 data-description='Spring course checkout'
                                 data-image
-                                        ='https://www.baeldung.com/wp-content/themes/baeldung/favicon/android-chrome-192x192.png'
+                                        ='/img/favicon-96x96.png'
                                 data-locale='auto'
                                 data-zip-code='false'>
                         </script>
@@ -106,6 +99,17 @@
                 </th:block>
 
             </div>
+
+        </th:block>
+
+        <th:block th:unless="${shoppingCart != null} ">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 th:if="${#lists.isEmpty(shoppingCart.items)}" class="text-white text-center">Your shopping cart is empty</h3>
+                </div>
+            </div>
+        </th:block>
+
 
     </div>
 </div>

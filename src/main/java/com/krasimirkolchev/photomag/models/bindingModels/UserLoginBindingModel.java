@@ -1,5 +1,9 @@
 package com.krasimirkolchev.photomag.models.bindingModels;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+
 public class UserLoginBindingModel {
     private String username;
     private String password;
@@ -7,8 +11,8 @@ public class UserLoginBindingModel {
     public UserLoginBindingModel() {
     }
 
-//    @NotNull
-//    @Length(min = 2, max = 10, message = "Username must be between 2 and 10 characters")
+    @NotBlank(message = "")
+    @Length(min = 6, max = 16, message = "Username must be between 6 and 16 characters")
     public String getUsername() {
         return username;
     }
@@ -17,8 +21,8 @@ public class UserLoginBindingModel {
         this.username = username;
     }
 
-//    @NotNull
-//    @Length(min = 3, max = 10, message = "Password must be between 3 and 10 characters")
+    @NotBlank(message = "")
+    @Length(min = 6, max = 12, message = "Password must be between 6 and 12 characters")
     public String getPassword() {
         return password;
     }

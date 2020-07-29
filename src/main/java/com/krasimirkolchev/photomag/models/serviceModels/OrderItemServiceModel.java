@@ -1,19 +1,19 @@
 package com.krasimirkolchev.photomag.models.serviceModels;
 
 public class OrderItemServiceModel extends BaseServiceModel {
-    private ProductServiceModel item;
+    private ProductServiceModel orderItem;
     private Integer quantity;
     private Double subTotal;
 
     public OrderItemServiceModel() {
     }
 
-    public ProductServiceModel getItem() {
-        return item;
+    public ProductServiceModel getOrderItem() {
+        return orderItem;
     }
 
-    public void setItem(ProductServiceModel item) {
-        this.item = item;
+    public void setOrderItem(ProductServiceModel orderItem) {
+        this.orderItem = orderItem;
     }
 
     public Integer getQuantity() {

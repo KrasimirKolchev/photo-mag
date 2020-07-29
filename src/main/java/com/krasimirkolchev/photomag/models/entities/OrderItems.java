@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "order_items")
 public class OrderItems extends BaseEntity {
-    private Product item;
+    private Product orderItem;
     private Integer quantity;
     private Double subTotal;
 
@@ -16,15 +16,15 @@ public class OrderItems extends BaseEntity {
     }
 
     @ManyToOne
-    public Product getItem() {
-        return item;
+    public Product getOrderItem() {
+        return orderItem;
     }
 
-    public void setItem(Product item) {
-        this.item = item;
+    public void setOrderItem(Product orderItem) {
+        this.orderItem = orderItem;
     }
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     public Integer getQuantity() {
         return quantity;
     }
@@ -33,7 +33,7 @@ public class OrderItems extends BaseEntity {
         this.quantity = quantity;
     }
 
-    @Column(name = "sub_total")
+    @Column(name = "sub_total", nullable = false)
     public Double getSubTotal() {
         return subTotal;
     }

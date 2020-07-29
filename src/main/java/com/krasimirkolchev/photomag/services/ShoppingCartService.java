@@ -2,6 +2,7 @@ package com.krasimirkolchev.photomag.services;
 
 import com.krasimirkolchev.photomag.models.bindingModels.CartItemAddBindModel;
 import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
+import com.krasimirkolchev.photomag.models.serviceModels.ShoppingCartServiceModel;
 
 public interface ShoppingCartService {
 
@@ -9,4 +10,5 @@ public interface ShoppingCartService {
 
     void removeItemFromCart(String productId, String username);
 
+    void retrieveShoppingCart(ShoppingCartServiceModel shoppingCart);
 }

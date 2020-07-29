@@ -22,10 +22,10 @@
 <nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
 
 <div class="container-fluid bg">
-<div class="container">
-    <h2 class="form-title text-right text-white">Register User</h2>
+<div class="container justify-content-center">
+    <h2 class="form-title text-left text-white">Register User</h2>
     <form th:object="${userRegBindingModel}" th:action="@{/users/register}" th:method="POST"
-          class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" style="left: 800px">
+          class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data">
         <div class="row">
             <div class="form-group col-md-12 mb-3">
                 <label for="firstName" class="text-white font-weight-bold">First Name</label>
@@ -76,7 +76,7 @@
 
 
         <div class="btn">
-            <div class="col col-md-6">
+            <div class="col col-md-12">
                 <div class="button-holder d-flex justify-content-center">
                     <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
                 </div>

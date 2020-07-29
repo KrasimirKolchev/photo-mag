@@ -18,6 +18,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
@@ -99,6 +101,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         this.shoppingCartRepository.save(this.modelMapper.map(shoppingCart, ShoppingCart.class));
         this.cartItemService.deleteItem(cartItemServiceModel.getId());
         this.productService.increaseProductQuantity(cartItemServiceModel.getItem(), cartItemServiceModel.getQuantity());
+    }
+
+    @Override
+    public void retrieveShoppingCart(ShoppingCartServiceModel shoppingCart) {
+        shoppingCart.getItems()
+                .forEach(ci -> this.cartItemService.deleteItem(ci.getId()));
+
+        shoppingCart.setItems(new ArrayList<>());
+        shoppingCart.setTotalCartAmount(0.0);
+        this.shoppingCartRepository.save(this.modelMapper.map(shoppingCart, ShoppingCart.class));
     }
 
 }

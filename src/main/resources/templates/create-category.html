@@ -24,7 +24,7 @@
 
 <div class="container-fluid bg">
     <div class="container">
-        <h2 class="form-title text-right text-white">Add Product</h2>
+        <h2 class="form-title text-left text-white">Add Product</h2>
         <form th:object="${categoryAddBindingModel}" th:action="@{/categories/add}" th:method="POST"
               class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" style="left: 800px">
             <div class="row">
@@ -46,7 +46,7 @@
 
 
             <div class="btn">
-                <div class="col col-md-8">
+                <div class="col col-md-12">
                     <div class="button-holder d-flex justify-content-center">
                         <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
                     </div>

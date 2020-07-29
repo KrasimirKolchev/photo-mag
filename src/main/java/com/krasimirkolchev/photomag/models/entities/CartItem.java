@@ -3,7 +3,7 @@ package com.krasimirkolchev.photomag.models.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "items")
+@Table(name = "cart_items")
 public class CartItem extends BaseEntity {
     private Product item;
     private Integer quantity;
@@ -21,7 +21,7 @@ public class CartItem extends BaseEntity {
         this.item = item;
     }
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     public Integer getQuantity() {
         return quantity;
     }
@@ -30,7 +30,7 @@ public class CartItem extends BaseEntity {
         this.quantity = quantity;
     }
 
-    @Column(name = "sub_total")
+    @Column(name = "sub_total", nullable = false)
     public Double getSubTotal() {
         return subTotal;
     }

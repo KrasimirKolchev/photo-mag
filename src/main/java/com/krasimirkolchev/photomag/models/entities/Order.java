@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity {
-    private List<OrderItems> items;
+    private List<OrderItems> orderItems;
     private Double totalAmount;
     private User user;
     private LocalDateTime purchaseDateTime;
@@ -17,15 +17,15 @@ public class Order extends BaseEntity {
     }
 
     @ManyToMany(targetEntity = OrderItems.class)
-    public List<OrderItems> getItems() {
-        return items;
+    public List<OrderItems> getOrderItems() {
+        return orderItems;
     }
 
-    public void setItems(List<OrderItems> items) {
-        this.items = items;
+    public void setOrderItems(List<OrderItems> orderItems) {
+        this.orderItems = orderItems;
     }
 
-    @Column(name = "total_amounut")
+    @Column(name = "total_amounut", nullable = false)
     public Double getTotalAmount() {
         return totalAmount;
     }
@@ -43,7 +43,7 @@ public class Order extends BaseEntity {
         this.user = user;
     }
 
-    @Column(name = "purchase_date_time")
+    @Column(name = "purchase_date_time", nullable = false)
     public LocalDateTime getPurchaseDateTime() {
         return purchaseDateTime;
     }
@@ -52,7 +52,7 @@ public class Order extends BaseEntity {
         this.purchaseDateTime = purchaseDateTime;
     }
 
-    @Column(name = "charge_id")
+    @Column(name = "charge_id", nullable = false)
     public String getChargeId() {
         return chargeId;
     }

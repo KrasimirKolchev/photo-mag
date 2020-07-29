@@ -18,7 +18,7 @@ public class PhotoMagApplication {
     }
 
 
-    //SSL certificate and https conf settings by dangeabunea
+    //SSL certificate and https conf settings
 
     @Bean
     public ServletWebServerFactory servletContainer() {

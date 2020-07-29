@@ -1,21 +1,22 @@
 package com.krasimirkolchev.photomag.models.bindingModels;
 
 import com.krasimirkolchev.photomag.models.serviceModels.CartItemServiceModel;
+import com.krasimirkolchev.photomag.models.serviceModels.OrderItemServiceModel;
 
 import java.util.List;
 
 public class OrderAddBindingModel {
-    private List<CartItemServiceModel> orderItems;
+    private List<String> orderItems;
     private Double totalAmount;
 
     public OrderAddBindingModel() {
     }
 
-    public List<CartItemServiceModel> getOrderItems() {
+    public List<String> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<CartItemServiceModel> orderItems) {
+    public void setOrderItems(List<String> orderItems) {
         this.orderItems = orderItems;
     }
 

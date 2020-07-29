@@ -15,7 +15,7 @@ public class ShoppingCart extends BaseEntity {
         this.totalCartAmount = 0.0;
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     public List<CartItem> getItems() {
         return items;
     }
@@ -24,7 +24,7 @@ public class ShoppingCart extends BaseEntity {
         this.items = items;
     }
 
-    @Column(name = "total_cart_amount")
+    @Column(name = "total_cart_amount", nullable = false)
     public Double getTotalCartAmount() {
         return totalCartAmount;
     }

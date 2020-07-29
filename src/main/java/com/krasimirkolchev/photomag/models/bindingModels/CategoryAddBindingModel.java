@@ -1,6 +1,10 @@
 package com.krasimirkolchev.photomag.models.bindingModels;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class CategoryAddBindingModel {
     private String name;
@@ -9,6 +13,8 @@ public class CategoryAddBindingModel {
     public CategoryAddBindingModel() {
     }
 
+    @NotBlank(message = "")
+    @Length(min = 4, max = 20, message = "")
     public String getName() {
         return name;
     }
@@ -17,6 +23,7 @@ public class CategoryAddBindingModel {
         this.name = name;
     }
 
+    @NotNull
     public MultipartFile getPhoto() {
         return photo;
     }

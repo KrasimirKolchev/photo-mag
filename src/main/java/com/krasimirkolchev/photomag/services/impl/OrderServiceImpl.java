@@ -1,24 +1,41 @@
 package com.krasimirkolchev.photomag.services.impl;
 
 import com.krasimirkolchev.photomag.models.entities.Order;
+import com.krasimirkolchev.photomag.models.serviceModels.OrderItemServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.OrderServiceModel;
+import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.repositories.OrderRepository;
-import com.krasimirkolchev.photomag.services.OrderService;
+import com.krasimirkolchev.photomag.services.*;
+import com.stripe.model.Charge;
+import org.joda.time.DateTime;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
+    private final UserService userService;
+    private final ShoppingCartService shoppingCartService;
+    private final OrderItemService orderItemService;
+    private final ProductService productService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper) {
+    public OrderServiceImpl(OrderRepository orderRepository, UserService userService, ShoppingCartService shoppingCartService,
+                            OrderItemService orderItemService, ProductService productService, ModelMapper modelMapper) {
         this.orderRepository = orderRepository;
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
+        this.orderItemService = orderItemService;
+        this.productService = productService;
         this.modelMapper = modelMapper;
     }
 
@@ -39,14 +56,35 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderServiceModel getOrderById(String id) {
-        return this.modelMapper.map(this.orderRepository.getOne(id), OrderServiceModel.class);
-    }
-
-    @Override
     public OrderServiceModel createOrder(OrderServiceModel orderServiceModel) {
         Order order = this.modelMapper.map(orderServiceModel, Order.class);
 
         return this.modelMapper.map(this.orderRepository.saveAndFlush(order), OrderServiceModel.class);
+    }
+
+    @Override
+    public OrderServiceModel generateOrder(Charge charge, Principal principal) {
+        UserServiceModel userServiceModel = this.modelMapper
+                .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
+
+        OrderServiceModel orderServiceModel = new OrderServiceModel();
+        orderServiceModel.setPurchaseDateTime(LocalDateTime.now());
+        orderServiceModel.setOrderItems(userServiceModel.getShoppingCart().getItems()
+                .stream()
+                .map(ci ->  {
+                    OrderItemServiceModel orderItemServiceModel = this.modelMapper.map(ci, OrderItemServiceModel.class);
+                    orderItemServiceModel.setOrderItem(this.productService.getProductById(ci.getItem().getId()));
+                    return this.orderItemService.addOrderItem(orderItemServiceModel);
+                })
+                .collect(Collectors.toList()));
+
+        orderServiceModel.setUser(this.modelMapper
+                .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class));
+        orderServiceModel.setChargeId(charge.getId());
+        orderServiceModel.setTotalAmount(userServiceModel.getShoppingCart().getTotalCartAmount());
+        this.createOrder(orderServiceModel);
+        this.shoppingCartService.retrieveShoppingCart(userServiceModel.getShoppingCart());
+
+        return orderServiceModel;
     }
 }

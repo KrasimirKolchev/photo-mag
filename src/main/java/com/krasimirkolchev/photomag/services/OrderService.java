@@ -1,7 +1,9 @@
 package com.krasimirkolchev.photomag.services;
 
 import com.krasimirkolchev.photomag.models.serviceModels.OrderServiceModel;
+import com.stripe.model.Charge;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface OrderService {
@@ -10,7 +12,7 @@ public interface OrderService {
 
     List<OrderServiceModel> getAllOrdersByUsername(String username);
 
-    OrderServiceModel getOrderById(String id);
-
     OrderServiceModel createOrder(OrderServiceModel orderServiceModel);
+
+    OrderServiceModel generateOrder(Charge charge, Principal principal);
 }

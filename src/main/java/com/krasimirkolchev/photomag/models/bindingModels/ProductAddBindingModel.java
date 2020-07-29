@@ -1,8 +1,12 @@
 package com.krasimirkolchev.photomag.models.bindingModels;
 
-import com.krasimirkolchev.photomag.models.entities.ProductCategory;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 public class ProductAddBindingModel {
@@ -16,6 +20,8 @@ public class ProductAddBindingModel {
     public ProductAddBindingModel() {
     }
 
+    @NotBlank(message = "")
+    @Length(min = 12, max = 60, message = "")
     public String getName() {
         return name;
     }
@@ -24,6 +30,8 @@ public class ProductAddBindingModel {
         this.name = name;
     }
 
+    @NotBlank(message = "")
+    @Length(min = 20, message = "")
     public String getDescription() {
         return description;
     }
@@ -32,6 +40,8 @@ public class ProductAddBindingModel {
         this.description = description;
     }
 
+    @NotNull(message = "")
+    @Positive(message = "")
     public Double getPrice() {
         return price;
     }
@@ -40,6 +50,8 @@ public class ProductAddBindingModel {
         this.price = price;
     }
 
+    @NotNull(message = "")
+    @Positive(message = "")
     public Integer getQuantity() {
         return quantity;
     }
@@ -48,6 +60,7 @@ public class ProductAddBindingModel {
         this.quantity = quantity;
     }
 
+    @NotBlank(message = "")
     public String getProductCategory() {
         return productCategory;
     }
@@ -56,6 +69,7 @@ public class ProductAddBindingModel {
         this.productCategory = productCategory;
     }
 
+    @NotNull(message = "")
     public List<MultipartFile> getProductGallery() {
         return productGallery;
     }

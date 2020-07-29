@@ -22,7 +22,7 @@
 <nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
 
 <div class="bg">
-    <div class="container-fluid product-details">
+    <div class="container-fluid product-details text-white">
         <form th:action="@{/shopping-cart/add}" th:method="POST" th:onject="${cartItem}">
         <div th:object="${product}">
             <div class="row">

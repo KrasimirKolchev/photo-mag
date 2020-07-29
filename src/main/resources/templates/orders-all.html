@@ -27,30 +27,31 @@
         <div class="accordion" id="ordersAccordion" th:object="${orders}">
 
             <th:block>
-                <div class="card" th:each="order, iterstat : ${orders}">
-                    <div class="card-header" th:id="'heading' + ${iterstat}">
+                <div class="card" th:each="order : ${orders}">
+                    <div class="card-header" th:id="'heading' + ${order.id}">
                         <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                <p th:text="| Order id: ${order.chargeId} / Order date: ${order.purchaseDateTime} / Total amount: ${order.totalAmount}|"></p>
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                    th:data-target="'#collapse'+${order.id}" aria-expanded="false" th:aria-controls="'collapse'+${order.id}">
+                                <p th:text="|Order date: ${#dates.format(order.purchaseDateTime)} / Order id: ${order.chargeId} / Total amount: ${order.totalAmount}|"></p>
                             </button>
                         </h2>
                     </div>
 
-                    <div th:id="'collapse' + ${iterstat}" class="collapse show" th:aria-labelledby="'heading' + ${iterstat}" data-parent="#ordersAccordion">
+                    <div th:id="'collapse' + ${order.id}" class="collapse" th:aria-labelledby="'heading'+${order.id}" data-parent="#ordersAccordion">
 
-                        <div class="card-body">
-                            <div class="shopping-cart cart-head">
-                                <div class="row">
+                        <div class="card-body text-dark">
+                            <div class="row">
+                                <div class="col">
                                     <div class="col-sm-2">Product Image</div>
-                                    <div class="col-sm-6">Product Name</div>
-                                    <div class="col-sm-1">Product quantity</div>
-                                    <div class="col-sm-1">Product price</div>
+                                    <div class="col-sm-8">Product Name</div>
+                                    <div class="col-sm-1">Product Quantity</div>
+                                    <div class="col-sm-1">Product Price</div>
                                 </div>
                             </div>
-                            <div class="shopping-cart cart-body" th:each="item : ${order.orderItems}">
-                                <div class="row cart-item">
-                                    <div class="col-sm-2"><img th:src="${item.item.mainPhoto}" class="img-thumbnail" alt="Product img"></div>
-                                    <div class="col-sm-8"><p th:text="${item.item.name}"></div>
+                            <div class="row text-dark" th:each="item : ${order.orderItems}">
+                                <div class="col card-item">
+                                    <div class="col-sm-2"><img th:src="${item.orderItem.mainPhoto}" class="img-thumbnail" alt="Product img"></div>
+                                    <div class="col-sm-8"><p th:text="${item.orderItem.name}"></div>
                                     <div class="col-sm-1"><p th:text="${item.quantity}"></div>
                                     <div class="col-sm-1"><p th:text="${item.subTotal}"></div>
                                 </div>

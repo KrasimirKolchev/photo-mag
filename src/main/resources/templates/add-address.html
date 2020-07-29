@@ -23,10 +23,10 @@
 
 
 <div class="container-fluid bg">
-    <div class="container">
-        <h2 class="form-title text-right text-white">Add address</h2>
+    <div class="container justify-content-center">
+        <h2 class="form-title text-left text-white">Add address</h2>
         <form th:object="${addressAddBindingModel}" th:action="@{/users/addresses/add}" th:method="POST"
-              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" style="left: 800px">
+              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" >
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="name" class="text-white font-weight-bold">Country</label>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="btn">
-                <div class="col col-md-8">
+                <div class="col col-md-12">
                     <div class="button-holder d-flex justify-content-center">
                         <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
                     </div>

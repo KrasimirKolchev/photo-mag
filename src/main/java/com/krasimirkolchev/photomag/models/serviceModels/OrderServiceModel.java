@@ -3,8 +3,8 @@ package com.krasimirkolchev.photomag.models.serviceModels;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class OrderServiceModel {
-    private List<CartItemServiceModel> orderItems;
+public class OrderServiceModel extends BaseServiceModel {
+    private List<OrderItemServiceModel> orderItems;
     private Double totalAmount;
     private UserServiceModel user;
     private LocalDateTime purchaseDateTime;
@@ -13,11 +13,11 @@ public class OrderServiceModel {
     public OrderServiceModel() {
     }
 
-    public List<CartItemServiceModel> getOrderItems() {
+    public List<OrderItemServiceModel> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<CartItemServiceModel> orderItems) {
+    public void setOrderItems(List<OrderItemServiceModel> orderItems) {
         this.orderItems = orderItems;
     }
 

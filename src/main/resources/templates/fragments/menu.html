@@ -1,23 +1,38 @@
-<div class="container-fluid" xmlns:th="http://www.thymeleaf.org">
-    <div class="navbar-header col-1">
+<div class="container-fluid" xmlns:th="http://www.thymeleaf.org" xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+    <div class="navbar-header col-2">
         <a class="navbar-brand" href="/">Photo Mag</a>
     </div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-            aria-controls="navbarResponsive"
-            aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div id="navbarResponsive" class="col-11 collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto col-9">
-            <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="/products/add">Add product</a></li>
+    <div id="navbarResponsive" class="col-10 collapse navbar-collapse">
+        <ul class="navbar-nav mx-auto col-8">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span>Hello [[${#httpServletRequest.remoteUser}]]</span>
+                </a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                       role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        Admin
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/products/add">Add Product</a>
+                        <a class="dropdown-item" href="/categories/add">Add Category</a>
+                    </div>
+                </li>
+            </th:block>
             <li class="nav-item"><a class="nav-link" href="/products/categories">CATEGORIES</a></li>
-            <li class="nav-item"><a class="nav-link" href="/contests/create">Create contest</a></li>
-            <li class="nav-item"><a class="nav-link" href="/categories/add">Add category</a></li>
+<!--            <li class="nav-item"><a class="nav-link" href="/contests/create">Create contest</a></li>-->
             <li class="nav-item"><a class="nav-link" href="/users/profile">User profile</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Page 1</a></li>
+            <li class="nav-item"><a class="nav-link" href="/orders/all">Orders</a></li>
         </ul>
-        <ul class="navbar-nav mr-0 col-3 justify-content-end">
+        <ul class="navbar-nav mr-0 col-4 justify-content-end">
             <li class="nav-item"><a class="nav-link" href="/shopping-cart"><span class="glyphicon glyphicon-shopping-cart"></span>
                 Shopping Cart</a>
             </li>

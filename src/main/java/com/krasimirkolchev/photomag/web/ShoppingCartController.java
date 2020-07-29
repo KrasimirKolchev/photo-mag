@@ -2,6 +2,7 @@ package com.krasimirkolchev.photomag.web;
 
 import com.krasimirkolchev.photomag.models.bindingModels.CartItemAddBindModel;
 import com.krasimirkolchev.photomag.models.bindingModels.OrderAddBindingModel;
+import com.krasimirkolchev.photomag.models.serviceModels.ShoppingCartServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.payment.Currency;
 import com.krasimirkolchev.photomag.payment.StripeService;
@@ -43,16 +44,15 @@ public class ShoppingCartController {
     @GetMapping("/shopping-cart")
     public String shoppingCart(Model model, Principal principal) {
         if (!model.containsAttribute("shoppingCart")) {
-            model.addAttribute("shoppingCart", this.modelMapper
+            ShoppingCartServiceModel cart = this.modelMapper
                     .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class)
-                        .getShoppingCart());
-            int amount = (int) (this.userService
-                    .getUserByUsername(principal.getName()).getShoppingCart().getTotalCartAmount() * 100);
+                    .getShoppingCart();
+            model.addAttribute("shoppingCart", cart);
+            int amount = (int) (cart.getTotalCartAmount() * 100);
 
             model.addAttribute("amount", amount); // in cents
             model.addAttribute("stripePublicKey", stripePublicKey);
-            model.addAttribute("currency", Currency.EUR);
-            model.addAttribute("orderAddBindingModel", new OrderAddBindingModel());
+            model.addAttribute("currency", Currency.BGN);
         }
         return "shopping-cart";
     }
