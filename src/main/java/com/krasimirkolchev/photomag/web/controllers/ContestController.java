@@ -1,4 +1,4 @@
-package com.krasimirkolchev.photomag.web;
+package com.krasimirkolchev.photomag.web.controllers;
 
 import com.krasimirkolchev.photomag.models.bindingModels.ContestCreateBindingModel;
 import com.krasimirkolchev.photomag.repositories.ContestRepository;

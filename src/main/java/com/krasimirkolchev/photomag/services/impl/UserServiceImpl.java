@@ -2,6 +2,7 @@ package com.krasimirkolchev.photomag.services.impl;
 
 import com.krasimirkolchev.photomag.models.bindingModels.AddressAddBindingModel;
 import com.krasimirkolchev.photomag.models.entities.Address;
+import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
 import com.krasimirkolchev.photomag.models.entities.User;
 import com.krasimirkolchev.photomag.models.entities.UserPrincipal;
 import com.krasimirkolchev.photomag.models.serviceModels.AddressServiceModel;
@@ -9,7 +10,6 @@ import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.repositories.UserRepository;
 import com.krasimirkolchev.photomag.services.AddressService;
 import com.krasimirkolchev.photomag.services.RoleService;
-import com.krasimirkolchev.photomag.services.ShoppingCartService;
 import com.krasimirkolchev.photomag.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.Principal;
@@ -51,6 +53,8 @@ public class UserServiceImpl implements UserService {
             User rootAdmin = new User("rootadmin", "password", "email@email.com", "Root", "Admin");
             rootAdmin.setAuthorities(this.roleService.getAllRoles());
             rootAdmin.setPassword(encoder.encode(rootAdmin.getPassword()));
+            rootAdmin.setShoppingCart(new ShoppingCart());
+            rootAdmin.setProfilePhoto("https://res.cloudinary.com/dk8gbxoue/image/upload/v1596182264/temp_user_photo/user-picture_teq4ct.jpg");
             this.userRepository.saveAndFlush(rootAdmin);
         }
     }
@@ -88,6 +92,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserServiceModel registerUser(UserServiceModel userServiceModel, MultipartFile file) throws IOException {
+
+        if (this.existByUsername(userServiceModel.getUsername())) {
+            throw new EntityExistsException(String.format("Username: %s already exist!", userServiceModel.getUsername()));
+        }
+
+        if (this.existByEmail(userServiceModel.getEmail())) {
+            throw new EntityExistsException(String.format("User with email: %s already exist!", userServiceModel.getEmail()));
+        }
+
+
         User user = this.modelMapper.map(userServiceModel, User.class);
         user.setAuthorities(Set.of(this.roleService.findByName("ROLE_USER")));
 
@@ -97,7 +111,8 @@ public class UserServiceImpl implements UserService {
 
         user.setProfilePhoto(this.cloudinaryService.createPhoto(file, "users", user.getUsername()));
         user.setPassword(this.encoder.encode(userServiceModel.getPassword()));
-        return this.modelMapper.map(this.userRepository.saveAndFlush(user), UserServiceModel.class);
+        user.setShoppingCart(new ShoppingCart());
+        return this.modelMapper.map(this.userRepository.save(user), UserServiceModel.class);
     }
 
     @Override
@@ -114,16 +129,32 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserServiceModel addAddressToUser(AddressAddBindingModel addressAddBindingModel, Principal principal) {
 
-        User user = this.getUserByUsername(principal.getName());
-        AddressServiceModel addressServiceModel = this.modelMapper.map(addressAddBindingModel, AddressServiceModel.class);
-        user.getAddresses().add(this.modelMapper.map(addressServiceModel, Address.class));
+        UserServiceModel user = this.modelMapper.map(this.getUserByUsername(principal.getName()), UserServiceModel.class);
+        user.getAddresses().add(this.addressService.createAddress(this.modelMapper
+                .map(addressAddBindingModel, AddressServiceModel.class)));
 
-        return this.modelMapper.map(this.userRepository.save(user), UserServiceModel.class);
+        this.userRepository.save(this.modelMapper.map(user, User.class));
+        return user;
     }
 
     @Override
     public User saveUser(User user) {
         return this.userRepository.save(user);
+    }
+
+    @Override
+    public UserServiceModel editUser(UserServiceModel userServiceModel, String oldPsw, String username) {
+        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException(""));
+
+        if (!this.encoder.matches(oldPsw, user.getPassword())) {
+            throw new IllegalArgumentException("Incorrect old password!");
+        }
+
+        user.setPassword(userServiceModel.getPassword() != null ? this.encoder.encode(userServiceModel.getPassword()) : user.getPassword());
+        user.setFirstName(userServiceModel.getFirstName());
+        user.setLastName(userServiceModel.getLastName());
+
+        return this.modelMapper.map(this.userRepository.save(user), UserServiceModel.class);
     }
 
 }

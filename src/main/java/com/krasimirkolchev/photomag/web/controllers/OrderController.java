@@ -1,8 +1,9 @@
-package com.krasimirkolchev.photomag.web;
+package com.krasimirkolchev.photomag.web.controllers;
 
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.services.OrderService;
 import com.krasimirkolchev.photomag.services.UserService;
+import com.krasimirkolchev.photomag.web.annotations.PageTitle;
 import org.apache.catalina.Role;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class OrderController {
     }
 
     @GetMapping("/all")
+    @PageTitle("All orders")
     public String getAllOrders(Model model, Principal principal) {
         if (!model.containsAttribute("orders")) {
             UserServiceModel userServiceModel = this.modelMapper

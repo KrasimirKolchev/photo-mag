@@ -83,7 +83,7 @@ public class User extends BaseEntity {
         this.lastName = lastName;
     }
 
-    @Column(name = "profile_photo")
+    @Column(name = "profile_photo", nullable = false)
     public String getProfilePhoto() {
         return profilePhoto;
     }
@@ -128,7 +128,7 @@ public class User extends BaseEntity {
         this.contests = contests;
     }
 
-    @OneToOne(targetEntity = ShoppingCart.class)
+    @OneToOne(targetEntity = ShoppingCart.class, cascade = CascadeType.ALL)
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }

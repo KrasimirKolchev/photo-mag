@@ -27,4 +27,6 @@ public interface UserService extends UserDetailsService {
     UserServiceModel addAddressToUser(AddressAddBindingModel addressAddBindingModel, Principal principal);
 
     User saveUser(User user);
+
+    UserServiceModel editUser(UserServiceModel userServiceModel, String oldPsw, String username);
 }

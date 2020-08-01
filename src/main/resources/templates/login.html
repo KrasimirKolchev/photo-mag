@@ -1,28 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>LOGIN USER</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
-    <link rel="manifest" href="/img/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
+<head th:include="~{fragments/head}"></head>
+<body class="bg-dark">
 
 <nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
 
-
-<div class="container-fluid bg">
+<div class="container-fluid bg bg-dark">
     <div class="container justify-content-center">
         <h2 class="form-title text-left text-white">Login</h2>
         <form th:object="${userLoginBindingModel}" th:action="@{/users/login}" th:method="POST"
@@ -34,14 +17,16 @@
                 <div class="form-group col-md-12 mb-3">
                     <label for="username" class="text-white font-weight-bold">Username</label>
                     <input th:field="*{username}" id="username" name="username" type="text" class="form-control"
-                           placeholder="Username"/>
+                           placeholder="Username" required/>
+                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username</p>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="password" class="text-white font-weight-bold">Password</label>
-                    <input id="password" type="text" name="password" class="form-control"
-                           placeholder="Password" />
+                    <input id="password" type="password" name="password" class="form-control"
+                           placeholder="Password" required/>
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password</p>
                 </div>
             </div>
 
@@ -56,6 +41,7 @@
         </form>
     </div>
 </div>
+<footer th:include="~{fragments/footer}"></footer>
 
 </body>
 </html>

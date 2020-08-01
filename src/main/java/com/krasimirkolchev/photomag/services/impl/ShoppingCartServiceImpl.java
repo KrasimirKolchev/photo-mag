@@ -43,16 +43,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         UserServiceModel user = this.modelMapper
                 .map(this.userService.getUserByUsername(username), UserServiceModel.class);
 
-        ShoppingCartServiceModel shoppingCart = null;
-
-        if (user.getShoppingCart() == null) {
-            shoppingCart = this.modelMapper
-                    .map(this.shoppingCartRepository.save(new ShoppingCart()), ShoppingCartServiceModel.class);
-            user.setShoppingCart(shoppingCart);
-            this.userService.saveUser(this.modelMapper.map(user, User.class));
-        } else {
-            shoppingCart = user.getShoppingCart();
-        }
+        ShoppingCartServiceModel shoppingCart = user.getShoppingCart();
 
         CartItemServiceModel item = shoppingCart.getItems().stream()
                 .filter(ci -> ci.getItem().getId().equals(cartItemAddBindModel.getId()))

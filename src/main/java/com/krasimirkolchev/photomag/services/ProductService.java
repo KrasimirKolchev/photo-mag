@@ -21,4 +21,6 @@ public interface ProductService {
     void decreaseProductQty(ProductServiceModel product, Integer quantity);
 
     void increaseProductQuantity(ProductServiceModel product, Integer quantity);
+
+    ProductServiceModel editProduct(String id, ProductServiceModel productServiceModel);
 }

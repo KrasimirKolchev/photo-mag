@@ -1,33 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>PROFILE</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
-    <link rel="manifest" href="/img/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
+<head th:include="~{fragments/head}"></head>
+<body class="bg-dark">
 
 <nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
 
-<div class="bg">
-    <div class="container-fluid emp-profile">
+<div class="container-fluid bg">
+    <div class="container emp-profile">
         <div th:object="${user}">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="profile-img">
-                        <img th:src="*{profilePhoto}" alt="Profile Image"/>
+                    <div class="row">
+                        <div class="profile-img">
+                            <img th:src="*{profilePhoto}" alt="Default Photo"/>
+                        </div>
+                    </div><br/>
+                    <div class="row justify-content-center">
+                        <div class="btn btn-info btn-md">
+                            <a class="text-dark" href="/users/edit">Edit profile</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -47,6 +38,7 @@
                     </div>
                 </div>
             </div>
+            <br/>
             <div class="row">
                 <div class="col-md-4 profile-info text-center">
                     <h4 class="text-white text-center">Profile info</h4>
@@ -76,6 +68,7 @@
                     </div>
                 </div>
             </div>
+            <br/>
             <div class="row text-center">
                 <div class="col-md-4 profile-info text-center">
                     <br>
@@ -108,7 +101,7 @@
                     <div class="row justify-content-center">
                         <div class="btn-holder">
                             <div class="btn btn-info btn-md">
-                                <a class="text-dark" href="/users/addresses/add">Add address</a>
+                                <a class="text-dark" href="/addresses/add">Add address</a>
                             </div>
                         </div>
                     </div>
@@ -117,6 +110,7 @@
         </div>
     </div>
 </div>
+<footer th:include="~{fragments/footer}"></footer>
 
 </body>
 </html>

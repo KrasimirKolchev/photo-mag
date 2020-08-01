@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/head}"></head>
+<body class="bg-dark">
+
+<nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
+
+<div class="container-fluid bg">
+    <div class="container">
+        <h2 class="form-title text-left text-white ">Product Category</h2>
+        <form th:object="${categoryAddBindingModel}" th:action="@{/categories/add}" th:method="POST"
+              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data">
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="name" class="text-white font-weight-bold">Category name</label>
+                    <input th:field="*{name}" id="name" name="name" type="text" class="form-control"
+                           placeholder="Category name" />
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">Category name</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12 mb-3">
+                    <label for="photo" class="file-label text-white font-weight-bold">Category photo</label>
+                    <input name="photo" type="file" class="file-input form-control-file" id="photo"
+                           placeholder="Choose category photo" accept="image/*" required>
+                </div>
+            </div>
+
+            <div class="btn">
+                <div class="col col-md-12">
+                    <div class="button-holder d-flex justify-content-center">
+                        <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<footer th:include="~{fragments/footer}"></footer>
+
+</body>
+</html>
+
+

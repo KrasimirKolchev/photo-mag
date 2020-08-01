@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -71,5 +72,14 @@ public class ProductServiceImpl implements ProductService {
         ProductServiceModel product = this.getProductById(productServiceModel.getId());
         product.setQuantity(product.getQuantity() + quantity);
         this.productRepository.save(this.modelMapper.map(product, Product.class));
+    }
+
+    @Override
+    public ProductServiceModel editProduct(String id, ProductServiceModel productServiceModel) {
+        Product product = this.productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(""));
+        product.setQuantity(productServiceModel.getQuantity());
+        product.setPrice(productServiceModel.getPrice());
+        product.setDescription(productServiceModel.getDescription());
+        return this.modelMapper.map(this.productRepository.save(product), ProductServiceModel.class);
     }
 }

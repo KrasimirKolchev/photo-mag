@@ -1,6 +1,7 @@
 package com.krasimirkolchev.photomag.models.bindingModels;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -21,8 +22,9 @@ public class CartItemAddBindModel {
     }
 
     @NotNull
-    @Positive(message = "")
-    @Max(value = 5, message = "")
+    @Positive(message = "Quantity must be positive number!")
+    @Min(value = 1, message = "Quantity must be at least 1!")
+    @Max(value = 5, message = "Quantity cannot be more than 5!")
     public Integer getQuantity() {
         return quantity;
     }

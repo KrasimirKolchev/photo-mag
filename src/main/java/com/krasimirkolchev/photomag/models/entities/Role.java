@@ -9,7 +9,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "authorities")
 public class Role extends BaseEntity implements GrantedAuthority {
-    @Column(name = "authority", unique = true, nullable = false)
     private String authority;
 
     public Role() {
@@ -19,6 +18,7 @@ public class Role extends BaseEntity implements GrantedAuthority {
         this.authority = authority;
     }
 
+    @Column(name = "authority", unique = true, nullable = false)
     public String getAuthority() {
         return authority;
     }

@@ -11,7 +11,7 @@ public class UserLoginBindingModel {
     public UserLoginBindingModel() {
     }
 
-    @NotBlank(message = "")
+    @NotBlank(message = "Username cannot be empty!")
     @Length(min = 6, max = 16, message = "Username must be between 6 and 16 characters")
     public String getUsername() {
         return username;
@@ -21,7 +21,7 @@ public class UserLoginBindingModel {
         this.username = username;
     }
 
-    @NotBlank(message = "")
+    @NotBlank(message = "Password cannot be empty!")
     @Length(min = 6, max = 12, message = "Password must be between 6 and 12 characters")
     public String getPassword() {
         return password;

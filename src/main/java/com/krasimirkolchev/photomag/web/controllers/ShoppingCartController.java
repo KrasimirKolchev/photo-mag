@@ -1,13 +1,12 @@
-package com.krasimirkolchev.photomag.web;
+package com.krasimirkolchev.photomag.web.controllers;
 
 import com.krasimirkolchev.photomag.models.bindingModels.CartItemAddBindModel;
-import com.krasimirkolchev.photomag.models.bindingModels.OrderAddBindingModel;
 import com.krasimirkolchev.photomag.models.serviceModels.ShoppingCartServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.payment.Currency;
-import com.krasimirkolchev.photomag.payment.StripeService;
 import com.krasimirkolchev.photomag.services.ShoppingCartService;
 import com.krasimirkolchev.photomag.services.UserService;
+import com.krasimirkolchev.photomag.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,13 +41,14 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/shopping-cart")
+    @PageTitle("Shopping cart")
     public String shoppingCart(Model model, Principal principal) {
         if (!model.containsAttribute("shoppingCart")) {
-            ShoppingCartServiceModel cart = this.modelMapper
-                    .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class)
-                    .getShoppingCart();
-            model.addAttribute("shoppingCart", cart);
-            int amount = (int) (cart.getTotalCartAmount() * 100);
+            UserServiceModel user = this.modelMapper
+                    .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
+            model.addAttribute("addresses", user.getAddresses());
+            model.addAttribute("shoppingCart", user.getShoppingCart());
+            int amount = (int) (user.getShoppingCart().getTotalCartAmount() * 100);
 
             model.addAttribute("amount", amount); // in cents
             model.addAttribute("stripePublicKey", stripePublicKey);

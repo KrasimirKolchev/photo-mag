@@ -1,4 +1,4 @@
-package com.krasimirkolchev.photomag.web;
+package com.krasimirkolchev.photomag.web.controllers;
 
 import com.krasimirkolchev.photomag.models.serviceModels.OrderServiceModel;
 import com.krasimirkolchev.photomag.payment.ChargeRequest;
@@ -34,6 +34,7 @@ public class CheckoutController {
         chargeRequest.setDescription("Example charge");
         chargeRequest.setCurrency(Currency.BGN);
         Charge charge = this.stripeService.charge(chargeRequest);
+
 
         OrderServiceModel orderServiceModel = this.orderService.generateOrder(charge, principal);
 

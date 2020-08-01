@@ -1,24 +1,30 @@
 package com.krasimirkolchev.photomag.models.bindingModels;
 
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.*;
-import java.util.List;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
-public class ProductAddBindingModel {
+public class ProductEditBindingModel {
+    private String id;
     private String name;
     private String description;
     private Double price;
     private Integer quantity;
-    private String productCategory;
-    private List<MultipartFile> productGallery;
 
-    public ProductAddBindingModel() {
+    public ProductEditBindingModel() {
     }
 
-    @NotBlank(message = "Product name cannot be empty!")
-    @Length(min = 12, max = 60, message = "Product name must be between 12 and 60 symbols long!")
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -59,21 +65,4 @@ public class ProductAddBindingModel {
         this.quantity = quantity;
     }
 
-    @NotBlank(message = "Product category must be selected!")
-    public String getProductCategory() {
-        return productCategory;
-    }
-
-    public void setProductCategory(String productCategory) {
-        this.productCategory = productCategory;
-    }
-
-    @NotNull(message = "Please choose files for product gallery!")
-    public List<MultipartFile> getProductGallery() {
-        return productGallery;
-    }
-
-    public void setProductGallery(List<MultipartFile> productGallery) {
-        this.productGallery = productGallery;
-    }
 }

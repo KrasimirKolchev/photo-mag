@@ -1,6 +1,7 @@
-package com.krasimirkolchev.photomag.web;
+package com.krasimirkolchev.photomag.web.controllers;
 
 import com.krasimirkolchev.photomag.services.UserService;
+import com.krasimirkolchev.photomag.web.annotations.PageTitle;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -13,6 +14,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
+    @PageTitle("Home")
     public String index() {
 
         return "home";
