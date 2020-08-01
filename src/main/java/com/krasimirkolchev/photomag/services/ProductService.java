@@ -12,7 +12,7 @@ public interface ProductService {
 
     ProductServiceModel addProduct(ProductServiceModel product, List<MultipartFile> files) throws IOException;
 
-    List<Product> findByCategory(String category);
+//    List<Product> findByCategory(String category);
 
     List<Product> getProductsByCategoryName(String name);
 
@@ -23,4 +23,6 @@ public interface ProductService {
     void increaseProductQuantity(ProductServiceModel product, Integer quantity);
 
     ProductServiceModel editProduct(String id, ProductServiceModel productServiceModel);
+
+    void deleteProduct(String id);
 }

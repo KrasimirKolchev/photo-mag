@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ProductAddBindingModel {
     private String name;
+    private String brand;
     private String description;
     private Double price;
     private Integer quantity;
@@ -23,8 +24,17 @@ public class ProductAddBindingModel {
         return name;
     }
 
+    @NotBlank(message = "Make cannot be empty!")
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     @NotBlank(message = "Description cannot be empty!")

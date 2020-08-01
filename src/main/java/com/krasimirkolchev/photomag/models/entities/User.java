@@ -17,14 +17,10 @@ public class User extends BaseEntity {
     private String profilePhoto;
     private Set<Role> authorities;
     private Set<Address> addresses;
-    private List<String> gallery;
-    private List<Contest> contests;
     private ShoppingCart shoppingCart;
 
     public User() {
         this.addresses = new LinkedHashSet<>();
-        this.gallery = new ArrayList<>();
-        this.contests = new ArrayList<>();
     }
 
     public User(String username, String password, String email, String firstName, String lastName) {
@@ -34,8 +30,6 @@ public class User extends BaseEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.addresses = new LinkedHashSet<>();
-        this.gallery = new ArrayList<>();
-        this.contests = new ArrayList<>();
     }
 
     @Column(name = "username", unique = true, nullable = false)
@@ -108,24 +102,6 @@ public class User extends BaseEntity {
 
     public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
-    }
-
-    @ElementCollection
-    public List<String> getGallery() {
-        return gallery;
-    }
-
-    public void setGallery(List<String> gallery) {
-        this.gallery = gallery;
-    }
-
-    @OneToMany
-    public List<Contest> getContests() {
-        return contests;
-    }
-
-    public void setContests(List<Contest> contests) {
-        this.contests = contests;
     }
 
     @OneToOne(targetEntity = ShoppingCart.class, cascade = CascadeType.ALL)

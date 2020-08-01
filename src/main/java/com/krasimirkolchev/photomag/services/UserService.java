@@ -22,8 +22,6 @@ public interface UserService extends UserDetailsService {
 
     UserServiceModel registerUser(UserServiceModel userServiceModel, MultipartFile file) throws IOException;
 
-    User addPhotoToUserGallery(Principal principal, MultipartFile file) throws IOException;
-
     UserServiceModel addAddressToUser(AddressAddBindingModel addressAddBindingModel, Principal principal);
 
     User saveUser(User user);

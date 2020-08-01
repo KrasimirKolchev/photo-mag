@@ -1,5 +1,7 @@
 package com.krasimirkolchev.photomag.models.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,6 +46,7 @@ public class Order extends BaseEntity {
     }
 
     @Column(name = "purchase_date_time", nullable = false)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     public LocalDateTime getPurchaseDateTime() {
         return purchaseDateTime;
     }

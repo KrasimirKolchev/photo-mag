@@ -45,14 +45,14 @@ public class ProductServiceImpl implements ProductService {
         return this.modelMapper.map(this.productRepository.save(product), ProductServiceModel.class);
     }
 
-    @Override
-    public List<Product> findByCategory(String category) {
-        return this.productRepository.getAllByProductCategory_NameAndQuantityIsGreaterThan(category, 0);
-    }
+//    @Override
+//    public List<Product> findByCategory(String category) {
+//        return this.productRepository.getAllByProductCategory_NameAndQuantityIsGreaterThan(category, 0);
+//    }
 
     @Override
     public List<Product> getProductsByCategoryName(String name) {
-        return this.productRepository.getAllByProductCategory_NameAndQuantityIsGreaterThan(name, 0);
+        return this.productRepository.getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalse(name, 0);
     }
 
     @Override
@@ -81,5 +81,12 @@ public class ProductServiceImpl implements ProductService {
         product.setPrice(productServiceModel.getPrice());
         product.setDescription(productServiceModel.getDescription());
         return this.modelMapper.map(this.productRepository.save(product), ProductServiceModel.class);
+    }
+
+    @Override
+    public void deleteProduct(String id) {
+        Product product = this.productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(""));
+        product.setDeleted(true);
+        this.productRepository.save(product);
     }
 }

@@ -1,10 +1,7 @@
 package com.krasimirkolchev.photomag.models.serviceModels;
 
-import com.krasimirkolchev.photomag.models.entities.Contest;
 import com.krasimirkolchev.photomag.models.entities.Role;
-import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
 
-import java.util.List;
 import java.util.Set;
 
 public class UserServiceModel extends BaseServiceModel {
@@ -16,8 +13,6 @@ public class UserServiceModel extends BaseServiceModel {
     private String profilePhoto;
     private Set<Role> authorities;
     private Set<AddressServiceModel> addresses;
-    private List<String> gallery;
-    private List<Contest> contests;
     private ShoppingCartServiceModel shoppingCart;
 
     public UserServiceModel() {
@@ -85,22 +80,6 @@ public class UserServiceModel extends BaseServiceModel {
 
     public void setAddresses(Set<AddressServiceModel> addresses) {
         this.addresses = addresses;
-    }
-
-    public List<String> getGallery() {
-        return gallery;
-    }
-
-    public void setGallery(List<String> gallery) {
-        this.gallery = gallery;
-    }
-
-    public List<Contest> getContests() {
-        return contests;
-    }
-
-    public void setContests(List<Contest> contests) {
-        this.contests = contests;
     }
 
     public ShoppingCartServiceModel getShoppingCart() {

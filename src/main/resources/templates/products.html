@@ -13,7 +13,8 @@
                     <img class="card-img-top" th:src="${p.mainPhoto}" alt="Photo image">
                 </div>
                 <div class="card-body pb-1">
-                    <h5 class="card-title" th:text="*{p.name}"></h5>
+                    <h3 class="card-title" th:text="*{p.name}"></h3>
+                    <h4 class="card-text" th:text="*{p.brand}"></h4>
                     <h4 class="card-text" th:text="*{p.price}"></h4>
                 </div>
                 <div class="card-body">

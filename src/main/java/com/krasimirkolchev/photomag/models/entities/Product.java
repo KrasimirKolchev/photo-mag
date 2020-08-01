@@ -7,14 +7,17 @@ import java.util.List;
 @Table(name = "products")
 public class Product extends BaseEntity {
     private String name;
+    private Brand brand;
     private String description;
     private Double price;
     private Integer quantity;
     private ProductCategory productCategory;
     private String mainPhoto;
     private List<String> productGallery;
+    private boolean isDeleted;
 
     public Product() {
+        this.isDeleted = false;
     }
 
     @Column(name = "name", unique = true, nullable = false)
@@ -24,6 +27,15 @@ public class Product extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @ManyToOne
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
     @Column(name = "description", columnDefinition = "TEXT", nullable = false)
@@ -78,5 +90,14 @@ public class Product extends BaseEntity {
 
     public void setProductGallery(List<String> productGallery) {
         this.productGallery = productGallery;
+    }
+
+    @Column(name = "is_deleted", nullable = false)
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

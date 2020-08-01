@@ -5,6 +5,7 @@ import com.krasimirkolchev.photomag.models.bindingModels.ProductAddBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.ProductEditBindingModel;
 import com.krasimirkolchev.photomag.models.entities.ProductCategory;
 import com.krasimirkolchev.photomag.models.serviceModels.ProductServiceModel;
+import com.krasimirkolchev.photomag.services.BrandService;
 import com.krasimirkolchev.photomag.services.ProductCategoryService;
 import com.krasimirkolchev.photomag.services.ProductService;
 import com.krasimirkolchev.photomag.web.annotations.PageTitle;
@@ -24,12 +25,14 @@ import javax.validation.Valid;
 public class ProductController {
     private final ProductService productService;
     private final ProductCategoryService productCategoryService;
+    private final BrandService brandService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ProductController(ProductService productService, ProductCategoryService productCategoryService, ModelMapper modelMapper) {
+    public ProductController(ProductService productService, ProductCategoryService productCategoryService, BrandService brandService, ModelMapper modelMapper) {
         this.productService = productService;
         this.productCategoryService = productCategoryService;
+        this.brandService = brandService;
         this.modelMapper = modelMapper;
     }
 
@@ -40,6 +43,7 @@ public class ProductController {
         if (!model.containsAttribute("productAddBindingModel")) {
             model.addAttribute("productAddBindingModel", new ProductAddBindingModel());
             model.addAttribute("productCategory", this.productCategoryService.getAllCategories());
+            model.addAttribute("brands", this.brandService.getAllBrands());
         }
         return "add-product";
     }
@@ -119,6 +123,14 @@ public class ProductController {
                 .map(productEditBindingModel, ProductServiceModel.class));
 
         return "redirect:/products/details/" + productServiceModel.getId();
+    }
+
+    @GetMapping("/delete{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
+    public String deleteProduct(@PathVariable("id") String id) {
+
+        this.productService.deleteProduct(id);
+        return "redirect:/categories";
     }
 
 }

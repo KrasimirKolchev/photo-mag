@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, String> {
 
-    List<Product> getAllByProductCategory_NameAndQuantityIsGreaterThan(String category, Integer qty);
+    List<Product> getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalse(String category, Integer qty);
 }

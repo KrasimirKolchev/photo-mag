@@ -116,17 +116,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addPhotoToUserGallery(Principal principal, MultipartFile file) throws IOException {
-        User user = this.getUserByUsername(principal.getName());
-
-        if (file == null || file.isEmpty() || file.getOriginalFilename().length() == 0) {
-            throw new FileNotFoundException("File is empty!");
-        }
-        user.getGallery().add(this.cloudinaryService.createPhoto(file, "users", principal.getName()));
-        return this.userRepository.save(user);
-    }
-
-    @Override
     public UserServiceModel addAddressToUser(AddressAddBindingModel addressAddBindingModel, Principal principal) {
 
         UserServiceModel user = this.modelMapper.map(this.getUserByUsername(principal.getName()), UserServiceModel.class);

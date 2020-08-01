@@ -10,12 +10,23 @@
         <h2 class="form-title text-left text-white">Add Product</h2>
         <form th:object="${productAddBindingModel}" th:action="@{/products/add}" th:method="POST"
               class="main-form product-form mx-auto col-md-8 d-flex flex-column justify-content-center" enctype="multipart/form-data">
+
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="name" class="text-white font-weight-bold">Product name</label>
                     <input th:field="*{name}" id="name" name="name" type="text" class="form-control"
                            placeholder="Product name" />
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">Name</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="brand" class="text-white font-weight-bold">Product Brand</label>
+                    <select id="brand" name="brand" class="form-control">
+                        <option value="">Select Brand</option>
+                        <option th:each="b : ${brands}" th:value="${b.id}" th:text="${b.name}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}" class="errors alert alert-danger">Brand.</p>
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="productCategory" class="text-white font-weight-bold">Product category</label>

@@ -79,35 +79,6 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/gallery")
-    public String userGallery() {
-        return null;
-    }
-
-    @GetMapping("/gallery/addPhoto")
-    public String userGalleryAdd() {
-        return null;
-    }
-
-    @PostMapping("/gallery/addPhoto")
-    public String useGalleryAddConf(@RequestParam(name = "file", required = false) MultipartFile file, Principal principal
-            , RedirectAttributes redirectAttr) {
-
-        try {
-            this.userService.addPhotoToUserGallery(principal, file);
-
-            return "home";
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-//            redirectAttr.addFlashAttribute("userRegBindingModel", userRegBindingModel);
-//            redirectAttr.addFlashAttribute("org.springframework.validation.BindingResult.userRegBindingModel"
-//                    , bindingResult);
-            return "redirect:register";
-        }
-
-    }
-
     @GetMapping("/profile")
     @PageTitle("Profile")
     public String userProfile(Model model, Principal principal) {

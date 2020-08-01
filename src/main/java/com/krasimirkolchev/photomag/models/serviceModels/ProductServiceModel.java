@@ -6,12 +6,14 @@ import java.util.List;
 
 public class ProductServiceModel extends BaseServiceModel {
     private String name;
+    private BrandServiceModel brand;
     private String description;
     private Double price;
     private Integer quantity;
     private ProductCategory productCategory;
     private String mainPhoto;
     private List<String> productGallery;
+    private boolean isDeleted;
 
     public ProductServiceModel() {
     }
@@ -22,6 +24,14 @@ public class ProductServiceModel extends BaseServiceModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public BrandServiceModel getBrand() {
+        return brand;
+    }
+
+    public void setBrand(BrandServiceModel brand) {
+        this.brand = brand;
     }
 
     public String getDescription() {
@@ -70,5 +80,13 @@ public class ProductServiceModel extends BaseServiceModel {
 
     public void setProductGallery(List<String> productGallery) {
         this.productGallery = productGallery;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
