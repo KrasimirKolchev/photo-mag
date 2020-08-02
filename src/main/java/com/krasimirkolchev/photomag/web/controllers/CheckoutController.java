@@ -8,6 +8,7 @@ import com.krasimirkolchev.photomag.services.OrderService;
 import com.stripe.exception.*;
 import com.stripe.model.Charge;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,6 +30,7 @@ public class CheckoutController {
     }
 
     @PostMapping("/charge")
+    @PreAuthorize("isAuthenticated()")
     public String charge(ChargeRequest chargeRequest, Principal principal)
             throws CardException, APIException, AuthenticationException, InvalidRequestException, APIConnectionException {
         chargeRequest.setDescription("Example charge");

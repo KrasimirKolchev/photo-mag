@@ -25,4 +25,8 @@ public interface ProductService {
     ProductServiceModel editProduct(String id, ProductServiceModel productServiceModel);
 
     void deleteProduct(String id);
+
+    List<ProductServiceModel> getAllProducts();
+
+    List<ProductServiceModel> getProductsOrderedBy(String category, String order);
 }

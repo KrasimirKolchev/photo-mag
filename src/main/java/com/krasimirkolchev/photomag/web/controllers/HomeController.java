@@ -1,16 +1,17 @@
 package com.krasimirkolchev.photomag.web.controllers;
 
-import com.krasimirkolchev.photomag.services.UserService;
+import com.krasimirkolchev.photomag.services.ProductService;
 import com.krasimirkolchev.photomag.web.annotations.PageTitle;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-    private final UserService userService;
+    private final ProductService productService;
 
-    public HomeController(UserService userService) {
-        this.userService = userService;
+    public HomeController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping("/")
@@ -21,8 +22,10 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home() {
-
+    public String home(Model model) {
+        if (!model.containsAttribute("products")) {
+            model.addAttribute("products", this.productService.getAllProducts());
+        }
         return "home";
     }
 

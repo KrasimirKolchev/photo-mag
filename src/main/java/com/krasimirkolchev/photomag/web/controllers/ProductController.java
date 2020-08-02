@@ -8,6 +8,8 @@ import com.krasimirkolchev.photomag.models.serviceModels.ProductServiceModel;
 import com.krasimirkolchev.photomag.services.BrandService;
 import com.krasimirkolchev.photomag.services.ProductCategoryService;
 import com.krasimirkolchev.photomag.services.ProductService;
+import com.krasimirkolchev.photomag.validation.ProductAddValidation;
+import com.krasimirkolchev.photomag.validation.ProductEditValidation;
 import com.krasimirkolchev.photomag.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/products")
@@ -26,13 +29,19 @@ public class ProductController {
     private final ProductService productService;
     private final ProductCategoryService productCategoryService;
     private final BrandService brandService;
+    private final ProductAddValidation productAddValidation;
+    private final ProductEditValidation productEditValidation;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ProductController(ProductService productService, ProductCategoryService productCategoryService, BrandService brandService, ModelMapper modelMapper) {
+    public ProductController(ProductService productService, ProductCategoryService productCategoryService,
+                             BrandService brandService, ProductAddValidation productAddValidation,
+                             ProductEditValidation productEditValidation, ModelMapper modelMapper) {
         this.productService = productService;
         this.productCategoryService = productCategoryService;
         this.brandService = brandService;
+        this.productAddValidation = productAddValidation;
+        this.productEditValidation = productEditValidation;
         this.modelMapper = modelMapper;
     }
 
@@ -50,9 +59,11 @@ public class ProductController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
-    public String addProductConf(@Valid @ModelAttribute("productAddBindingModel") ProductAddBindingModel productAddBindingModel,
-                                 BindingResult result, RedirectAttributes attributes) {
-        System.out.println();
+    public String addProductConf(@ModelAttribute("productAddBindingModel") ProductAddBindingModel productAddBindingModel,
+                                 BindingResult result, RedirectAttributes attributes) throws IOException {
+
+        this.productAddValidation.validate(productAddBindingModel, result);
+
         if (result.hasErrors()) {
             attributes.addFlashAttribute("productAddBindingModel", productAddBindingModel);
             attributes.addFlashAttribute("org.springframework.validation.BindingResult.productAddBindingModel"
@@ -60,33 +71,37 @@ public class ProductController {
             return "redirect:/products/add";
         }
 
-        try {
-            ProductServiceModel productServiceModel = this.modelMapper.map(productAddBindingModel, ProductServiceModel.class);
-            ProductCategory category = this.productCategoryService
-                    .getCategoryById(productAddBindingModel.getProductCategory());
+        ProductServiceModel productServiceModel = this.modelMapper.map(productAddBindingModel, ProductServiceModel.class);
+        ProductCategory category = this.productCategoryService
+                .getCategoryById(productAddBindingModel.getProductCategory());
 
-            productServiceModel.setProductCategory(category);
-            this.productService.addProduct(productServiceModel, productAddBindingModel.getProductGallery());
-            return "redirect:/";
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            attributes.addFlashAttribute("productAddBindingModel", productAddBindingModel);
-            return "redirect:/products/add";
-        }
-
+        productServiceModel.setProductCategory(category);
+        this.productService.addProduct(productServiceModel, productAddBindingModel.getProductGallery());
+        return "redirect:/";
     }
 
-    @GetMapping("/{categoryName}")
+    @GetMapping("/{categoryName}{order}")
     @PageTitle("Products")
-    public String allProductsByCategory(@PathVariable(name = "categoryName") String categoryName, Model model) {
+    @PreAuthorize("isAuthenticated()")
+    public String allProductsByCategory(@PathVariable(name = "categoryName") String categoryName, Model model,
+                                        @PathVariable(name = "order", required = false) String order) {
         if (!model.containsAttribute("products")) {
-            model.addAttribute("products", this.productService.getProductsByCategoryName(categoryName.replace('+', ' ')));
+            String category = categoryName.replace('+', ' ');
+            model.addAttribute("categoryName", categoryName);
+
+            if (!order.equals("")) {
+                model.addAttribute("products", this.productService.getProductsOrderedBy(category, order));
+            } else {
+                model.addAttribute("products", this.productService.getProductsByCategoryName(category));
+            }
+
         }
         return "products";
     }
 
     @GetMapping("/details/{id}")
     @PageTitle("Product details")
+    @PreAuthorize("isAuthenticated()")
     public String allCategories(@PathVariable(name = "id") String id, Model model) {
         if (!model.containsAttribute("product")) {
             model.addAttribute("product", this.productService.getProductById(id));
@@ -109,8 +124,10 @@ public class ProductController {
 
     @PostMapping("/edit{id}")
     @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
-    public String editProductConf(@Valid @ModelAttribute("productEditBindingModel") ProductEditBindingModel productEditBindingModel,
+    public String editProductConf(@ModelAttribute("productEditBindingModel") ProductEditBindingModel productEditBindingModel,
                                   BindingResult result, RedirectAttributes attributes, @PathVariable("id") String id) {
+
+        this.productEditValidation.validate(productEditBindingModel, result);
 
         if (result.hasErrors()) {
             attributes.addFlashAttribute("productEditBindingModel", productEditBindingModel);

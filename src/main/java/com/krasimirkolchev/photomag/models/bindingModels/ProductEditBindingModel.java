@@ -33,8 +33,6 @@ public class ProductEditBindingModel {
         this.name = name;
     }
 
-    @NotBlank(message = "Description cannot be empty!")
-    @Length(min = 20, message = "Description must be at least 20 symbols long!")
     public String getDescription() {
         return description;
     }
@@ -43,9 +41,6 @@ public class ProductEditBindingModel {
         this.description = description;
     }
 
-    @NotNull(message = "Price cannot be empty")
-    @Positive(message = "Price should be positive number!")
-    @Min(value = 1, message = "Price cannot be less than 1!")
     public Double getPrice() {
         return price;
     }
@@ -54,9 +49,6 @@ public class ProductEditBindingModel {
         this.price = price;
     }
 
-    @NotNull(message = "Quantity cannot be empty!")
-    @Positive(message = "Quantity should be positive number!")
-    @Min(value = 1, message = "Quantity must be more than 1!")
     public Integer getQuantity() {
         return quantity;
     }

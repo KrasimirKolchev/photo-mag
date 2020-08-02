@@ -23,8 +23,6 @@ public class UserEditBindingModel {
         this.id = id;
     }
 
-    @NotBlank(message = "Password cannot be empty!")
-    @Length(min = 6, max = 12, message = "Password must be between 6 and 12 characters")
     public String getOldPassword() {
         return oldPassword;
     }
@@ -33,8 +31,6 @@ public class UserEditBindingModel {
         this.oldPassword = oldPassword;
     }
 
-//    @NotBlank(message = "Password cannot be empty!")
-//    @Length(min = 6, max = 12, message = "Password must be between 6 and 12 characters")
     public String getPassword() {
         return password;
     }
@@ -43,8 +39,6 @@ public class UserEditBindingModel {
         this.password = password;
     }
 
-//    @NotBlank(message = "Conform password cannot be empty!")
-//    @Length(min = 6, max = 12, message = "Confirm password must be between 6 and 12 characters")
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -53,8 +47,6 @@ public class UserEditBindingModel {
         this.confirmPassword = confirmPassword;
     }
 
-    @NotBlank(message = "First name cannot be empty!")
-    @Length(min = 3, max = 16, message = "First name must be between 3 and 16 symbols long!")
     public String getFirstName() {
         return firstName;
     }
@@ -63,8 +55,6 @@ public class UserEditBindingModel {
         this.firstName = firstName;
     }
 
-    @NotBlank(message = "Last name cannot be empty!")
-    @Length(min = 3, max = 16, message = "Last name must be between 3 and 16 symbols long")
     public String getLastName() {
         return lastName;
     }

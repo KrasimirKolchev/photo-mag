@@ -3,6 +3,7 @@ package com.krasimirkolchev.photomag.web.controllers;
 import com.krasimirkolchev.photomag.models.bindingModels.BrandAddBindingModel;
 import com.krasimirkolchev.photomag.models.serviceModels.BrandServiceModel;
 import com.krasimirkolchev.photomag.services.BrandService;
+import com.krasimirkolchev.photomag.validation.BrandAddValidation;
 import com.krasimirkolchev.photomag.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,13 @@ import javax.validation.Valid;
 @RequestMapping("/brands")
 public class BrandController {
     private final BrandService brandService;
+    private final BrandAddValidation brandAddValidation;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public BrandController(BrandService brandService, ModelMapper modelMapper) {
+    public BrandController(BrandService brandService, BrandAddValidation brandAddValidation, ModelMapper modelMapper) {
         this.brandService = brandService;
+        this.brandAddValidation = brandAddValidation;
         this.modelMapper = modelMapper;
     }
 
@@ -41,10 +44,16 @@ public class BrandController {
     }
 
     @PostMapping("/add")
-    public String addBrandConf(@Valid @ModelAttribute("brandAddBindingModel") BrandAddBindingModel brandAddBindingModel,
+    @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
+    public String addBrandConf(@ModelAttribute("brandAddBindingModel") BrandAddBindingModel brandAddBindingModel,
                                BindingResult result, RedirectAttributes attributes) {
+
+        this.brandAddValidation.validate(brandAddBindingModel, result);
+
         if (result.hasErrors()) {
             attributes.addFlashAttribute("brandAddBindingModel", brandAddBindingModel);
+            attributes.addFlashAttribute("org.springframework.validation.BindingResult.brandAddBindingModel"
+                    , result);
             return "redirect:/brands/add";
         }
 

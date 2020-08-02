@@ -7,6 +7,7 @@ import com.krasimirkolchev.photomag.web.annotations.PageTitle;
 import org.apache.catalina.Role;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ public class OrderController {
 
     @GetMapping("/all")
     @PageTitle("All orders")
+    @PreAuthorize("isAuthenticated()")
     public String getAllOrders(Model model, Principal principal) {
         if (!model.containsAttribute("orders")) {
             UserServiceModel userServiceModel = this.modelMapper

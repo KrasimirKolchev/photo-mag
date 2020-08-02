@@ -10,6 +10,7 @@ import com.krasimirkolchev.photomag.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +43,7 @@ public class ShoppingCartController {
 
     @GetMapping("/shopping-cart")
     @PageTitle("Shopping cart")
+    @PreAuthorize("isAuthenticated()")
     public String shoppingCart(Model model, Principal principal) {
         if (!model.containsAttribute("shoppingCart")) {
             UserServiceModel user = this.modelMapper
@@ -58,12 +60,14 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/shopping-cart/remove")
+    @PreAuthorize("isAuthenticated()")
     public String shoppingCartRemove(@RequestParam(name = "id") String productId, Principal principal) {
         this.shoppingCartService.removeItemFromCart(productId, principal.getName());
         return "redirect:/shopping-cart";
     }
 
     @PostMapping("/shopping-cart/add")
+    @PreAuthorize("isAuthenticated()")
     public String addToCart(@Valid @ModelAttribute("cartItem") CartItemAddBindModel cartItemAddBindModel,
                             BindingResult result, RedirectAttributes attributes, Principal principal) {
 

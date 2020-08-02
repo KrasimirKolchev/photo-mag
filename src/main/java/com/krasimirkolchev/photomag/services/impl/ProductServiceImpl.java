@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -88,5 +89,33 @@ public class ProductServiceImpl implements ProductService {
         Product product = this.productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(""));
         product.setDeleted(true);
         this.productRepository.save(product);
+    }
+
+    @Override
+    public List<ProductServiceModel> getAllProducts() {
+        return this.productRepository.getAllByQuantityIsGreaterThanAndDeletedFalseOrderByBrand(0)
+                .stream()
+                .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductServiceModel> getProductsOrderedBy(String category, String order) {
+        switch (order) {
+            case "priced":
+                return this.productRepository
+                        .getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByPriceDesc(category, 0)
+                        .stream()
+                        .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
+                        .collect(Collectors.toList());
+
+            case "pricea":
+                return this.productRepository
+                        .getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByPriceAsc(category, 0)
+                        .stream()
+                        .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
+                        .collect(Collectors.toList());
+        }
+        return null;
     }
 }

@@ -12,8 +12,6 @@ public class AddressAddBindingModel {
     public AddressAddBindingModel() {
     }
 
-    @NotBlank(message = "Street cannot be empty!")
-    @Length(min = 3, max = 50, message = "Street must be between 3 and 50 symbols long!")
     public String getStreet() {
         return street;
     }
@@ -22,8 +20,6 @@ public class AddressAddBindingModel {
         this.street = street;
     }
 
-    @NotBlank(message = "City cannot be empty!")
-    @Length(min = 3, max = 20, message = "City name must be between 3 and 20 symbols long!")
     public String getCity() {
         return city;
     }
@@ -32,8 +28,6 @@ public class AddressAddBindingModel {
         this.city = city;
     }
 
-    @NotBlank(message = "Country cannot be empty!")
-    @Length(min = 3, max = 20, message = "Country name must be between 3 and 20 symbols long!")
     public String getCountry() {
         return country;
     }

@@ -1,8 +1,8 @@
 package com.krasimirkolchev.photomag.web.controllers;
 
 import com.krasimirkolchev.photomag.models.bindingModels.CategoryAddBindingModel;
-import com.krasimirkolchev.photomag.models.entities.ProductCategory;
 import com.krasimirkolchev.photomag.services.ProductCategoryService;
+import com.krasimirkolchev.photomag.validation.CategoryValidation;
 import com.krasimirkolchev.photomag.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +16,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
 @RequestMapping("/categories")
 public class CategoryController {
     private final ProductCategoryService productCategoryService;
+    private final CategoryValidation categoryValidation;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public CategoryController(ProductCategoryService productCategoryService, ModelMapper modelMapper) {
+    public CategoryController(ProductCategoryService productCategoryService, CategoryValidation categoryValidation,
+                              ModelMapper modelMapper) {
         this.productCategoryService = productCategoryService;
+        this.categoryValidation = categoryValidation;
         this.modelMapper = modelMapper;
     }
 
     @GetMapping()
     @PageTitle("Categories")
+    @PreAuthorize("isAuthenticated()")
     public String allCategories(Model model) {
         if (!model.containsAttribute("categories")) {
             model.addAttribute("categories", this.productCategoryService.getAllCategories());
@@ -52,11 +55,15 @@ public class CategoryController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
-    public String addCategoryConf(@Valid @ModelAttribute("categoryAddBindingModel")
+    public String addCategoryConf(@ModelAttribute("categoryAddBindingModel")
                   CategoryAddBindingModel categoryAddBindingModel, BindingResult result, RedirectAttributes attributes) throws IOException {
+
+        this.categoryValidation.validate(categoryAddBindingModel, result);
 
         if (result.hasErrors()) {
             attributes.addFlashAttribute("categoryAddBindingModel", categoryAddBindingModel);
+            attributes.addFlashAttribute("org.springframework.validation.BindingResult.categoryAddBindingModel"
+                    , result);
             return "redirect:/categories/add";
         }
 

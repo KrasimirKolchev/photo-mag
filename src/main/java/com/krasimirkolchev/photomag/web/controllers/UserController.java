@@ -4,30 +4,37 @@ import com.krasimirkolchev.photomag.models.bindingModels.UserEditBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.UserLoginBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.UserRegBindingModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
-import com.krasimirkolchev.photomag.services.AddressService;
 import com.krasimirkolchev.photomag.services.UserService;
+import com.krasimirkolchev.photomag.validation.UserEditValidation;
+import com.krasimirkolchev.photomag.validation.UserRegisterValidation;
 import com.krasimirkolchev.photomag.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final UserRegisterValidation userRegisterValidation;
+    private final UserEditValidation userEditValidation;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, UserRegisterValidation userRegisterValidation,
+                          UserEditValidation userEditValidation, ModelMapper modelMapper) {
         this.userService = userService;
+        this.userRegisterValidation = userRegisterValidation;
+        this.userEditValidation = userEditValidation;
         this.modelMapper = modelMapper;
     }
 
@@ -41,12 +48,10 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String userRegisterConf(@Valid @ModelAttribute("userRegBindingModel") UserRegBindingModel userRegBindingModel
-            , BindingResult result, RedirectAttributes attributes) {
+    public String userRegisterConf(@ModelAttribute("userRegBindingModel") UserRegBindingModel userRegBindingModel
+            , BindingResult result, RedirectAttributes attributes) throws IOException {
 
-        if (!userRegBindingModel.getPassword().equals(userRegBindingModel.getConfirmPassword())) {
-            result.rejectValue("password", "error.userRegBindingModel", "Passwords doesn't match");
-        }
+        this.userRegisterValidation.validate(userRegBindingModel, result);
 
         if (result.hasErrors()) {
             attributes.addFlashAttribute("userRegBindingModel", userRegBindingModel);
@@ -55,19 +60,10 @@ public class UserController {
             return "redirect:register";
         }
 
-        try {
-            UserServiceModel userServiceModel = this.userService.registerUser(this.modelMapper
-                    .map(userRegBindingModel, UserServiceModel.class), userRegBindingModel.getFile());
+        UserServiceModel userServiceModel = this.userService.registerUser(this.modelMapper
+                .map(userRegBindingModel, UserServiceModel.class), userRegBindingModel.getFile());
 
-            return "redirect:/login";
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            attributes.addFlashAttribute("userRegBindingModel", userRegBindingModel);
-            attributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegBindingModel"
-                    , result);
-            return "redirect:register";
-        }
-
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
@@ -81,6 +77,7 @@ public class UserController {
 
     @GetMapping("/profile")
     @PageTitle("Profile")
+    @PreAuthorize("isAuthenticated()")
     public String userProfile(Model model, Principal principal) {
         if (!model.containsAttribute("user")) {
             model.addAttribute("user", this.userService.getUserByUsername(principal.getName()));
@@ -90,6 +87,7 @@ public class UserController {
 
     @GetMapping("/edit")
     @PageTitle("Edit User")
+    @PreAuthorize("isAuthenticated()")
     public String editUser(Model model, Principal principal) {
         if (!model.containsAttribute("userEditBindingModel")) {
             UserServiceModel userServiceModel = this.modelMapper
@@ -102,33 +100,23 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String editUserConf(@Valid @ModelAttribute("userEditBindingModel") UserEditBindingModel userEditBindingModel
+    @PreAuthorize("isAuthenticated()")
+    public String editUserConf(@ModelAttribute("userEditBindingModel") UserEditBindingModel userEditBindingModel
             , BindingResult result, RedirectAttributes attributes, Principal principal) {
 
-        if (!userEditBindingModel.getPassword().equals(userEditBindingModel.getConfirmPassword())) {
-            result.rejectValue("password", "error.userEditBindingModel", "Passwords doesn't match");
-        }
+        this.userEditValidation.validate(userEditBindingModel, result);
 
         if (result.hasErrors()) {
             userEditBindingModel.setPassword(null);
             attributes.addFlashAttribute("userEditBindingModel", userEditBindingModel);
             attributes.addFlashAttribute("org.springframework.validation.BindingResult.userEditBindingModel"
                     , result);
-            return "redirect:edit-user";
+            return "redirect:/users/edit";
         }
 
-        try {
-            UserServiceModel userServiceModel = this.userService.editUser(this.modelMapper
-                    .map(userEditBindingModel, UserServiceModel.class), userEditBindingModel.getOldPassword(), principal.getName());
+        UserServiceModel userServiceModel = this.userService.editUser(this.modelMapper
+                .map(userEditBindingModel, UserServiceModel.class), userEditBindingModel.getOldPassword(), principal.getName());
 
-            return "redirect:/users/profile";
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            attributes.addFlashAttribute("userEditBindingModel", userEditBindingModel);
-            attributes.addFlashAttribute("org.springframework.validation.BindingResult.userEditBindingModel"
-                    , result);
-            return "redirect:edit-user";
-        }
-
+        return "redirect:/users/profile";
     }
 }
