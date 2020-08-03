@@ -18,14 +18,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                .antMatchers("/", "/home", "/users/register").permitAll()
+                .antMatchers("/", "/users/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/users/login").permitAll()
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/home")
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
@@ -36,8 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable();
 
-        http.requiresChannel().antMatchers("/**").requiresSecure();
+//        http.requiresChannel().antMatchers("/**").requiresSecure();
     }
-
 
 }

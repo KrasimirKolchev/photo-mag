@@ -7,7 +7,6 @@ import java.util.List;
 @Table(name = "brands")
 public class Brand extends BaseEntity {
     private String name;
-    private List<Product> products;
 
     public Brand() {
     }
@@ -21,12 +20,4 @@ public class Brand extends BaseEntity {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "brand", fetch = FetchType.EAGER)
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
 }

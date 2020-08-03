@@ -14,6 +14,7 @@ public class Order extends BaseEntity {
     private User user;
     private LocalDateTime purchaseDateTime;
     private String chargeId;
+    private Address address;
 
     public Order() {
     }
@@ -62,5 +63,14 @@ public class Order extends BaseEntity {
 
     public void setChargeId(String chargeId) {
         this.chargeId = chargeId;
+    }
+
+    @ManyToOne
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

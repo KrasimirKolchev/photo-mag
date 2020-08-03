@@ -16,10 +16,12 @@
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
                                     th:data-target="'#collapse'+${order.id}" aria-expanded="false" th:aria-controls="'collapse'+${order.id}">
-                                <p th:text="|Order date: ${#dates.format(order.purchaseDateTime)} / Order id: ${order.chargeId} / Total amount: ${order.totalAmount}|"></p>
+                                <p th:text="|Order date: date / Order id: ${order.chargeId} / Total amount: ${order.totalAmount}|"></p>
                             </button>
                         </h2>
                     </div>
+
+<!--                    ${#dates.format(order.purchaseDateTime)}-->
 
                     <div th:id="'collapse' + ${order.id}" class="collapse" th:aria-labelledby="'heading'+${order.id}" data-parent="#ordersAccordion">
 

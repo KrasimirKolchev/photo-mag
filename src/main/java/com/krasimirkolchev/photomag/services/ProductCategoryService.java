@@ -14,4 +14,6 @@ public interface ProductCategoryService {
     ProductCategory getCategoryById(String id);
 
     void addCategory(CategoryAddBindingModel categoryAddBindingModel) throws IOException;
+
+    ProductCategoryServiceModel getCategoryByName(String category);
 }

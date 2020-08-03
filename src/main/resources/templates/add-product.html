@@ -63,7 +63,8 @@
                 <div class="form-group col-md-12 mb-3">
                     <label for="productGallery" class="custom-file-label text-white font-weight-bold">Product gallery</label>
                     <input name="productGallery" type="file" class="custom-file-input form-control-file" id="productGallery"
-                           placeholder="Choose product gallery" accept="image/*" required multiple>
+                           placeholder="Choose product gallery" accept="image/*" multiple>
+                    <p th:if="${#fields.hasErrors('productGallery')}" th:errors="*{productGallery}" class="errors alert alert-danger">Gallery</p>
                 </div>
             </div>
 

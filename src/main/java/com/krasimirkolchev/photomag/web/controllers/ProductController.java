@@ -80,24 +80,42 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping("/{categoryName}{order}")
+    @GetMapping("/{categoryName}")
     @PageTitle("Products")
     @PreAuthorize("isAuthenticated()")
-    public String allProductsByCategory(@PathVariable(name = "categoryName") String categoryName, Model model,
-                                        @PathVariable(name = "order", required = false) String order) {
+    public String allProductsByCategory(@PathVariable(name = "categoryName") String categoryName,
+                                        @RequestParam(name = "order", required = false) String order, Model model) {
         if (!model.containsAttribute("products")) {
             String category = categoryName.replace('+', ' ');
-            model.addAttribute("categoryName", categoryName);
-
-            if (!order.equals("")) {
+//            model.addAttribute("category", this.productCategoryService.getCategoryByName(category));
+            if (order != null) {
                 model.addAttribute("products", this.productService.getProductsOrderedBy(category, order));
             } else {
                 model.addAttribute("products", this.productService.getProductsByCategoryName(category));
             }
-
         }
         return "products";
     }
+
+//    @GetMapping("/{categoryName}/{order}")
+//    @PageTitle("Products")
+//    @PreAuthorize("isAuthenticated()")
+//    public String allProductsByCategoryOrdered(@PathVariable("categoryName") String categoryName,
+//                                               @PathVariable(name = "order", required = false) String order, Model model) {
+//        if (!model.containsAttribute("products")) {
+//            String category = categoryName.replace('+', ' ');
+//            model.addAttribute("category", categoryName);
+//            if (order != null) {
+//                model.addAttribute("products", this.productService.getProductsOrderedBy(category, order));
+//            } else {
+//                model.addAttribute("products", this.productService.getProductsByCategoryName(category));
+//            }
+//
+//        }
+//        return "products";
+//    }
+
+
 
     @GetMapping("/details/{id}")
     @PageTitle("Product details")

@@ -63,11 +63,11 @@
 
         <div class="row justify-content-end">
             <th:block th:unless="${#lists.isEmpty(shoppingCart.items)}">
-                <form action='/shopping-cart/charge' method='POST' id='checkout-form'>
+                <form action='/shopping-cart/charge' method='POST' id='checkout-form' th:object="${addressGetBindingModel}">
                     <div class="row">
                         <div class="col-6">
-                            <label for="address" class="text-white font-weight-bold">Address</label>
-                            <select id="address" name="address" class="form-control">
+                            <label for="addressId" class="text-white font-weight-bold">Address</label>
+                            <select id="addressId" name="addressId" class="form-control">
                                 <option value="">Select Address</option>
                                 <option th:each="a : ${addresses}" th:value="${a.id}"
                                         th:text="|${a.country}, ${a.city}, ${a.street}|"></option>

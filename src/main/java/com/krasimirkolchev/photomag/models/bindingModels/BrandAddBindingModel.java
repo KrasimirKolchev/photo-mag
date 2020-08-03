@@ -7,10 +7,9 @@ import java.util.List;
 
 public class BrandAddBindingModel {
     private String name;
-    private List<ProductServiceModel> products;
+
 
     public BrandAddBindingModel() {
-        this.products = new ArrayList<>();
     }
 
     public String getName() {
@@ -21,11 +20,4 @@ public class BrandAddBindingModel {
         this.name = name;
     }
 
-    public List<ProductServiceModel> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<ProductServiceModel> products) {
-        this.products = products;
-    }
 }

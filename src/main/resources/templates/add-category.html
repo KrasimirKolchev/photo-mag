@@ -23,8 +23,9 @@
                 <div class="form-group col-md-12 mb-3">
                     <label for="photo" class="file-label text-white font-weight-bold">Category photo</label>
                     <input name="photo" type="file" class="file-input form-control-file" id="photo"
-                           placeholder="Choose category photo" accept="image/*" required>
+                           placeholder="Choose category photo" accept="image/*" >
                 </div>
+                <p th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}" class="errors alert alert-danger">File</p>
             </div>
 
             <div class="btn">

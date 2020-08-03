@@ -22,15 +22,15 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="profile-head border border-light">
-                        <h3 th:if="${#lists.isEmpty(user.gallery)}" class="text-center text-white">No photos in
-                            gallery!</h3>
-                        <div th:each="photo : ${user.gallery}" class="gallery">
-                            <a target="_blank" th:href="${photo}">
-                                <img th:src="${photo}" alt="Gallery photo" width="600" height="400">
-                            </a>
-                        </div>
-                    </div>
+<!--                    <div class="profile-head border border-light">-->
+<!--                        <h3 th:if="${#lists.isEmpty(user.gallery)}" class="text-center text-white">No photos in-->
+<!--                            gallery!</h3>-->
+<!--                        <div th:each="photo : ${user.gallery}" class="gallery">-->
+<!--                            <a target="_blank" th:href="${photo}">-->
+<!--                                <img th:src="${photo}" alt="Gallery photo" width="600" height="400">-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
                 <div class="col-md-2">
                     <div class="btn btn-info btn-md">

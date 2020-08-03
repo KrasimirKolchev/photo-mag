@@ -1,5 +1,6 @@
 package com.krasimirkolchev.photomag.web.controllers;
 
+import com.krasimirkolchev.photomag.models.bindingModels.AddressGetBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.CartItemAddBindModel;
 import com.krasimirkolchev.photomag.models.serviceModels.ShoppingCartServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
@@ -50,6 +51,7 @@ public class ShoppingCartController {
                     .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
             model.addAttribute("addresses", user.getAddresses());
             model.addAttribute("shoppingCart", user.getShoppingCart());
+            model.addAttribute("addressGetBindingModel", new AddressGetBindingModel());
             int amount = (int) (user.getShoppingCart().getTotalCartAmount() * 100);
 
             model.addAttribute("amount", amount); // in cents

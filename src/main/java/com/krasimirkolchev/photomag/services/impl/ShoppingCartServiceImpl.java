@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -96,12 +97,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void retrieveShoppingCart(ShoppingCartServiceModel shoppingCart) {
-        shoppingCart.getItems()
-                .forEach(ci -> this.cartItemService.deleteItem(ci.getId()));
+        List<String> cartItemIds = new ArrayList<>();
 
-        shoppingCart.setItems(new ArrayList<>());
-        shoppingCart.setTotalCartAmount(0.0);
+        while (shoppingCart.getItems().size() > 0) {
+            cartItemIds.add(shoppingCart.getItems().get(0).getId());
+            shoppingCart.getItems().remove(0);
+        }
+
+        shoppingCart.setTotalCartAmount(shoppingCart.getItems()
+                .stream()
+                .mapToDouble(CartItemServiceModel::getSubTotal).sum());
         this.shoppingCartRepository.save(this.modelMapper.map(shoppingCart, ShoppingCart.class));
+
+        cartItemIds.forEach(this.cartItemService::deleteItem);
     }
 
 }

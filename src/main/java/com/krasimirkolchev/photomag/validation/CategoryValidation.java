@@ -31,5 +31,9 @@ public class CategoryValidation implements Validator {
         if (this.categoryRepository.existsByName(categoryAddBindingModel.getName())) {
             errors.rejectValue("name", "Category already exist!");
         }
+        if (categoryAddBindingModel.getPhoto() == null || categoryAddBindingModel.getPhoto().isEmpty()
+                || categoryAddBindingModel.getPhoto().getOriginalFilename().length() == 0) {
+            errors.rejectValue("photo", "Select image file!", "Select image file!");
+        }
     }
 }

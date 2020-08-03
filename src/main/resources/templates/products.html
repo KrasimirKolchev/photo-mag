@@ -15,13 +15,13 @@
                             <a class="dropdown-toggle" href="#" id="dropdown"
                                role="button" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
-                                Admin
+                                ORDER BY
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown">
-                                <a class="dropdown-item" th:href="@{/products/${categoryName}{order}(order=priced)}">price desc</a>
-                                <a class="dropdown-item" th:href="@{/products/{name}{order}(order=pricea)}">price asc</a>
-                                <a class="dropdown-item" th:href="@{/products/${name}/(by=name)(type=asc)}">name asc</a>
-                                <a class="dropdown-item" th:href="@{/products/${name}/(by=name)(type=desc)}">name desc</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown" th:object="${category}">
+                                <a class="dropdown-item" th:href="@{/products/{categoryName}(categoryName=${#strings.replace(category.name,' ','+')})(order=pricedesc)}">price desc</a>
+                                <a class="dropdown-item" th:href="@{/products/{categoryName}/{order}(order=priceasc)}">price asc</a>
+                                <a class="dropdown-item" th:href="@{/products/{categoryName}/{order}(order=nameasc)}">name asc</a>
+                                <a class="dropdown-item" th:href="@{/products/{categoryName}/{order}(order=namedesc)}">name desc</a>
                             </div>
                         </li>
                     </ul>

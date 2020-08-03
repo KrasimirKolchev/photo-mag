@@ -1,5 +1,6 @@
 package com.krasimirkolchev.photomag.web.controllers;
 
+import com.krasimirkolchev.photomag.models.bindingModels.AddressGetBindingModel;
 import com.krasimirkolchev.photomag.models.serviceModels.OrderServiceModel;
 import com.krasimirkolchev.photomag.payment.ChargeRequest;
 import com.krasimirkolchev.photomag.payment.Currency;
@@ -31,14 +32,13 @@ public class CheckoutController {
 
     @PostMapping("/charge")
     @PreAuthorize("isAuthenticated()")
-    public String charge(ChargeRequest chargeRequest, Principal principal)
+    public String charge(ChargeRequest chargeRequest, Principal principal, AddressGetBindingModel addressGetBindingModel)
             throws CardException, APIException, AuthenticationException, InvalidRequestException, APIConnectionException {
         chargeRequest.setDescription("Example charge");
         chargeRequest.setCurrency(Currency.BGN);
         Charge charge = this.stripeService.charge(chargeRequest);
 
-
-        OrderServiceModel orderServiceModel = this.orderService.generateOrder(charge, principal);
+        OrderServiceModel orderServiceModel = this.orderService.generateOrder(charge, principal, addressGetBindingModel);
 
         return "redirect:/orders/all";
     }

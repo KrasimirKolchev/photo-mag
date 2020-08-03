@@ -1,5 +1,6 @@
 package com.krasimirkolchev.photomag.services;
 
+import com.krasimirkolchev.photomag.models.bindingModels.AddressGetBindingModel;
 import com.krasimirkolchev.photomag.models.serviceModels.OrderServiceModel;
 import com.stripe.model.Charge;
 
@@ -14,5 +15,5 @@ public interface OrderService {
 
     OrderServiceModel createOrder(OrderServiceModel orderServiceModel);
 
-    OrderServiceModel generateOrder(Charge charge, Principal principal);
+    OrderServiceModel generateOrder(Charge charge, Principal principal, AddressGetBindingModel addressGetBindingModel);
 }

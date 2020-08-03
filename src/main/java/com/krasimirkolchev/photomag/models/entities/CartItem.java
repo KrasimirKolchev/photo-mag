@@ -12,7 +12,7 @@ public class CartItem extends BaseEntity {
     public CartItem() {
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     public Product getItem() {
         return item;
     }

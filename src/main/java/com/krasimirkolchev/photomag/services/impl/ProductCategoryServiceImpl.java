@@ -64,5 +64,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         this.productCategoryRepository.save(category);
     }
 
+    @Override
+    public ProductCategoryServiceModel getCategoryByName(String category) {
+        return this.modelMapper
+                .map(this.productCategoryRepository.findProductCategoryByNameLike(category), ProductCategoryServiceModel.class);
+    }
+
 
 }

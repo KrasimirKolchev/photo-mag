@@ -9,6 +9,7 @@ public class OrderServiceModel extends BaseServiceModel {
     private UserServiceModel user;
     private LocalDateTime purchaseDateTime;
     private String chargeId;
+    private AddressServiceModel address;
 
     public OrderServiceModel() {
     }
@@ -51,5 +52,13 @@ public class OrderServiceModel extends BaseServiceModel {
 
     public void setChargeId(String chargeId) {
         this.chargeId = chargeId;
+    }
+
+    public AddressServiceModel getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressServiceModel address) {
+        this.address = address;
     }
 }

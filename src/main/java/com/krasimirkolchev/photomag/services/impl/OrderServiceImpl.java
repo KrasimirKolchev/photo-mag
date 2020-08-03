@@ -1,5 +1,6 @@
 package com.krasimirkolchev.photomag.services.impl;
 
+import com.krasimirkolchev.photomag.models.bindingModels.AddressGetBindingModel;
 import com.krasimirkolchev.photomag.models.entities.Order;
 import com.krasimirkolchev.photomag.models.serviceModels.OrderItemServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.OrderServiceModel;
@@ -63,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderServiceModel generateOrder(Charge charge, Principal principal) {
+    public OrderServiceModel generateOrder(Charge charge, Principal principal, AddressGetBindingModel addressGetBindingModel) {
         UserServiceModel userServiceModel = this.modelMapper
                 .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
 
@@ -78,10 +79,14 @@ public class OrderServiceImpl implements OrderService {
                 })
                 .collect(Collectors.toList()));
 
-        orderServiceModel.setUser(this.modelMapper
-                .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class));
+        orderServiceModel.setUser(userServiceModel);
         orderServiceModel.setChargeId(charge.getId());
         orderServiceModel.setTotalAmount(userServiceModel.getShoppingCart().getTotalCartAmount());
+        orderServiceModel.setAddress(userServiceModel.getAddresses()
+                .stream()
+                .filter(a -> a.getId().equals(addressGetBindingModel.getAddressId()))
+                .findFirst()
+                .orElse(null));
         this.createOrder(orderServiceModel);
         this.shoppingCartService.retrieveShoppingCart(userServiceModel.getShoppingCart());
 

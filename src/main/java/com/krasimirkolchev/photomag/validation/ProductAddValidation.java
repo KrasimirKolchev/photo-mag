@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ProductAddValidation implements Validator {
@@ -46,5 +47,15 @@ public class ProductAddValidation implements Validator {
         if (productAddBindingModel.getBrand() == null || productAddBindingModel.getBrand().isBlank()) {
             errors.rejectValue("brand", "Brand must be selected!", "Brand must be selected!");
         }
+        if (productAddBindingModel.getProductGallery() == null || productAddBindingModel.getProductGallery().size() == 0) {
+            errors.rejectValue("file", "Select images for the gallery!", "Select images for the gallery!");
+        }
+
+        for (MultipartFile file : productAddBindingModel.getProductGallery()) {
+            if (file == null || file.isEmpty() || file.getOriginalFilename().length() == 0) {
+                errors.rejectValue("file", "Some images are corrupted!", "Some images are corrupted!");
+            }
+        }
+
     }
 }

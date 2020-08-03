@@ -46,6 +46,10 @@ public class UserRegisterValidation implements Validator {
         if (userRegBindingModel.getLastName().length() < 3 || userRegBindingModel.getLastName().length() > 16) {
             errors.rejectValue("lastName", "Last name must be between 3 and 16 symbols!", "Last name must be between 3 and 16 symbols!");
         }
+        if (userRegBindingModel.getFile() == null || userRegBindingModel.getFile().isEmpty()
+                || userRegBindingModel.getFile().getOriginalFilename().length() == 0) {
+            errors.rejectValue("file", "Select image file!", "Select image file!");
+        }
 
     }
 }
