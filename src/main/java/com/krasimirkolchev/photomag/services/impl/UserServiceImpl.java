@@ -1,5 +1,6 @@
 package com.krasimirkolchev.photomag.services.impl;
 
+import com.krasimirkolchev.photomag.error.UserNotFoundException;
 import com.krasimirkolchev.photomag.models.bindingModels.AddressAddBindingModel;
 import com.krasimirkolchev.photomag.models.entities.Address;
 import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(String id) {
-        return this.userRepository.findById(id).orElse(null);
+        return this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Override
@@ -87,28 +88,14 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("User with username " + username + " not found!");
         }
 
-        return new UserPrincipal(user);
+        return new UserPrincipal(user, true, true, true, true);
     }
 
     @Override
     public UserServiceModel registerUser(UserServiceModel userServiceModel, MultipartFile file) throws IOException {
 
-        if (this.existByUsername(userServiceModel.getUsername())) {
-            throw new EntityExistsException(String.format("Username: %s already exist!", userServiceModel.getUsername()));
-        }
-
-        if (this.existByEmail(userServiceModel.getEmail())) {
-            throw new EntityExistsException(String.format("User with email: %s already exist!", userServiceModel.getEmail()));
-        }
-
-
         User user = this.modelMapper.map(userServiceModel, User.class);
         user.setAuthorities(Set.of(this.roleService.findByName("ROLE_USER")));
-
-        if (file == null || file.isEmpty() || file.getOriginalFilename().length() == 0) {
-            throw new FileNotFoundException("File is empty!");
-        }
-
         user.setProfilePhoto(this.cloudinaryService.createPhoto(file, "users", user.getUsername()));
         user.setPassword(this.encoder.encode(userServiceModel.getPassword()));
         user.setShoppingCart(new ShoppingCart());
@@ -133,11 +120,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserServiceModel editUser(UserServiceModel userServiceModel, String oldPsw, String username) {
-        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException(""));
-
-        if (!this.encoder.matches(oldPsw, user.getPassword())) {
-            throw new IllegalArgumentException("Incorrect old password!");
-        }
+        User user = this.userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found!"));
 
         user.setPassword(userServiceModel.getPassword() != null ? this.encoder.encode(userServiceModel.getPassword()) : user.getPassword());
         user.setFirstName(userServiceModel.getFirstName());

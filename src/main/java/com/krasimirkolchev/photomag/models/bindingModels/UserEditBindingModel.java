@@ -1,9 +1,5 @@
 package com.krasimirkolchev.photomag.models.bindingModels;
 
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.NotBlank;
-
 public class UserEditBindingModel {
     private String id;
     private String oldPassword;

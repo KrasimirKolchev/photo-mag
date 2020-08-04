@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, String> {
     List<Order> getOrdersByUser_UsernameOrderByPurchaseDateTime(String username);
+
+    List<Order> getOrdersByPurchaseDateTimeBetween(String st, String end);
 }

@@ -8,38 +8,40 @@
 <div class="bg">
     <div class="container">
 
+        <h3 th:if="${#lists.isEmpty(orders)}" class="text-center text-white">You don't have any orders yest!</h3>
+
         <div class="accordion" id="ordersAccordion" th:object="${orders}">
 
+            <!--                        need optimization for smartphone-->
             <th:block>
                 <div class="card" th:each="order : ${orders}">
-                    <div class="card-header" th:id="'heading' + ${order.id}">
+                    <div class="card-header bg-dark" th:id="'heading' + ${order.id}">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
                                     th:data-target="'#collapse'+${order.id}" aria-expanded="false" th:aria-controls="'collapse'+${order.id}">
-                                <p th:text="|Order date: date / Order id: ${order.chargeId} / Total amount: ${order.totalAmount}|"></p>
+                                <p class="text-white d-flex" th:text="|Order date: ${#temporals.format(order.purchaseDateTime, 'dd-MM-yyyy HH:mm')} //
+                                   Total amount: ${#numbers.formatDecimal(order.totalAmount, 1, 2)}BGN //
+                                   Address: ${order.address.country}, ${order.address.city}, ${order.address.street}|"></p>
                             </button>
                         </h2>
                     </div>
-
-<!--                    ${#dates.format(order.purchaseDateTime)}-->
-
                     <div th:id="'collapse' + ${order.id}" class="collapse" th:aria-labelledby="'heading'+${order.id}" data-parent="#ordersAccordion">
 
                         <div class="card-body text-dark">
                             <div class="row">
-                                <div class="col">
+                                <div class="col ">
                                     <div class="col-sm-2">Product Image</div>
-                                    <div class="col-sm-8">Product Name</div>
-                                    <div class="col-sm-1">Product Quantity</div>
-                                    <div class="col-sm-1">Product Price</div>
+                                    <div class="col-sm-7">Product Name</div>
+                                    <div class="col-sm-1 text-center">Quantity</div>
+                                    <div class="col-sm-2 text-center">Price</div>
                                 </div>
                             </div>
                             <div class="row text-dark" th:each="item : ${order.orderItems}">
-                                <div class="col card-item">
+                                <div class="col card-item border-top border-dark">
                                     <div class="col-sm-2"><img th:src="${item.orderItem.mainPhoto}" class="img-thumbnail" alt="Product img"></div>
-                                    <div class="col-sm-8"><p th:text="${item.orderItem.name}"></div>
-                                    <div class="col-sm-1"><p th:text="${item.quantity}"></div>
-                                    <div class="col-sm-1"><p th:text="${item.subTotal}"></div>
+                                    <div class="col-sm-7"><p th:text="${item.orderItem.name}"></div>
+                                    <div class="col-sm-1 text-center"><p th:text="${item.quantity}"></div>
+                                    <div class="col-sm-2 text-center"><p th:text="|${#numbers.formatDecimal(item.subTotal, 1, 2)}BGN|"></div>
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,6 @@
 package com.krasimirkolchev.photomag.services.impl;
 
+import com.krasimirkolchev.photomag.error.BrandNotFoundException;
 import com.krasimirkolchev.photomag.models.entities.Brand;
 import com.krasimirkolchev.photomag.models.serviceModels.BrandServiceModel;
 import com.krasimirkolchev.photomag.repositories.BrandRepository;
@@ -8,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +35,14 @@ public class BrandServiceImpl implements BrandService {
         return this.brandRepository.findAll()
                 .stream()
                 .map(b -> this.modelMapper.map(b, BrandServiceModel.class))
+                .sorted(Comparator.comparing(BrandServiceModel::getName))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public BrandServiceModel getBrandById(String id) {
+        return this.modelMapper
+                .map(this.brandRepository.findById(id).orElseThrow(() -> new BrandNotFoundException("Brand not found!"))
+                        , BrandServiceModel.class);
     }
 }

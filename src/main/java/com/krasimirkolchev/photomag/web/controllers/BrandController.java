@@ -34,7 +34,7 @@ public class BrandController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     @PageTitle("Add brand")
     public String addBrand(Model model) {
         if (!model.containsAttribute("brandAddBindingModel")) {
@@ -44,7 +44,7 @@ public class BrandController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     public String addBrandConf(@ModelAttribute("brandAddBindingModel") BrandAddBindingModel brandAddBindingModel,
                                BindingResult result, RedirectAttributes attributes) {
 

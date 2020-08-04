@@ -8,15 +8,13 @@ import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.repositories.OrderRepository;
 import com.krasimirkolchev.photomag.services.*;
 import com.stripe.model.Charge;
-import org.joda.time.DateTime;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,8 +57,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderServiceModel createOrder(OrderServiceModel orderServiceModel) {
         Order order = this.modelMapper.map(orderServiceModel, Order.class);
-
-        return this.modelMapper.map(this.orderRepository.saveAndFlush(order), OrderServiceModel.class);
+        return this.modelMapper.map(this.orderRepository.save(order), OrderServiceModel.class);
     }
 
     @Override
@@ -69,7 +66,6 @@ public class OrderServiceImpl implements OrderService {
                 .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
 
         OrderServiceModel orderServiceModel = new OrderServiceModel();
-        orderServiceModel.setPurchaseDateTime(LocalDateTime.now());
         orderServiceModel.setOrderItems(userServiceModel.getShoppingCart().getItems()
                 .stream()
                 .map(ci ->  {
@@ -92,4 +88,5 @@ public class OrderServiceImpl implements OrderService {
 
         return orderServiceModel;
     }
+
 }

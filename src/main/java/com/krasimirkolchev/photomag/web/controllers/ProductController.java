@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -46,7 +47,7 @@ public class ProductController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     @PageTitle("Add product")
     public String addProduct(Model model) {
         if (!model.containsAttribute("productAddBindingModel")) {
@@ -58,7 +59,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     public String addProductConf(@ModelAttribute("productAddBindingModel") ProductAddBindingModel productAddBindingModel,
                                  BindingResult result, RedirectAttributes attributes) throws IOException {
 
@@ -76,6 +77,7 @@ public class ProductController {
                 .getCategoryById(productAddBindingModel.getProductCategory());
 
         productServiceModel.setProductCategory(category);
+        productServiceModel.setBrand(this.brandService.getBrandById(productAddBindingModel.getBrand()));
         this.productService.addProduct(productServiceModel, productAddBindingModel.getProductGallery());
         return "redirect:/";
     }
@@ -83,39 +85,14 @@ public class ProductController {
     @GetMapping("/{categoryName}")
     @PageTitle("Products")
     @PreAuthorize("isAuthenticated()")
-    public String allProductsByCategory(@PathVariable(name = "categoryName") String categoryName,
-                                        @RequestParam(name = "order", required = false) String order, Model model) {
-        if (!model.containsAttribute("products")) {
+    public String allProductsByCategory(@PathVariable(name = "categoryName") String categoryName, Model model) {
+        if (!model.containsAttribute("categoryName")) {
             String category = categoryName.replace('+', ' ');
-//            model.addAttribute("category", this.productCategoryService.getCategoryByName(category));
-            if (order != null) {
-                model.addAttribute("products", this.productService.getProductsOrderedBy(category, order));
-            } else {
-                model.addAttribute("products", this.productService.getProductsByCategoryName(category));
-            }
+            model.addAttribute("products", this.productService.getProductsByCategoryName(category));
+            model.addAttribute("categoryName", categoryName);
         }
         return "products";
     }
-
-//    @GetMapping("/{categoryName}/{order}")
-//    @PageTitle("Products")
-//    @PreAuthorize("isAuthenticated()")
-//    public String allProductsByCategoryOrdered(@PathVariable("categoryName") String categoryName,
-//                                               @PathVariable(name = "order", required = false) String order, Model model) {
-//        if (!model.containsAttribute("products")) {
-//            String category = categoryName.replace('+', ' ');
-//            model.addAttribute("category", categoryName);
-//            if (order != null) {
-//                model.addAttribute("products", this.productService.getProductsOrderedBy(category, order));
-//            } else {
-//                model.addAttribute("products", this.productService.getProductsByCategoryName(category));
-//            }
-//
-//        }
-//        return "products";
-//    }
-
-
 
     @GetMapping("/details/{id}")
     @PageTitle("Product details")
@@ -129,7 +106,7 @@ public class ProductController {
     }
 
     @GetMapping("/edit{id}")
-    @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     @PageTitle("Edit Product")
     public String editProduct(@PathVariable(name = "id") String id, Model model) {
         if (!model.containsAttribute("productEditBindingModel")) {
@@ -141,7 +118,7 @@ public class ProductController {
     }
 
     @PostMapping("/edit{id}")
-    @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     public String editProductConf(@ModelAttribute("productEditBindingModel") ProductEditBindingModel productEditBindingModel,
                                   BindingResult result, RedirectAttributes attributes, @PathVariable("id") String id) {
 
@@ -161,7 +138,7 @@ public class ProductController {
     }
 
     @GetMapping("/delete{id}")
-    @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     public String deleteProduct(@PathVariable("id") String id) {
 
         this.productService.deleteProduct(id);

@@ -10,10 +10,16 @@
         <form th:action="@{/shopping-cart/add}" th:method="POST" th:onject="${cartItem}">
             <div th:object="${product}">
                 <div class="row">
-                    <h3 th:text="*{name}">Product name<span th:text="*{brand}"></span></h3>
+                    <div class="col-8">
+                        <h3 th:text="|*{brand.name} : *{name}|">Product name</h3>
+                    </div>
+                    <div class="col-4 justify-content-end">
+                        <h4 class="text-right"
+                            th:text="|Price: ${#numbers.formatDecimal(product.getPrice(), 1, 2)}BGN|"></h4>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-sm-12">
                         <div class="product-gallery">
                             <div id="carousel-thumb" class="carousel slide">
                                 <!--Slides-->
@@ -46,45 +52,49 @@
                                 <!--                            commented html not working good (do not visualize after repeat)-->
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="col-sm-8"><h4>Specifications</h4></div>
-                        <div class="col-sm-6"><p th:wrap="hard" type="text" th:text="*{description}"> ... </p></div>
-                    </div>
-                </div>
-                <br/>
-                <div class="row justify-content-start" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <div class="row col-sm-2 justify-content-center">
-                        <div class="btn btn-warning btn-md">
-                            <a class="text-white" th:href="@{/products/edit{id}(id=${product.id})}">Edit product</a>
-                        </div>
-                    </div>
-                    <div class="row col-sm-2 justify-content-center">
-                        <div class="btn btn-danger btn-md">
-                            <a class="text-white" th:href="@{/products/delete{id}(id=${product.id})}">Delete product</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-start">
-                    <div class="col-sm-2">
-                        <label for="quantity" class="text-white font-weight-bold">quantity</label>
-                        <input th:field="${cartItem.quantity}" id="quantity" type="number" min="1"
-                               th:max="*{quantity} > 5 ? 5 : *{quantity}"
-                               step="1" name="quantity" class="form-control" placeholder="quantity"/>
-                        <input type="hidden" name="id" id="id" th:value="${product.id}"/>
-                    </div>
-                    <div class="col-sm-2">
-
-                        <div class="btn">
-                            <div class="col">
-                                <div class="button-holder d-flex justify-content-center">
-                                    <input type="submit" class="btn btn-info btn-lg" value="Add To Cart">
+                        <br/>
+                        <div class="row justify-content-center" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <div class="col-6">
+                                <div class="btn btn-warning button-holder btn-md ml-5">
+                                    <a class="text-white" th:href="@{/products/edit{id}(id=${product.id})}">Edit
+                                        product</a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="btn btn-holder btn-danger btn-md">
+                                    <a class="text-white" th:href="@{/products/delete{id}(id=${product.id})}">Delete
+                                        product</a>
                                 </div>
                             </div>
                         </div>
-
+                        <div class="row justify-content-center">
+                            <div class="col-4 mt-2">
+                                <label for="quantity" class="text-white font-weight-bold">Select quantity</label>
+                                <input th:field="${cartItem.quantity}" id="quantity" type="number" min="1"
+                                       th:max="*{quantity} > 5 ? 5 : *{quantity}"
+                                       step="1" name="quantity" class="form-control" placeholder="Quantity"/>
+                                <input type="hidden" name="id" id="id" th:value="${product.id}"/>
+                            </div>
+                            <div class="col-6">
+                                <div class="btn-holder mt-5 ml-5">
+                                    <div class="col">
+                                        <div class="d-flex">
+                                            <input type="submit" class="btn btn-info" value="Add To Cart">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="row justify-content-center mt-5">
+                    <div class="col text-center text-white">
+                        <h4>Specifications</h4>
+                        <p th:wrap="hard" type="text" th:text="*{description}"> ... </p>
+                    </div>
+                </div>
+                <br/>
+
             </div>
         </form>
     </div>

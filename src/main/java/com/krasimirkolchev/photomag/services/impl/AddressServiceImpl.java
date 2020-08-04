@@ -1,5 +1,6 @@
 package com.krasimirkolchev.photomag.services.impl;
 
+import com.krasimirkolchev.photomag.error.AddressNotFoundException;
 import com.krasimirkolchev.photomag.models.entities.Address;
 import com.krasimirkolchev.photomag.models.serviceModels.AddressServiceModel;
 import com.krasimirkolchev.photomag.repositories.AddressRepository;
@@ -29,8 +30,10 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressServiceModel getAddressByUserId(String id) {
-        return this.modelMapper.map(this.addressRepository.getOne(id), AddressServiceModel.class);
+    public AddressServiceModel getAddressById(String id) {
+        return this.modelMapper
+                .map(this.addressRepository.findById(id).orElseThrow(() -> new AddressNotFoundException("Incorrect id!"))
+                        , AddressServiceModel.class);
     }
 
     @Override

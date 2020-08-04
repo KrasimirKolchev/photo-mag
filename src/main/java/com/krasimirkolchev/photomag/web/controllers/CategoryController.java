@@ -44,7 +44,7 @@ public class CategoryController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     @PageTitle("Add Product category")
     public String addCategory(Model model) {
         if (!model.containsAttribute("categoryAddBindingModel")) {
@@ -54,7 +54,7 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyRole('ROLE_ROOT_ADMIN, ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     public String addCategoryConf(@ModelAttribute("categoryAddBindingModel")
                   CategoryAddBindingModel categoryAddBindingModel, BindingResult result, RedirectAttributes attributes) throws IOException {
 

@@ -37,11 +37,11 @@ public class OrderController {
             UserServiceModel userServiceModel = this.modelMapper
                     .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
 
-            if (userServiceModel.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
+            if (userServiceModel.getAuthorities().stream().anyMatch(a -> !a.getAuthority().equals("ROLE_ADMIN"))) {
+                model.addAttribute("orders", this.orderService.getAllOrders());
+            } else {
                 model.addAttribute("orders", this.orderService
                         .getAllOrdersByUsername(userServiceModel.getUsername()));
-            } else {
-                model.addAttribute("orders", this.orderService.getAllOrders());
             }
         }
 

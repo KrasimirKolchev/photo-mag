@@ -16,8 +16,10 @@ public class HomeController {
 
     @GetMapping("/")
     @PageTitle("Home")
-    public String index() {
-
+    public String index(Model model) {
+        if (!model.containsAttribute("products")) {
+            model.addAttribute("products", this.productService.getAllProducts());
+        }
         return "home";
     }
 

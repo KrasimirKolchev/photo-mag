@@ -1,5 +1,7 @@
 package com.krasimirkolchev.photomag.services.impl;
 
+import com.krasimirkolchev.photomag.error.ProductCategoryNotFoundException;
+import com.krasimirkolchev.photomag.error.ProductNotFoundException;
 import com.krasimirkolchev.photomag.models.entities.Product;
 import com.krasimirkolchev.photomag.models.entities.User;
 import com.krasimirkolchev.photomag.models.serviceModels.CartItemServiceModel;
@@ -46,11 +48,6 @@ public class ProductServiceImpl implements ProductService {
         return this.modelMapper.map(this.productRepository.save(product), ProductServiceModel.class);
     }
 
-//    @Override
-//    public List<Product> findByCategory(String category) {
-//        return this.productRepository.getAllByProductCategory_NameAndQuantityIsGreaterThan(category, 0);
-//    }
-
     @Override
     public List<Product> getProductsByCategoryName(String name) {
         return this.productRepository.getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalse(name, 0);
@@ -59,7 +56,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductServiceModel getProductById(String id) {
         return this.modelMapper
-                .map(this.productRepository.getOne(id), ProductServiceModel.class);
+                .map(this.productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("product not found"))
+                        , ProductServiceModel.class);
     }
 
     @Override
@@ -77,7 +75,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductServiceModel editProduct(String id, ProductServiceModel productServiceModel) {
-        Product product = this.productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(""));
+        Product product = this.productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("product not found"));
         product.setQuantity(productServiceModel.getQuantity());
         product.setPrice(productServiceModel.getPrice());
         product.setDescription(productServiceModel.getDescription());
@@ -86,7 +85,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(String id) {
-        Product product = this.productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(""));
+        Product product = this.productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("product not found"));
         product.setDeleted(true);
         this.productRepository.save(product);
     }

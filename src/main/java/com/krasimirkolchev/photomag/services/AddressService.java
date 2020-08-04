@@ -8,7 +8,7 @@ public interface AddressService {
 
     AddressServiceModel createAddress(AddressServiceModel addressServiceModel);
 
-    AddressServiceModel getAddressByUserId(String id);
+    AddressServiceModel getAddressById(String id);
 
     List<AddressServiceModel> getAllAddressesByUserId();
 }

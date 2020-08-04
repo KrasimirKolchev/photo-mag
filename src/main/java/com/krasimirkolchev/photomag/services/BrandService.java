@@ -9,4 +9,7 @@ public interface BrandService {
     BrandServiceModel createBrand(BrandServiceModel brandServiceModel);
 
     List<BrandServiceModel> getAllBrands();
+
+    BrandServiceModel getBrandById(String brand);
+
 }

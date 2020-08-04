@@ -8,34 +8,14 @@
     <div class="container">
         <div class="offers row mx-auto d-flex flex-row justify-content-center">
 
-            <div class="row jumbotron-fluid">
-                <div class="col-6">
-                    <ul class="text-white">
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" href="#" id="dropdown"
-                               role="button" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
-                                ORDER BY
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown" th:object="${category}">
-                                <a class="dropdown-item" th:href="@{/products/{categoryName}(categoryName=${#strings.replace(category.name,' ','+')})(order=pricedesc)}">price desc</a>
-                                <a class="dropdown-item" th:href="@{/products/{categoryName}/{order}(order=priceasc)}">price asc</a>
-                                <a class="dropdown-item" th:href="@{/products/{categoryName}/{order}(order=nameasc)}">name asc</a>
-                                <a class="dropdown-item" th:href="@{/products/{categoryName}/{order}(order=namedesc)}">name desc</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div th:each="p : ${products}" class="offer card col-sm-8 col-md-4  col-lg-2 m-1 p-0">
+            <div th:each="p : ${products}" class="offer card col-sm-8 col-md-4  col-lg-3 m-1 p-0">
                 <div class="card-img-top-wrapper">
                     <img class="card-img-top" th:src="${p.mainPhoto}" alt="Photo image">
                 </div>
                 <div class="card-body pb-1">
                     <h3 class="card-title" th:text="*{p.name}"></h3>
-                    <h4 class="card-text" th:text="*{p.brand}"></h4>
-                    <h4 class="card-text" th:text="*{p.price}"></h4>
+                    <h4 class="card-text" th:text="*{p.brand.name}"></h4>
+                    <h4 class="card-text" th:text="|*{#numbers.formatDecimal(p.price, 1, 2)} BGN|"></h4>
                 </div>
                 <div class="card-body">
                     <a class="card-link" th:href="@{/products/details/{id}(id=${p.id})}"><span>Details</span></a>

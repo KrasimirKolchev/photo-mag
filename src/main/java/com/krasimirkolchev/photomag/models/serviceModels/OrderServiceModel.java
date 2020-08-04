@@ -1,6 +1,7 @@
 package com.krasimirkolchev.photomag.models.serviceModels;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public class OrderServiceModel extends BaseServiceModel {
@@ -12,6 +13,7 @@ public class OrderServiceModel extends BaseServiceModel {
     private AddressServiceModel address;
 
     public OrderServiceModel() {
+        this.purchaseDateTime = LocalDateTime.now();
     }
 
     public List<OrderItemServiceModel> getOrderItems() {
