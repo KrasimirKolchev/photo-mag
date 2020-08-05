@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
         return this.modelMapper.map(this.userRepository.save(user), UserServiceModel.class);
     }
 
-    //get all other users except ROOT_ADMIN as only he can make role changes
+    //get all other isDeleted=false users except ROOT_ADMIN as only he can make role changes
     @Override
     public List<UserServiceModel> getAllUsers() {
         return this.userRepository.findAll()
@@ -144,10 +144,10 @@ public class UserServiceImpl implements UserService {
                 .filter(u -> {
                     for (Role r: u.getAuthorities()) {
                         if (r.getAuthority().equals("ROLE_ROOT_ADMIN")) {
-                            return false;
+                            return true;
                         }
                     }
-                    return true;
+                    return false;
                 })
                 .filter(User::isDeleted)
                 .map(u -> this.modelMapper.map(u, UserServiceModel.class))
@@ -164,7 +164,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String username) {
-        this.userRepository.deleteById(this.getUserByUsername(username).getId());
+        User user = this.getUserByUsername(username);
+        user.setDeleted(true);
+        this.userRepository.save(user);
     }
 
 }

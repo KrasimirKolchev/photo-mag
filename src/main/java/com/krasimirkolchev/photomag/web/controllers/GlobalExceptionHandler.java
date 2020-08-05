@@ -1,6 +1,7 @@
 package com.krasimirkolchev.photomag.web.controllers;
 
 import com.krasimirkolchev.photomag.error.*;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +26,5 @@ public class GlobalExceptionHandler {
         model.addObject("code", ex.getStatus());
         return model;
     }
-
 
 }

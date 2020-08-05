@@ -11,7 +11,7 @@
         <form th:object="${userLoginBindingModel}" th:action="@{/users/login}" th:method="POST"
               class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center">
 
-            <small th:if="${errorMsg}" class="text-center text-danger">Incorrect username or password!</small>
+            <small th:if="${param.error}" class="text-center text-danger">Incorrect username or password!</small>
 
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
