@@ -3,10 +3,7 @@ package com.krasimirkolchev.photomag.services.impl;
 import com.krasimirkolchev.photomag.error.UserNotFoundException;
 import com.krasimirkolchev.photomag.models.bindingModels.AddressAddBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.UserRoleAddBindingModel;
-import com.krasimirkolchev.photomag.models.entities.Address;
-import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
-import com.krasimirkolchev.photomag.models.entities.User;
-import com.krasimirkolchev.photomag.models.entities.UserPrincipal;
+import com.krasimirkolchev.photomag.models.entities.*;
 import com.krasimirkolchev.photomag.models.serviceModels.AddressServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.repositories.UserRepository;
@@ -75,7 +72,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(String id) {
-        return this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
+        User user = this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        if (user.isDeleted()) {
+            throw new UsernameNotFoundException("User not found!");
+        }
+
+        return user;
     }
 
     @Override
@@ -87,7 +90,7 @@ public class UserServiceImpl implements UserService {
     public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userRepository.findByUsername(username).orElse(null);
 
-        if (user == null) {
+        if (user == null || user.isDeleted()) {
             throw new UsernameNotFoundException("User with username " + username + " not found!");
         }
 
@@ -138,7 +141,15 @@ public class UserServiceImpl implements UserService {
     public List<UserServiceModel> getAllUsers() {
         return this.userRepository.findAll()
                 .stream()
-                .filter(u -> !u.getUsername().equals("rootadmin"))
+                .filter(u -> {
+                    for (Role r: u.getAuthorities()) {
+                        if (r.getAuthority().equals("ROLE_ROOT_ADMIN")) {
+                            return false;
+                        }
+                    }
+                    return true;
+                })
+                .filter(User::isDeleted)
                 .map(u -> this.modelMapper.map(u, UserServiceModel.class))
                 .collect(Collectors.toList());
     }

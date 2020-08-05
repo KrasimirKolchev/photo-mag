@@ -18,9 +18,11 @@ public class User extends BaseEntity {
     private Set<Role> authorities;
     private Set<Address> addresses;
     private ShoppingCart shoppingCart;
+    private boolean isDeleted;
 
     public User() {
         this.addresses = new LinkedHashSet<>();
+        this.isDeleted = false;
     }
 
     public User(String username, String password, String email, String firstName, String lastName) {
@@ -30,6 +32,7 @@ public class User extends BaseEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.addresses = new LinkedHashSet<>();
+        this.isDeleted = false;
     }
 
     @Column(name = "username", unique = true, nullable = false)
@@ -111,5 +114,14 @@ public class User extends BaseEntity {
 
     public void setShoppingCart(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
+    }
+
+    @Column(name = "is_deleted", nullable = false)
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
