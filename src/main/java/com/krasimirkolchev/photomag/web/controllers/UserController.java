@@ -3,8 +3,10 @@ package com.krasimirkolchev.photomag.web.controllers;
 import com.krasimirkolchev.photomag.models.bindingModels.UserEditBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.UserLoginBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.UserRegBindingModel;
+import com.krasimirkolchev.photomag.models.bindingModels.UserRoleAddBindingModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.services.UserService;
+import com.krasimirkolchev.photomag.validation.UserAddRoleValidation;
 import com.krasimirkolchev.photomag.validation.UserEditValidation;
 import com.krasimirkolchev.photomag.validation.UserRegisterValidation;
 import com.krasimirkolchev.photomag.web.annotations.PageTitle;
@@ -17,7 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 
@@ -27,14 +28,16 @@ public class UserController {
     private final UserService userService;
     private final UserRegisterValidation userRegisterValidation;
     private final UserEditValidation userEditValidation;
+    private final UserAddRoleValidation userAddRoleValidation;
     private final ModelMapper modelMapper;
 
     @Autowired
     public UserController(UserService userService, UserRegisterValidation userRegisterValidation,
-                          UserEditValidation userEditValidation, ModelMapper modelMapper) {
+                          UserEditValidation userEditValidation, UserAddRoleValidation userAddRoleValidation, ModelMapper modelMapper) {
         this.userService = userService;
         this.userRegisterValidation = userRegisterValidation;
         this.userEditValidation = userEditValidation;
+        this.userAddRoleValidation = userAddRoleValidation;
         this.modelMapper = modelMapper;
     }
 
@@ -118,5 +121,42 @@ public class UserController {
                 .map(userEditBindingModel, UserServiceModel.class), userEditBindingModel.getOldPassword(), principal.getName());
 
         return "redirect:/users/profile";
+    }
+
+    @GetMapping("/delete")
+    @PreAuthorize("isAuthenticated()")
+    public String deleteUser(Principal principal) {
+
+        this.userService.deleteUser(principal.getName());
+
+        return "redirect:/logout";
+    }
+
+    @GetMapping("/roles/add")
+    @PreAuthorize("hasRole('ROOT_ADMIN')")
+    public String addRoleToUser(Model model) {
+        if (!model.containsAttribute("userRoleAddBindingModel")) {
+            model.addAttribute("userRoleAddBindingModel", new UserRoleAddBindingModel());
+            model.addAttribute("users", this.userService.getAllUsers());
+        }
+
+        return "user-add-role";
+    }
+
+    @PostMapping("/roles/add")
+    @PreAuthorize("hasRole('ROOT_ADMIN')")
+    public String addRoleToUserConf(@ModelAttribute("userRoleAddBindingModel") UserRoleAddBindingModel userRoleAddBindingModel,
+                                    BindingResult result, RedirectAttributes attributes) {
+        this.userAddRoleValidation.validate(userRoleAddBindingModel, result);
+
+        if (result.hasErrors()) {
+            attributes.addFlashAttribute("userRoleAddBindingModel", userRoleAddBindingModel);
+            attributes.addFlashAttribute("org.springframework.validation.BindingResult.userRoleAddBindingModel"
+                    , result);
+            return "redirect:/users/roles/add";
+        }
+        this.userService.addRoleToUser(userRoleAddBindingModel);
+
+        return "redirect:/home";
     }
 }

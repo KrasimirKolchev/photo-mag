@@ -17,7 +17,7 @@ public class PhotoMagApplication {
         SpringApplication.run(PhotoMagApplication.class, args);
     }
 
-    //resources bootsecurity.p12 is the SSL certificate for local working with https
+    //  /resources/bootsecurity.p12 is the SSL certificate for local working with https
     //SSL certificate and https config settings because of the Stripe service
 
     @Bean

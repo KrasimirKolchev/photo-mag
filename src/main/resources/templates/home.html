@@ -18,7 +18,7 @@
                     <h4 class="card-text" th:text="*{p.brand.name}"></h4>
                     <h4 class="card-text" th:text="|*{#numbers.formatDecimal(p.price, 1, 2)} BGN|"></h4>
                 </div>
-                <div class="card-body">
+                <div class="card-foot">
                     <a class="card-link" th:href="@{/products/details/{id}(id=${p.id})}"><span>Details</span></a>
                 </div>
             </div>
@@ -30,7 +30,6 @@
 
 <footer th:include="~{fragments/footer}"></footer>
 </body>
-
 </html>
 
 

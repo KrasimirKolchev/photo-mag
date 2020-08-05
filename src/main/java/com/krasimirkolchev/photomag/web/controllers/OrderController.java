@@ -4,7 +4,6 @@ import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.services.OrderService;
 import com.krasimirkolchev.photomag.services.UserService;
 import com.krasimirkolchev.photomag.web.annotations.PageTitle;
-import org.apache.catalina.Role;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,5 +46,6 @@ public class OrderController {
 
         return "orders-all";
     }
+
 
 }

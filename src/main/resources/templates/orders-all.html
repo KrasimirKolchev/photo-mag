@@ -19,9 +19,8 @@
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
                                     th:data-target="'#collapse'+${order.id}" aria-expanded="false" th:aria-controls="'collapse'+${order.id}">
-                                <p class="text-white d-flex" th:text="|Order date: ${#temporals.format(order.purchaseDateTime, 'dd-MM-yyyy HH:mm')} //
-                                   Total amount: ${#numbers.formatDecimal(order.totalAmount, 1, 2)}BGN //
-                                   Address: ${order.address.country}, ${order.address.city}, ${order.address.street}|"></p>
+                                <small class="text-white d-flex" th:text="|Order date: ${#temporals.format(order.purchaseDateTime, 'dd-MM-yyyy HH:mm')} //
+                                   Total amount: ${#numbers.formatDecimal(order.totalAmount, 1, 2)}BGN|"></small>
                             </button>
                         </h2>
                     </div>
@@ -29,7 +28,7 @@
 
                         <div class="card-body text-dark">
                             <div class="row">
-                                <div class="col ">
+                                <div class="col-8">
                                     <div class="col-sm-2">Product Image</div>
                                     <div class="col-sm-7">Product Name</div>
                                     <div class="col-sm-1 text-center">Quantity</div>
@@ -37,7 +36,7 @@
                                 </div>
                             </div>
                             <div class="row text-dark" th:each="item : ${order.orderItems}">
-                                <div class="col card-item border-top border-dark">
+                                <div class="col-8 card-item border-top border-dark">
                                     <div class="col-sm-2"><img th:src="${item.orderItem.mainPhoto}" class="img-thumbnail" alt="Product img"></div>
                                     <div class="col-sm-7"><p th:text="${item.orderItem.name}"></div>
                                     <div class="col-sm-1 text-center"><p th:text="${item.quantity}"></div>

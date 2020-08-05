@@ -2,6 +2,7 @@ package com.krasimirkolchev.photomag.services.impl;
 
 import com.krasimirkolchev.photomag.error.UserNotFoundException;
 import com.krasimirkolchev.photomag.models.bindingModels.AddressAddBindingModel;
+import com.krasimirkolchev.photomag.models.bindingModels.UserRoleAddBindingModel;
 import com.krasimirkolchev.photomag.models.entities.Address;
 import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
 import com.krasimirkolchev.photomag.models.entities.User;
@@ -26,7 +27,9 @@ import javax.persistence.EntityNotFoundException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -81,7 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userRepository.findByUsername(username).orElse(null);
 
         if (user == null) {
@@ -128,6 +131,29 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userServiceModel.getLastName());
 
         return this.modelMapper.map(this.userRepository.save(user), UserServiceModel.class);
+    }
+
+    //get all other users except ROOT_ADMIN as only he can make role changes
+    @Override
+    public List<UserServiceModel> getAllUsers() {
+        return this.userRepository.findAll()
+                .stream()
+                .filter(u -> !u.getUsername().equals("rootadmin"))
+                .map(u -> this.modelMapper.map(u, UserServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void addRoleToUser(UserRoleAddBindingModel userRoleAddBindingModel) {
+        UserServiceModel userServiceModel = this.modelMapper
+                .map(this.getUserByUsername(userRoleAddBindingModel.getUsername()), UserServiceModel.class);
+        userServiceModel.getAuthorities().add(this.roleService.findByName(userRoleAddBindingModel.getRole()));
+        this.saveUser(this.modelMapper.map(userServiceModel, User.class));
+    }
+
+    @Override
+    public void deleteUser(String username) {
+        this.userRepository.deleteById(this.getUserByUsername(username).getId());
     }
 
 }

@@ -55,16 +55,12 @@
                         <br/>
                         <div class="row justify-content-center" sec:authorize="hasRole('ROLE_ADMIN')">
                             <div class="col-6">
-                                <div class="btn btn-warning button-holder btn-md ml-5">
-                                    <a class="text-white" th:href="@{/products/edit{id}(id=${product.id})}">Edit
-                                        product</a>
-                                </div>
+                                    <a class="btn btn-warning btn-md ml-5 text-white" th:href="@{/products/edit{id}(id=${product.id})}">
+                                        Edit product</a>
                             </div>
                             <div class="col-6">
-                                <div class="btn btn-holder btn-danger btn-md">
-                                    <a class="text-white" th:href="@{/products/delete{id}(id=${product.id})}">Delete
+                                    <a class="btn btn-danger btn-md text-white" th:href="@{/products/delete{id}(id=${product.id})}">Delete
                                         product</a>
-                                </div>
                             </div>
                         </div>
                         <div class="row justify-content-center">

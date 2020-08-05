@@ -18,7 +18,7 @@
                     <h4 class="card-text" th:text="|*{#numbers.formatDecimal(p.price, 1, 2)} BGN|"></h4>
                 </div>
                 <div class="card-body">
-                    <a class="card-link" th:href="@{/products/details/{id}(id=${p.id})}"><span>Details</span></a>
+                    <a class="card-link text-center" th:href="@{/products/details/{id}(id=${p.id})}"><span>Details</span></a>
                 </div>
             </div>
 
