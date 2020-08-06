@@ -81,7 +81,7 @@
 <!--            <artifactId>aws-java-sdk-s3</artifactId>-->
 <!--            <version>1.11.763</version>-->
 <!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-core -->
+<!--         https://mvnrepository.com/artifact/com.cloudinary/cloudinary-core-->
         <dependency>
             <groupId>com.cloudinary</groupId>
             <artifactId>cloudinary-taglib</artifactId>

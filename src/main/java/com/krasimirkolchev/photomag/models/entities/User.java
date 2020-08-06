@@ -1,10 +1,9 @@
 package com.krasimirkolchev.photomag.models.entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -19,6 +18,7 @@ public class User extends BaseEntity {
     private Set<Address> addresses;
     private ShoppingCart shoppingCart;
     private boolean isDeleted;
+    private LocalDateTime deleteDate;
 
     public User() {
         this.addresses = new LinkedHashSet<>();
@@ -123,5 +123,14 @@ public class User extends BaseEntity {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    @Column(name = "delete_date")
+    public LocalDateTime getDeleteDate() {
+        return deleteDate;
+    }
+
+    public void setDeleteDate(LocalDateTime deleteDate) {
+        this.deleteDate = deleteDate;
     }
 }

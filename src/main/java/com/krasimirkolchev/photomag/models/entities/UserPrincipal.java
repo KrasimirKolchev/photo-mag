@@ -21,6 +21,14 @@ public class UserPrincipal implements UserDetails {
         this.isEnabled = isEnabled;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.getAuthorities();

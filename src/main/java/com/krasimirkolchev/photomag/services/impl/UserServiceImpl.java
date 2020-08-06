@@ -12,6 +12,8 @@ import com.krasimirkolchev.photomag.services.RoleService;
 import com.krasimirkolchev.photomag.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +26,8 @@ import javax.persistence.EntityNotFoundException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -87,10 +91,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userRepository.findByUsername(username).orElse(null);
 
-        if (user == null || user.isDeleted()) {
+        if (user == null) {
             throw new UsernameNotFoundException("User with username " + username + " not found!");
         }
 
@@ -105,7 +109,7 @@ public class UserServiceImpl implements UserService {
         user.setProfilePhoto(this.cloudinaryService.createPhoto(file, "users", user.getUsername()));
         user.setPassword(this.encoder.encode(userServiceModel.getPassword()));
         user.setShoppingCart(new ShoppingCart());
-        return this.modelMapper.map(this.userRepository.save(user), UserServiceModel.class);
+        return this.saveUser(user);
     }
 
     @Override
@@ -120,8 +124,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
-        return this.userRepository.save(user);
+    public UserServiceModel saveUser(User user) {
+        return this.modelMapper.map(this.userRepository.save(user), UserServiceModel.class);
     }
 
     @Override
@@ -133,13 +137,13 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userServiceModel.getFirstName());
         user.setLastName(userServiceModel.getLastName());
 
-        return this.modelMapper.map(this.userRepository.save(user), UserServiceModel.class);
+        return this.saveUser(user);
     }
 
-    //get all other isDeleted=false users except ROOT_ADMIN as only he can make role changes
+    //get all other isdeleted=false users except ROOT_ADMIN as only he can make role changes
     @Override
     public List<UserServiceModel> getAllUsers() {
-        return this.userRepository.findAll()
+        return this.userRepository.findAllByDeletedIsFalse()
                 .stream()
                 .filter(u -> {
                     for (Role r: u.getAuthorities()) {
@@ -149,7 +153,6 @@ public class UserServiceImpl implements UserService {
                     }
                     return false;
                 })
-                .filter(User::isDeleted)
                 .map(u -> this.modelMapper.map(u, UserServiceModel.class))
                 .collect(Collectors.toList());
     }
@@ -166,7 +169,21 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String username) {
         User user = this.getUserByUsername(username);
         user.setDeleted(true);
+        user.setDeleteDate(LocalDateTime.now());
         this.userRepository.save(user);
+    }
+
+    //will check for users that are isDeleted=true and will delete from repo after 7-th day
+    @Async
+    @Scheduled(cron = "0 0 1 * * *")
+    void deleteUsers() {
+        List<User> users = this.userRepository.findAllByDeletedIsTrue();
+
+        for (User u: users) {
+            if (u.getDeleteDate().plusDays(7).isBefore(LocalDateTime.now())) {
+                this.userRepository.deleteById(u.getId());
+            }
+        }
     }
 
 }
