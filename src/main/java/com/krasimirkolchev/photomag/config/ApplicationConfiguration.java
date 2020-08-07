@@ -5,12 +5,18 @@ import com.cloudinary.utils.ObjectUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.Validation;
 import java.util.Objects;
 
 @Configuration
 public class ApplicationConfiguration {
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public ModelMapper modelMapper() {

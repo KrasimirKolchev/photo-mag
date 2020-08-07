@@ -1,12 +1,14 @@
 package com.krasimirkolchev.photomag.services;
 
-import com.krasimirkolchev.photomag.models.entities.Role;
+import com.krasimirkolchev.photomag.models.serviceModels.RoleServiceModel;
 
 import java.util.Set;
 
 public interface RoleService {
 
-    Role findByName(String name);
+    RoleServiceModel findByName(String name);
 
-    Set<Role> getAllRoles();
+    Set<RoleServiceModel> getAllRoles();
+
+    void initRoles();
 }

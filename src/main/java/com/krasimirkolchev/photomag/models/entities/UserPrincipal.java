@@ -12,13 +12,12 @@ public class UserPrincipal implements UserDetails {
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
 
-    public UserPrincipal(User user, boolean isAccountNonExpired, boolean isAccountNonLocked,
-                         boolean isCredentialsNonExpired, boolean isEnabled) {
+    public UserPrincipal(User user) {
         this.user = user;
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-        this.isEnabled = isEnabled;
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+        this.isCredentialsNonExpired = true;
+        this.isEnabled = true;
     }
 
     public User getUser() {

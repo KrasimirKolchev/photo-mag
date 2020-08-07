@@ -14,11 +14,6 @@ import java.security.Principal;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
-    boolean existByUsername(String username);
-
-    boolean existByEmail(String email);
-
-    User getUserById(String id);
 
     User getUserByUsername(String username);
 

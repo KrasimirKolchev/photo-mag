@@ -21,7 +21,6 @@ public class PhotoMagApplication {
 
 
     // card for testing 4242 4242 4242 4242, validity future date, CVC any 3 digits
-    // def username: rootadmin pass: password
     //  /resources/bootsecurity.p12 is the SSL certificate for local working with https
     //SSL certificate and https config settings because of the Stripe service
 

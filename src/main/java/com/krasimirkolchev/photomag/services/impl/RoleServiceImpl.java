@@ -1,6 +1,7 @@
 package com.krasimirkolchev.photomag.services.impl;
 
 import com.krasimirkolchev.photomag.models.entities.Role;
+import com.krasimirkolchev.photomag.models.serviceModels.RoleServiceModel;
 import com.krasimirkolchev.photomag.repositories.RoleRepository;
 import com.krasimirkolchev.photomag.services.RoleService;
 import org.modelmapper.ModelMapper;
@@ -8,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
+import javax.persistence.EntityNotFoundException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
         this.modelMapper = modelMapper;
     }
 
-    @PostConstruct
+    @Override
     public void initRoles() {
         if (this.roleRepository.count() == 0) {
             Role rootAdmin = new Role("ROLE_ROOT_ADMIN");
@@ -37,13 +38,16 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findByName(String name) {
-        return this.roleRepository.findByAuthority(name)
-                .orElse(null);
+    public RoleServiceModel findByName(String name) {
+        Role role = this.roleRepository.findByAuthority(name)
+                .orElseThrow(() -> new EntityNotFoundException("Role doesn't exist!"));
+        return this.modelMapper.map(role, RoleServiceModel.class);
     }
 
     @Override
-    public Set<Role> getAllRoles() {
-        return new HashSet<>(this.roleRepository.findAll());
+    public Set<RoleServiceModel> getAllRoles() {
+        return this.roleRepository.findAll()
+        .stream().map(r -> this.modelMapper.map(r, RoleServiceModel.class))
+        .collect(Collectors.toSet());
     }
 }

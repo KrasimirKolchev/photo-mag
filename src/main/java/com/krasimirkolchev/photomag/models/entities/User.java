@@ -25,16 +25,6 @@ public class User extends BaseEntity {
         this.isDeleted = false;
     }
 
-    public User(String username, String password, String email, String firstName, String lastName) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.addresses = new LinkedHashSet<>();
-        this.isDeleted = false;
-    }
-
     @Column(name = "username", unique = true, nullable = false)
     public String getUsername() {
         return username;

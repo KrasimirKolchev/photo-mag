@@ -2,6 +2,7 @@ package com.krasimirkolchev.photomag.models.serviceModels;
 
 import com.krasimirkolchev.photomag.models.entities.Role;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class UserServiceModel extends BaseServiceModel {
@@ -11,11 +12,22 @@ public class UserServiceModel extends BaseServiceModel {
     private String firstName;
     private String lastName;
     private String profilePhoto;
-    private Set<Role> authorities;
+    private Set<RoleServiceModel> authorities;
     private Set<AddressServiceModel> addresses;
     private ShoppingCartServiceModel shoppingCart;
+    private boolean isDeleted;
 
     public UserServiceModel() {
+    }
+
+    public UserServiceModel(String username, String password, String email, String firstName, String lastName) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.addresses = new LinkedHashSet<>();
+        this.isDeleted = false;
     }
 
     public String getUsername() {
@@ -66,11 +78,11 @@ public class UserServiceModel extends BaseServiceModel {
         this.profilePhoto = profilePhoto;
     }
 
-    public Set<Role> getAuthorities() {
+    public Set<RoleServiceModel> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Set<Role> authorities) {
+    public void setAuthorities(Set<RoleServiceModel> authorities) {
         this.authorities = authorities;
     }
 
@@ -88,5 +100,13 @@ public class UserServiceModel extends BaseServiceModel {
 
     public void setShoppingCart(ShoppingCartServiceModel shoppingCart) {
         this.shoppingCart = shoppingCart;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
