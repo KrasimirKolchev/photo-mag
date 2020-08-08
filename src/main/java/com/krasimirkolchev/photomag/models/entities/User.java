@@ -1,5 +1,7 @@
 package com.krasimirkolchev.photomag.models.entities;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -7,7 +9,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
     private String username;
     private String password;
     private String email;
@@ -25,6 +27,7 @@ public class User extends BaseEntity {
         this.isDeleted = false;
     }
 
+    @Override
     @Column(name = "username", unique = true, nullable = false)
     public String getUsername() {
         return username;
@@ -34,6 +37,7 @@ public class User extends BaseEntity {
         this.username = username;
     }
 
+    @Override
     @Column(name = "password", nullable = false)
     public String getPassword() {
         return password;
@@ -79,6 +83,7 @@ public class User extends BaseEntity {
         this.profilePhoto = profilePhoto;
     }
 
+    @Override
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     public Set<Role> getAuthorities() {
         return authorities;
@@ -122,5 +127,29 @@ public class User extends BaseEntity {
 
     public void setDeleteDate(LocalDateTime deleteDate) {
         this.deleteDate = deleteDate;
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isEnabled() {
+        return true;
     }
 }

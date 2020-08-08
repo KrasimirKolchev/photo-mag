@@ -1,8 +1,6 @@
 package com.krasimirkolchev.photomag.services;
 
-import com.krasimirkolchev.photomag.models.bindingModels.AddressAddBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.UserRoleAddBindingModel;
-import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
 import com.krasimirkolchev.photomag.models.entities.User;
 import com.krasimirkolchev.photomag.models.serviceModels.AddressServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
@@ -17,9 +15,9 @@ public interface UserService extends UserDetailsService {
 
     User getUserByUsername(String username);
 
-    UserServiceModel registerUser(UserServiceModel userServiceModel, MultipartFile file) throws IOException;
+    UserServiceModel registerUser(UserServiceModel userServiceModel);
 
-    UserServiceModel addAddressToUser(AddressAddBindingModel addressAddBindingModel, Principal principal);
+    UserServiceModel addAddressToUser(AddressServiceModel addressServiceModel, String name);
 
     UserServiceModel saveUser(User user);
 

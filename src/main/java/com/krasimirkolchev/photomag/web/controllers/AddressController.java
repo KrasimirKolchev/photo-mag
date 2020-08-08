@@ -1,6 +1,7 @@
 package com.krasimirkolchev.photomag.web.controllers;
 
 import com.krasimirkolchev.photomag.models.bindingModels.AddressAddBindingModel;
+import com.krasimirkolchev.photomag.models.serviceModels.AddressServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.services.AddressService;
 import com.krasimirkolchev.photomag.services.UserService;
@@ -61,7 +62,8 @@ public class AddressController {
             return "redirect:/addresses/add";
         }
 
-        UserServiceModel userServiceModel = this.userService.addAddressToUser(addressAddBindingModel, principal);
+        UserServiceModel userServiceModel = this.userService
+                .addAddressToUser(this.modelMapper.map(addressAddBindingModel, AddressServiceModel.class), principal.getName());
 
         return "redirect:/users/profile";
     }

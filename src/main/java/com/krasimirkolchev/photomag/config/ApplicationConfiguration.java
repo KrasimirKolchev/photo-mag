@@ -35,4 +35,5 @@ public class ApplicationConfiguration {
                 "api_key", "311932535255713",
                 "api_secret", "67preLKTuPtUFxACTWRUQAOLYa8"));
     }
+
 }

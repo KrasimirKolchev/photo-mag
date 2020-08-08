@@ -1,10 +1,16 @@
 package com.krasimirkolchev.photomag.services.impl;
 
-import com.krasimirkolchev.photomag.models.bindingModels.*;
-import com.krasimirkolchev.photomag.models.entities.*;
-import com.krasimirkolchev.photomag.models.serviceModels.*;
+import com.krasimirkolchev.photomag.models.bindingModels.UserRoleAddBindingModel;
+import com.krasimirkolchev.photomag.models.entities.Role;
+import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
+import com.krasimirkolchev.photomag.models.entities.User;
+import com.krasimirkolchev.photomag.models.serviceModels.AddressServiceModel;
+import com.krasimirkolchev.photomag.models.serviceModels.RoleServiceModel;
+import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.repositories.UserRepository;
-import com.krasimirkolchev.photomag.services.*;
+import com.krasimirkolchev.photomag.services.AddressService;
+import com.krasimirkolchev.photomag.services.RoleService;
+import com.krasimirkolchev.photomag.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -13,15 +19,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,23 +45,9 @@ public class UserServiceImpl implements UserService {
         this.modelMapper = modelMapper;
     }
 
-//    @PostConstruct
-//    private void init() {
-//        if (this.userRepository.count() == 0) {
-//            this.roleService.initRoles();
-//
-//            UserServiceModel rootAdmin = new UserServiceModel("rootadmin", "password", "email@email.com", "Root", "Admin");
-//            rootAdmin.setAuthorities(this.roleService.getAllRoles());
-//            rootAdmin.setShoppingCart(new ShoppingCartServiceModel());
-//            rootAdmin.setProfilePhoto("https://res.cloudinary.com/dk8gbxoue/image/upload/v1596182264/temp_user_photo/user-picture_teq4ct.jpg");
-//            this.userRepository.saveAndFlush(this.modelMapper.map(rootAdmin, User.class));
-//        }
-//    }
-
     @Override
     public User getUserByUsername(String username) {
-        return this.userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found!"));
+        return this.userRepository.findByUsername(username).orElse(null);
     }
 
     //after registration the first login throws NullPinterException but the user is logged in and after logout
@@ -69,24 +56,21 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userRepository.findByUsername(username).orElse(null);
 
-        System.out.println("asdasdasdasdad");
         if (user == null) {
             throw new UsernameNotFoundException("User with username " + username + " not found!");
         }
 
-        return new UserPrincipal(user);
+        return user;
     }
 
     @Override
-    public UserServiceModel registerUser(UserServiceModel userServiceModel, MultipartFile file) throws IOException {
+    public UserServiceModel registerUser(UserServiceModel userServiceModel) {
 
         this.roleService.initRoles();
 
         setUserRole(userServiceModel);
 
         User user = this.modelMapper.map(userServiceModel, User.class);
-//        userServiceModel.getAuthorities().add(this.roleService.findByName("ROLE_USER"));
-        user.setProfilePhoto(this.cloudinaryService.createPhoto(file, "users", user.getUsername()));
         user.setPassword(this.encoder.encode(userServiceModel.getPassword()));
         user.setShoppingCart(new ShoppingCart());
         return this.saveUser(user);
@@ -103,11 +87,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserServiceModel addAddressToUser(AddressAddBindingModel addressAddBindingModel, Principal principal) {
+    public UserServiceModel addAddressToUser(AddressServiceModel addressServiceModel, String name) {
 
-        UserServiceModel user = this.modelMapper.map(this.getUserByUsername(principal.getName()), UserServiceModel.class);
-        user.getAddresses().add(this.addressService.createAddress(this.modelMapper
-                .map(addressAddBindingModel, AddressServiceModel.class)));
+        UserServiceModel user = this.modelMapper.map(this.getUserByUsername(name), UserServiceModel.class);
+        user.getAddresses().add(this.addressService.createAddress(addressServiceModel));
 
         this.userRepository.save(this.modelMapper.map(user, User.class));
         return user;
@@ -136,7 +119,7 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findAllByDeletedIsFalse()
                 .stream()
                 .filter(u -> {
-                    for (Role r: u.getAuthorities()) {
+                    for (Role r : u.getAuthorities()) {
                         if (r.getAuthority().equals("ROLE_ROOT_ADMIN")) {
                             return true;
                         }
@@ -170,7 +153,7 @@ public class UserServiceImpl implements UserService {
     void deleteUsers() {
         List<User> users = this.userRepository.findAllByDeletedIsTrue();
 
-        for (User u: users) {
+        for (User u : users) {
             if (u.getDeleteDate().plusDays(7).isBefore(LocalDateTime.now())) {
                 this.userRepository.deleteById(u.getId());
             }

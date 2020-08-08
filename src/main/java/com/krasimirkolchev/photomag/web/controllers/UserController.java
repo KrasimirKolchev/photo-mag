@@ -6,6 +6,7 @@ import com.krasimirkolchev.photomag.models.bindingModels.UserRegBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.UserRoleAddBindingModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.services.UserService;
+import com.krasimirkolchev.photomag.services.impl.CloudinaryServiceImpl;
 import com.krasimirkolchev.photomag.validation.UserAddRoleValidation;
 import com.krasimirkolchev.photomag.validation.UserEditValidation;
 import com.krasimirkolchev.photomag.validation.UserRegisterValidation;
@@ -29,15 +30,17 @@ public class UserController {
     private final UserRegisterValidation userRegisterValidation;
     private final UserEditValidation userEditValidation;
     private final UserAddRoleValidation userAddRoleValidation;
+    private final CloudinaryServiceImpl cloudinaryService;
     private final ModelMapper modelMapper;
 
     @Autowired
     public UserController(UserService userService, UserRegisterValidation userRegisterValidation,
-                          UserEditValidation userEditValidation, UserAddRoleValidation userAddRoleValidation, ModelMapper modelMapper) {
+                          UserEditValidation userEditValidation, UserAddRoleValidation userAddRoleValidation, CloudinaryServiceImpl cloudinaryService, ModelMapper modelMapper) {
         this.userService = userService;
         this.userRegisterValidation = userRegisterValidation;
         this.userEditValidation = userEditValidation;
         this.userAddRoleValidation = userAddRoleValidation;
+        this.cloudinaryService = cloudinaryService;
         this.modelMapper = modelMapper;
     }
 
@@ -60,11 +63,15 @@ public class UserController {
             attributes.addFlashAttribute("userRegBindingModel", userRegBindingModel);
             attributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegBindingModel"
                     , result);
-            return "redirect:register";
+            return "redirect:/register";
         }
 
-        UserServiceModel userServiceModel = this.userService.registerUser(this.modelMapper
-                .map(userRegBindingModel, UserServiceModel.class), userRegBindingModel.getFile());
+
+        UserServiceModel userServiceModel = this.modelMapper.map(userRegBindingModel, UserServiceModel.class);
+        userServiceModel.setProfilePhoto(this.cloudinaryService
+                .createPhoto(userRegBindingModel.getFile(), "users", userServiceModel.getUsername()));
+
+        this.userService.registerUser(userServiceModel);
 
         return "redirect:/login";
     }
