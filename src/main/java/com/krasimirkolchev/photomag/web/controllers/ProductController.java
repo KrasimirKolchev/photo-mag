@@ -52,9 +52,9 @@ public class ProductController {
     public String addProduct(Model model) {
         if (!model.containsAttribute("productAddBindingModel")) {
             model.addAttribute("productAddBindingModel", new ProductAddBindingModel());
-            model.addAttribute("productCategory", this.productCategoryService.getAllCategories());
-            model.addAttribute("brands", this.brandService.getAllBrands());
         }
+        model.addAttribute("productCategory", this.productCategoryService.getAllCategories());
+        model.addAttribute("brands", this.brandService.getAllBrands());
         return "add-product";
     }
 

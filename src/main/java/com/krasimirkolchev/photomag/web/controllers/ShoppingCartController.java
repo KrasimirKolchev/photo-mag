@@ -81,6 +81,6 @@ public class ShoppingCartController {
 
         this.shoppingCartService.addItemToCart(cartItemAddBindModel, principal.getName());
 
-        return "redirect:/products/categories";
+        return "redirect:/categories";
     }
 }

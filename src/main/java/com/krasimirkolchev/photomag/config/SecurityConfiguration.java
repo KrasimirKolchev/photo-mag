@@ -15,21 +15,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-//    private final UserServiceImpl userService;
-//    private final PasswordEncoder passwordEncoder;
-//
-//    @Autowired
-//    public SecurityConfiguration(UserServiceImpl userService, PasswordEncoder passwordEncoder) {
-//        this.userService = userService;
-//        this.passwordEncoder = passwordEncoder;
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .userDetailsService(userService)
-//                .passwordEncoder(passwordEncoder);
-//    }
+    private final UserServiceImpl userService;
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public SecurityConfiguration(UserServiceImpl userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userService)
+                .passwordEncoder(passwordEncoder);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/users/login").permitAll()
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/home", true)
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
@@ -52,6 +52,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable();
 
+//        http.requiresChannel().antMatchers("/**").requiresSecure();
     }
+
+
 
 }
