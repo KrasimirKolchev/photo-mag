@@ -23,13 +23,13 @@ import java.security.Principal;
 
 @Controller
 public class ShoppingCartController {
-    private static final String STRIPE_PUBLIC_KEY =
-            "pk_test_51H6HJBKfodfbToz72uIVEVq5B6FF5GGRtEqYU3eOxQFlntqhki9gGFpZZIhTZ2IabsRaooc2O2v6Ha2A1EPCtAAu0099yu2S3i";
-
-
-    //    @Value("${STRIPE_PUBLIC_KEY}") for env variable
-    @Value(STRIPE_PUBLIC_KEY)
-    private String stripePublicKey;
+//    private static final String STRIPE_PUBLIC_KEY =
+//            "pk_test_51H6HJBKfodfbToz72uIVEVq5B6FF5GGRtEqYU3eOxQFlntqhki9gGFpZZIhTZ2IabsRaooc2O2v6Ha2A1EPCtAAu0099yu2S3i";
+//
+//
+//    //    @Value("${STRIPE_PUBLIC_KEY}") for env variable
+//    @Value(STRIPE_PUBLIC_KEY)
+//    private String stripePublicKey;
 
     private final ShoppingCartService shoppingCartService;
     private final UserService userService;
@@ -49,14 +49,14 @@ public class ShoppingCartController {
         if (!model.containsAttribute("shoppingCart")) {
             UserServiceModel user = this.modelMapper
                     .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
-            model.addAttribute("addresses", user.getAddresses());
+//            model.addAttribute("addresses", user.getAddresses());
+//            model.addAttribute("addressGetBindingModel", new AddressGetBindingModel());
             model.addAttribute("shoppingCart", user.getShoppingCart());
-            model.addAttribute("addressGetBindingModel", new AddressGetBindingModel());
-            int amount = (int) (user.getShoppingCart().getTotalCartAmount() * 100);
-
-            model.addAttribute("amount", amount); // in cents
-            model.addAttribute("stripePublicKey", stripePublicKey);
-            model.addAttribute("currency", Currency.BGN);
+//            int amount = (int) (user.getShoppingCart().getTotalCartAmount() * 100);
+//
+//            model.addAttribute("amount", amount); // in cents
+//            model.addAttribute("stripePublicKey", stripePublicKey);
+//            model.addAttribute("currency", Currency.BGN);
         }
         return "shopping-cart";
     }

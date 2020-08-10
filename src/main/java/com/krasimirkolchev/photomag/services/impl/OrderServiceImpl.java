@@ -1,6 +1,5 @@
 package com.krasimirkolchev.photomag.services.impl;
 
-import com.krasimirkolchev.photomag.models.bindingModels.AddressGetBindingModel;
 import com.krasimirkolchev.photomag.models.entities.Order;
 import com.krasimirkolchev.photomag.models.serviceModels.OrderItemServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.OrderServiceModel;
@@ -13,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,16 +22,18 @@ public class OrderServiceImpl implements OrderService {
     private final ShoppingCartService shoppingCartService;
     private final OrderItemService orderItemService;
     private final ProductService productService;
+    private final AddressService addressService;
     private final ModelMapper modelMapper;
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository, UserService userService, ShoppingCartService shoppingCartService,
-                            OrderItemService orderItemService, ProductService productService, ModelMapper modelMapper) {
+                            OrderItemService orderItemService, ProductService productService, AddressService addressService, ModelMapper modelMapper) {
         this.orderRepository = orderRepository;
         this.userService = userService;
         this.shoppingCartService = shoppingCartService;
         this.orderItemService = orderItemService;
         this.productService = productService;
+        this.addressService = addressService;
         this.modelMapper = modelMapper;
     }
 
@@ -61,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderServiceModel generateOrder(Charge charge, Principal principal, AddressGetBindingModel addressGetBindingModel) {
+    public OrderServiceModel generateOrder(Charge charge, Principal principal, String addressId) {
         UserServiceModel userServiceModel = this.modelMapper
                 .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
 
@@ -78,11 +77,7 @@ public class OrderServiceImpl implements OrderService {
         orderServiceModel.setUser(userServiceModel);
         orderServiceModel.setChargeId(charge.getId());
         orderServiceModel.setTotalAmount(userServiceModel.getShoppingCart().getTotalCartAmount());
-        orderServiceModel.setAddress(userServiceModel.getAddresses()
-                .stream()
-                .filter(a -> a.getId().equals(addressGetBindingModel.getAddressId()))
-                .findFirst()
-                .orElse(null));
+        orderServiceModel.setAddress(this.addressService.getAddressById(addressId));
         this.createOrder(orderServiceModel);
         this.shoppingCartService.retrieveShoppingCart(userServiceModel.getShoppingCart());
 

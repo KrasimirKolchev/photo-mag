@@ -15,7 +15,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,19 +47,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUsername(String username) {
         return this.userRepository.findByUsername(username).orElse(null);
-    }
-
-    //after registration the first login throws NullPinterException but the user is logged in and after logout
-    //and new login the problem is gone
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = this.userRepository.findByUsername(username).orElse(null);
-
-        if (user == null) {
-            throw new UsernameNotFoundException("User with username " + username + " not found!");
-        }
-
-        return user;
     }
 
     @Override

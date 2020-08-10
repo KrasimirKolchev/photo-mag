@@ -1,5 +1,6 @@
 package com.krasimirkolchev.photomag.config;
 
+import com.krasimirkolchev.photomag.services.impl.CustomUserDetailsService;
 import com.krasimirkolchev.photomag.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -15,11 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final UserServiceImpl userService;
+    private final CustomUserDetailsService userService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SecurityConfiguration(UserServiceImpl userService, PasswordEncoder passwordEncoder) {
+    public SecurityConfiguration(CustomUserDetailsService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -47,7 +48,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
-
                 .and()
                 .csrf().disable()
                 .cors().disable();

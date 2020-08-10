@@ -15,5 +15,5 @@ public interface OrderService {
 
     OrderServiceModel createOrder(OrderServiceModel orderServiceModel);
 
-    OrderServiceModel generateOrder(Charge charge, Principal principal, AddressGetBindingModel addressGetBindingModel);
+    OrderServiceModel generateOrder(Charge charge, Principal principal, String addressId);
 }

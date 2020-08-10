@@ -1,15 +1,13 @@
 package com.krasimirkolchev.photomag.models.entities;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity {
     private String username;
     private String password;
     private String email;
@@ -27,7 +25,6 @@ public class User extends BaseEntity implements UserDetails {
         this.isDeleted = false;
     }
 
-    @Override
     @Column(name = "username", unique = true, nullable = false)
     public String getUsername() {
         return username;
@@ -37,7 +34,6 @@ public class User extends BaseEntity implements UserDetails {
         this.username = username;
     }
 
-    @Override
     @Column(name = "password", nullable = false)
     public String getPassword() {
         return password;
@@ -83,7 +79,6 @@ public class User extends BaseEntity implements UserDetails {
         this.profilePhoto = profilePhoto;
     }
 
-    @Override
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     public Set<Role> getAuthorities() {
         return authorities;
@@ -93,7 +88,7 @@ public class User extends BaseEntity implements UserDetails {
         this.authorities = authorities;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Set<Address> getAddresses() {
         return addresses;
     }
@@ -129,27 +124,4 @@ public class User extends BaseEntity implements UserDetails {
         this.deleteDate = deleteDate;
     }
 
-    @Override
-    @Transient
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    @Transient
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    @Transient
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    @Transient
-    public boolean isEnabled() {
-        return true;
-    }
 }

@@ -18,16 +18,17 @@
                             th:text="|Price: ${#numbers.formatDecimal(product.getPrice(), 1, 2)}BGN|"></h4>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-6 col-sm-12">
+                <div class="row">
+                <div class="col-md-6 col-sm-12 justify-content-center">
+                    <div class="col">
                         <div class="product-gallery">
                             <div id="carousel-thumb" class="carousel slide">
                                 <!--Slides-->
                                 <div class="carousel-inner">
 
-                                    <div th:each="photo, iterstat : *{productGallery}" class="item"
+                                    <div th:each="photo, iterstat : *{productGallery}" class="item carousel-img justify-content-center"
                                          th:classappend="${iterstat.index} == 0 ? 'item active' : 'item'">
-                                        <img class="d-md-block w-100" th:src="${photo}" alt="Slide">
+                                        <img class="" th:src="${photo}" alt="Slide">
                                     </div>
 
                                 </div>
@@ -83,17 +84,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-5">
+                <div class="col-md-6 col-sm-12 justify-content-center mt-5">
                     <div class="col text-center text-white">
                         <h4>Specifications</h4>
                         <p th:wrap="hard" type="text" th:text="*{description}"> ... </p>
                     </div>
                 </div>
                 <br/>
-
+                </div>
             </div>
         </form>
     </div>
+
 </div>
 <footer th:include="~{fragments/footer}"></footer>
 

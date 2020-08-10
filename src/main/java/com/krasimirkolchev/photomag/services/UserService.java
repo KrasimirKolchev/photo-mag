@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
     User getUserByUsername(String username);
 
