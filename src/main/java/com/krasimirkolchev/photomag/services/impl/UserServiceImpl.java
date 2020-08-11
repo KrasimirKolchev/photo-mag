@@ -18,7 +18,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -46,11 +48,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return this.userRepository.findByUsername(username).orElse(null);
+        return this.userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("asd"));
     }
 
     @Override
-    public UserServiceModel registerUser(UserServiceModel userServiceModel) {
+    public UserServiceModel registerUser(UserServiceModel userServiceModel, MultipartFile file) throws IOException {
 
         this.roleService.initRoles();
 
@@ -59,6 +61,9 @@ public class UserServiceImpl implements UserService {
         User user = this.modelMapper.map(userServiceModel, User.class);
         user.setPassword(this.encoder.encode(userServiceModel.getPassword()));
         user.setShoppingCart(new ShoppingCart());
+        user.setProfilePhoto(this.cloudinaryService
+                .createPhoto(file, "users", userServiceModel.getUsername()));
+
         return this.saveUser(user);
     }
 

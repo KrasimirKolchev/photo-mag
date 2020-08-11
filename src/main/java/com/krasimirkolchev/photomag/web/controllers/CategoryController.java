@@ -1,6 +1,7 @@
 package com.krasimirkolchev.photomag.web.controllers;
 
 import com.krasimirkolchev.photomag.models.bindingModels.CategoryAddBindingModel;
+import com.krasimirkolchev.photomag.models.serviceModels.ProductCategoryServiceModel;
 import com.krasimirkolchev.photomag.services.ProductCategoryService;
 import com.krasimirkolchev.photomag.validation.CategoryValidation;
 import com.krasimirkolchev.photomag.web.annotations.PageTitle;
@@ -67,7 +68,9 @@ public class CategoryController {
             return "redirect:/categories/add";
         }
 
-        this.productCategoryService.addCategory(categoryAddBindingModel);
+        ProductCategoryServiceModel categoryServiceModel = this.productCategoryService
+                .addCategory(this.modelMapper
+                        .map(categoryAddBindingModel, ProductCategoryServiceModel.class), categoryAddBindingModel.getPhoto());
         return "redirect:/";
     }
 

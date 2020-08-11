@@ -4,6 +4,7 @@ import com.krasimirkolchev.photomag.models.bindingModels.CartItemAddBindModel;
 import com.krasimirkolchev.photomag.models.bindingModels.ProductAddBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.ProductEditBindingModel;
 import com.krasimirkolchev.photomag.models.entities.ProductCategory;
+import com.krasimirkolchev.photomag.models.serviceModels.ProductCategoryServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.ProductServiceModel;
 import com.krasimirkolchev.photomag.services.BrandService;
 import com.krasimirkolchev.photomag.services.ProductCategoryService;
@@ -73,7 +74,7 @@ public class ProductController {
         }
 
         ProductServiceModel productServiceModel = this.modelMapper.map(productAddBindingModel, ProductServiceModel.class);
-        ProductCategory category = this.productCategoryService
+        ProductCategoryServiceModel category = this.productCategoryService
                 .getCategoryById(productAddBindingModel.getProductCategory());
 
         productServiceModel.setProductCategory(category);

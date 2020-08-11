@@ -9,6 +9,7 @@ import com.krasimirkolchev.photomag.services.ProductCategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -53,26 +54,20 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public ProductCategory getCategoryById(String id) {
-        return this.productCategoryRepository.findById(id)
+    public ProductCategoryServiceModel getCategoryById(String id) {
+        ProductCategory category = this.productCategoryRepository.findById(id)
                 .orElseThrow(() -> new ProductCategoryNotFoundException("Category not found!"));
+        return this.modelMapper.map(category, ProductCategoryServiceModel.class);
     }
 
     @Override
-    public void addCategory(CategoryAddBindingModel categoryAddBindingModel) throws IOException {
+    public ProductCategoryServiceModel addCategory(ProductCategoryServiceModel categoryServiceModel, MultipartFile file) throws IOException {
 
-        ProductCategory category = this.modelMapper.map(categoryAddBindingModel, ProductCategory.class);
+        ProductCategory category = this.modelMapper.map(categoryServiceModel, ProductCategory.class);
         category.setPhoto(this.cloudinaryService
-                .createPhoto(categoryAddBindingModel.getPhoto(), "categories", category.getName()));
+                .createPhoto(file, "categories", category.getName()));
 
-        this.productCategoryRepository.save(category);
+        return this.modelMapper.map(this.productCategoryRepository.save(category), ProductCategoryServiceModel.class);
     }
-
-    @Override
-    public ProductCategoryServiceModel getCategoryByName(String category) {
-        return this.modelMapper
-                .map(this.productCategoryRepository.findProductCategoryByNameLike(category), ProductCategoryServiceModel.class);
-    }
-
 
 }

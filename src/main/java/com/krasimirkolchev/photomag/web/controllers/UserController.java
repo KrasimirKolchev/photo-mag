@@ -66,12 +66,9 @@ public class UserController {
             return "redirect:/register";
         }
 
-
-        UserServiceModel userServiceModel = this.modelMapper.map(userRegBindingModel, UserServiceModel.class);
-        userServiceModel.setProfilePhoto(this.cloudinaryService
-                .createPhoto(userRegBindingModel.getFile(), "users", userServiceModel.getUsername()));
-
-        this.userService.registerUser(userServiceModel);
+        UserServiceModel userServiceModel = this.userService
+                .registerUser(this.modelMapper
+                        .map(userRegBindingModel, UserServiceModel.class), userRegBindingModel.getFile());
 
         return "redirect:/login";
     }

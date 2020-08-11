@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,13 +28,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void initRoles() {
         if (this.roleRepository.count() == 0) {
-            Role rootAdmin = new Role("ROLE_ROOT_ADMIN");
-            Role admin = new Role("ROLE_ADMIN");
-            Role user = new Role("ROLE_USER");
-
-            this.roleRepository.save(rootAdmin);
-            this.roleRepository.save(admin);
-            this.roleRepository.save(user);
+            this.roleRepository.save(new Role("ROLE_ROOT_ADMIN"));
+            this.roleRepository.save(new Role("ROLE_ADMIN"));
+            this.roleRepository.save(new Role("ROLE_USER"));
         }
     }
 

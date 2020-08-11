@@ -15,7 +15,7 @@ public interface UserService {
 
     User getUserByUsername(String username);
 
-    UserServiceModel registerUser(UserServiceModel userServiceModel);
+    UserServiceModel registerUser(UserServiceModel userServiceModel, MultipartFile file) throws IOException;
 
     UserServiceModel addAddressToUser(AddressServiceModel addressServiceModel, String name);
 

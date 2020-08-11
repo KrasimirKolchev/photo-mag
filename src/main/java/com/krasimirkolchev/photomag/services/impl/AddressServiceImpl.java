@@ -36,10 +36,4 @@ public class AddressServiceImpl implements AddressService {
                         , AddressServiceModel.class);
     }
 
-    @Override
-    public List<AddressServiceModel> getAllAddressesByUserId() {
-        return this.addressRepository.findAll()
-                .stream().map(a -> this.modelMapper.map(a, AddressServiceModel.class))
-                .collect(Collectors.toList());
-    }
 }

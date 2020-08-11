@@ -1,6 +1,7 @@
 package com.krasimirkolchev.photomag.services.impl;
 
 import com.krasimirkolchev.photomag.models.entities.Order;
+import com.krasimirkolchev.photomag.models.serviceModels.CartItemServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.OrderItemServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.OrderServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
@@ -65,14 +66,8 @@ public class OrderServiceImpl implements OrderService {
                 .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
 
         OrderServiceModel orderServiceModel = new OrderServiceModel();
-        orderServiceModel.setOrderItems(userServiceModel.getShoppingCart().getItems()
-                .stream()
-                .map(ci ->  {
-                    OrderItemServiceModel orderItemServiceModel = this.modelMapper.map(ci, OrderItemServiceModel.class);
-                    orderItemServiceModel.setOrderItem(this.productService.getProductById(ci.getItem().getId()));
-                    return this.orderItemService.addOrderItem(orderItemServiceModel);
-                })
-                .collect(Collectors.toList()));
+        List<OrderItemServiceModel> orderitems = generateOrderItems(userServiceModel.getShoppingCart().getItems());
+        orderServiceModel.setOrderItems(orderitems);
 
         orderServiceModel.setUser(userServiceModel);
         orderServiceModel.setChargeId(charge.getId());
@@ -82,6 +77,17 @@ public class OrderServiceImpl implements OrderService {
         this.shoppingCartService.retrieveShoppingCart(userServiceModel.getShoppingCart());
 
         return orderServiceModel;
+    }
+
+    private List<OrderItemServiceModel> generateOrderItems(List<CartItemServiceModel> cartItemsList) {
+        return cartItemsList
+                .stream()
+                .map(ci ->  {
+                    OrderItemServiceModel orderItemServiceModel = this.modelMapper.map(ci, OrderItemServiceModel.class);
+                    orderItemServiceModel.setOrderItem(this.productService.getProductById(ci.getItem().getId()));
+                    return this.orderItemService.addOrderItem(orderItemServiceModel);
+                })
+                .collect(Collectors.toList());
     }
 
 }

@@ -39,8 +39,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsByCategoryName(String name) {
-        return this.productRepository.getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalse(name, 0);
+    public List<ProductServiceModel> getProductsByCategoryName(String name) {
+        return this.productRepository.getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalse(name, 0)
+                .stream()
+                .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -22,7 +22,8 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     public CartItemServiceModel saveItem(CartItemServiceModel cartItemServiceModel) {
         CartItem cartItem = this.modelMapper.map(cartItemServiceModel, CartItem.class);
-        cartItem.setSubTotal(cartItemServiceModel.getItem().getPrice() * cartItemServiceModel.getQuantity());
+        double subtotal = cartItem.getItem().getPrice() * cartItem.getQuantity();
+        cartItem.setSubTotal(subtotal);
 
         return this.modelMapper.map(this.cartItemRepository.save(cartItem), CartItemServiceModel.class);
     }

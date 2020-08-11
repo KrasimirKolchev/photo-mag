@@ -1,8 +1,7 @@
 package com.krasimirkolchev.photomag.services;
 
-import com.krasimirkolchev.photomag.models.bindingModels.CategoryAddBindingModel;
-import com.krasimirkolchev.photomag.models.entities.ProductCategory;
 import com.krasimirkolchev.photomag.models.serviceModels.ProductCategoryServiceModel;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,9 +10,8 @@ public interface ProductCategoryService {
 
     List<ProductCategoryServiceModel> getAllCategories();
 
-    ProductCategory getCategoryById(String id);
+    ProductCategoryServiceModel getCategoryById(String id);
 
-    void addCategory(CategoryAddBindingModel categoryAddBindingModel) throws IOException;
+    ProductCategoryServiceModel addCategory(ProductCategoryServiceModel categoryServiceModel, MultipartFile file) throws IOException;
 
-    ProductCategoryServiceModel getCategoryByName(String category);
 }

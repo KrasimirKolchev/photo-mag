@@ -10,7 +10,7 @@ public class ProductServiceModel extends BaseServiceModel {
     private String description;
     private Double price;
     private Integer quantity;
-    private ProductCategory productCategory;
+    private ProductCategoryServiceModel productCategory;
     private String mainPhoto;
     private List<String> productGallery;
     private boolean isDeleted;
@@ -58,11 +58,11 @@ public class ProductServiceModel extends BaseServiceModel {
         this.quantity = quantity;
     }
 
-    public ProductCategory getProductCategory() {
+    public ProductCategoryServiceModel getProductCategory() {
         return productCategory;
     }
 
-    public void setProductCategory(ProductCategory productCategory) {
+    public void setProductCategory(ProductCategoryServiceModel productCategory) {
         this.productCategory = productCategory;
     }
 
