@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return this.userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("asd"));
+        return this.userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
     }
 
     @Override
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceModel addAddressToUser(AddressServiceModel addressServiceModel, String name) {
 
         UserServiceModel user = this.modelMapper.map(this.getUserByUsername(name), UserServiceModel.class);
-        user.getAddresses().add(this.addressService.createAddress(addressServiceModel));
+        user.getAddresses().add(addressServiceModel);
 
         this.userRepository.save(this.modelMapper.map(user, User.class));
         return user;
@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found!"));
 
-        user.setPassword(userServiceModel.getPassword() != null ? this.encoder.encode(userServiceModel.getPassword()) : user.getPassword());
+        user.setPassword(!userServiceModel.getPassword().equals("") ? this.encoder.encode(userServiceModel.getPassword()) : user.getPassword());
         user.setFirstName(userServiceModel.getFirstName());
         user.setLastName(userServiceModel.getLastName());
 

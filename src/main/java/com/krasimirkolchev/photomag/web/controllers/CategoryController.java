@@ -68,9 +68,8 @@ public class CategoryController {
             return "redirect:/categories/add";
         }
 
-        ProductCategoryServiceModel categoryServiceModel = this.productCategoryService
-                .addCategory(this.modelMapper
-                        .map(categoryAddBindingModel, ProductCategoryServiceModel.class), categoryAddBindingModel.getPhoto());
+        ProductCategoryServiceModel categoryServiceModel = this.productCategoryService.addCategory(this
+                .modelMapper.map(categoryAddBindingModel, ProductCategoryServiceModel.class), categoryAddBindingModel.getPhoto());
         return "redirect:/";
     }
 

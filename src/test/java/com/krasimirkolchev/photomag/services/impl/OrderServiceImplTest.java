@@ -173,7 +173,6 @@ class OrderServiceImplTest {
 
         Principal pr = Mockito.mock(Principal.class);
         Mockito.when(pr.getName()).thenReturn("User");
-//        Mockito.when(userService.getUserByUsername(anyString())).thenReturn(new User());
 
         Mockito.when(orderService.generateOrder(any(), any(), anyString())).thenReturn(act);
 

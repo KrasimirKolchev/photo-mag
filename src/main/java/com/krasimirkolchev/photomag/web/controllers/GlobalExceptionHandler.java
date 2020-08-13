@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleExceptions(Exception ex) {
         ModelAndView model = new ModelAndView("error");
         model.addObject("error", ex.getMessage());
+        ex.printStackTrace();
         return model;
     }
 

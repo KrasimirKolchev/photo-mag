@@ -65,11 +65,6 @@ class RoleServiceImplTest {
     }
 
     @Test
-    void initRolesInDbWhenAreRolesNotSeed() {
-
-    }
-
-    @Test
     void findByNameReturnsRoleIfRoleExist() {
         RoleServiceModel exp = roleService.findByName("USER");
 

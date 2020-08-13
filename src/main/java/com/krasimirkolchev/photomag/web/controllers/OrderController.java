@@ -68,7 +68,7 @@ public class OrderController {
 
     @PostMapping("/add-details")
     @PreAuthorize("isAuthenticated()")
-    public String addOrderDetailsCOnf(@ModelAttribute("addressGetBindingModel") AddressGetBindingModel addressGetBindingModel,
+    public String addOrderDetailsConf(@ModelAttribute("addressGetBindingModel") AddressGetBindingModel addressGetBindingModel,
                                       BindingResult result, RedirectAttributes attributes, Model model) {
 
         if (result.hasErrors()) {

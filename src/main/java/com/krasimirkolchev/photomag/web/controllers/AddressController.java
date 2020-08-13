@@ -63,7 +63,8 @@ public class AddressController {
         }
 
         UserServiceModel userServiceModel = this.userService
-                .addAddressToUser(this.modelMapper.map(addressAddBindingModel, AddressServiceModel.class), principal.getName());
+                .addAddressToUser(this.addressService.createAddress(this
+                        .modelMapper.map(addressAddBindingModel, AddressServiceModel.class)), principal.getName());
 
         return "redirect:/users/profile";
     }

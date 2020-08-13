@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductServiceModel addProduct(ProductServiceModel productServiceModel, List<MultipartFile> files) throws IOException {
 
         Product product = this.modelMapper.map(productServiceModel, Product.class);
-        product.setProductGallery((this.cloudinaryService.createPhotos(files, "products", product.getName())));
+        product.setProductGallery(this.cloudinaryService.createPhotos(files, "products", product.getName()));
         product.setMainPhoto(product.getProductGallery().get(0));
 
         return this.modelMapper.map(this.productRepository.save(product), ProductServiceModel.class);
@@ -86,29 +86,29 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductServiceModel> getAllProducts() {
-        return this.productRepository.getAllByQuantityIsGreaterThanAndDeletedFalseOrderByBrand(0)
+        return this.productRepository.getAllByQuantityIsGreaterThanAndDeletedFalseOrderByBrandName(0)
                 .stream()
                 .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<ProductServiceModel> getProductsOrderedBy(String category, String order) {
-        switch (order) {
-            case "priced":
-                return this.productRepository
-                        .getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByPriceDesc(category, 0)
-                        .stream()
-                        .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
-                        .collect(Collectors.toList());
-
-            case "pricea":
-                return this.productRepository
-                        .getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByPriceAsc(category, 0)
-                        .stream()
-                        .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
-                        .collect(Collectors.toList());
-        }
-        return null;
-    }
+//    @Override
+//    public List<ProductServiceModel> getProductsOrderedBy(String category, String order) {
+//        switch (order) {
+//            case "priced":
+//                return this.productRepository
+//                        .getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByPriceDesc(category, 0)
+//                        .stream()
+//                        .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
+//                        .collect(Collectors.toList());
+//
+//            case "pricea":
+//                return this.productRepository
+//                        .getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByPriceAsc(category, 0)
+//                        .stream()
+//                        .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
+//                        .collect(Collectors.toList());
+//        }
+//        return null;
+//    }
 }

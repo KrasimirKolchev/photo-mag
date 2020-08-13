@@ -2,6 +2,7 @@ package com.krasimirkolchev.photomag.web.controllers;
 
 import com.krasimirkolchev.photomag.services.ProductService;
 import com.krasimirkolchev.photomag.web.annotations.PageTitle;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    @PageTitle("Home")
+    @PageTitle("Index")
     public String index(Model model) {
         if (!model.containsAttribute("products")) {
             model.addAttribute("products", this.productService.getAllProducts());
@@ -24,6 +25,8 @@ public class HomeController {
     }
 
     @GetMapping("/home")
+    @PageTitle("Home")
+    @PreAuthorize("isAuthenticated()")
     public String home(Model model) {
         if (!model.containsAttribute("products")) {
             model.addAttribute("products", this.productService.getAllProducts());
@@ -32,11 +35,13 @@ public class HomeController {
     }
 
     @GetMapping("/about")
+    @PageTitle("About")
     public String about() {
         return "about";
     }
 
     @GetMapping("/contacts")
+    @PageTitle("Contacts")
     public String contacts() {
         return "contacts";
     }

@@ -36,11 +36,13 @@ public class UserEditValidation implements Validator {
         if (userEditBindingModel.getOldPassword().length() < 6 || userEditBindingModel.getOldPassword().length() > 12) {
             errors.rejectValue("oldPassword", "Old Password must be between 6 and 12 symbols!", "Old Password must be between 6 and 12 symbols");
         }
-        if (!userEditBindingModel.getPassword().isBlank() && (userEditBindingModel.getPassword().length() < 6 || userEditBindingModel.getPassword().length() > 12)) {
-            errors.rejectValue("password", "Password must be between 6 and 12 characters", "Password must be between 6 and 12 characters");
-        }
-        if (!userEditBindingModel.getPassword().equals(userEditBindingModel.getConfirmPassword()) && !userEditBindingModel.getPassword().isBlank()) {
-            errors.rejectValue("password", "Invalid Password", "Passwords do not match!");
+        if (!userEditBindingModel.getPassword().isBlank()){
+            if (userEditBindingModel.getPassword().length() < 6 || userEditBindingModel.getPassword().length() > 12) {
+                errors.rejectValue("password", "Password must be between 6 and 12 characters", "Password must be between 6 and 12 characters");
+            }
+            if (!userEditBindingModel.getPassword().equals(userEditBindingModel.getConfirmPassword()) && !userEditBindingModel.getPassword().isBlank()) {
+                errors.rejectValue("password", "Invalid Password", "Passwords do not match!");
+            }
         }
         if (!userEditBindingModel.getFirstName().isBlank() && userEditBindingModel.getFirstName().length() < 3 || userEditBindingModel.getFirstName().length() > 16) {
             errors.rejectValue("firstName", "First name must be between 3 and 16 symbols!", "First name must be between 3 and 16 symbols!");

@@ -1,7 +1,5 @@
 package com.krasimirkolchev.photomag.services;
 
-import com.krasimirkolchev.photomag.models.entities.Product;
-import com.krasimirkolchev.photomag.models.serviceModels.CartItemServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.ProductServiceModel;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,5 +26,5 @@ public interface ProductService {
 
     List<ProductServiceModel> getAllProducts();
 
-    List<ProductServiceModel> getProductsOrderedBy(String category, String order);
+//    List<ProductServiceModel> getProductsOrderedBy(String category, String order);
 }

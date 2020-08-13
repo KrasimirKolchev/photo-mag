@@ -11,6 +11,7 @@
         <form th:object="${userEditBindingModel}" action="/users/edit" th:method="POST"
               class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data">
             <div class="row">
+                <input type="hidden" name="id" th:value="*{id}">
                 <div class="form-group col-md-12 mb-3">
                     <label for="firstName" class="text-white font-weight-bold">First Name</label>
                     <input th:field="*{firstName}" id="firstName" name="firstName" type="text" class="form-control"
