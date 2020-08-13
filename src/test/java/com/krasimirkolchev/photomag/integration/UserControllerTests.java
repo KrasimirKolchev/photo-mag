@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -28,7 +29,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.security.Principal;
-import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,6 +47,8 @@ public class UserControllerTests {
     private UserRepository repository;
     @Autowired
     private UserController controller;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @BeforeEach
     public void init() {
@@ -163,7 +165,7 @@ public class UserControllerTests {
         user.setEmail("asd@asd.as");
         user.setFirstName("admina");
         user.setLastName("adminova");
-        user.setPassword("password");
+        user.setPassword(encoder.encode("password"));
         user.setProfilePhoto("file");
         User u = repository.save(user);
 
@@ -172,13 +174,12 @@ public class UserControllerTests {
                 .param("firstName", "new name")
                 .param("lastName", "new lastName")
                 .param("oldPassword", "password")
+                .param("password", "")
+                .param("ConfirmPassword", "")
 
         )
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/register"));
-
-        User test = repository.getOne(u.getId());
-
+                .andExpect(view().name("redirect:/users/profile"));
     }
 
 }
