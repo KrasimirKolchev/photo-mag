@@ -76,7 +76,7 @@ public class BrandControllerTests {
                 .param("name", "Canon")
         )
                 .andExpect(status().is3xxRedirection())
-                .andReturn();
+                .andExpect(view().name("redirect:/home"));
 
         Assert.assertEquals(1, repository.count());
     }

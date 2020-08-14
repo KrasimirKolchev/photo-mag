@@ -59,6 +59,8 @@ public class ShoppingCartController {
 
         if (result.hasErrors()) {
             attributes.addFlashAttribute("cartItem", cartItemAddBindModel);
+            attributes.addFlashAttribute("org.springframework.validation.BindingResult.cartItemAddBindModel"
+                    , result);
             return "redirect:/products/details/" + cartItemAddBindModel.getId();
         }
 

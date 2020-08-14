@@ -10,8 +10,8 @@
     </parent>
     <groupId>com.krasimirkolchev</groupId>
     <artifactId>photo-mag</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <version>1.0.2-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>photo-mag</name>
     <description>Demo project for Spring Boot</description>
 
@@ -75,13 +75,6 @@
             <artifactId>modelmapper</artifactId>
             <version>2.3.1</version>
         </dependency>
-        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.amazonaws</groupId>-->
-        <!--            <artifactId>aws-java-sdk-s3</artifactId>-->
-        <!--            <version>1.11.763</version>-->
-        <!--        </dependency>-->
-        <!--         https://mvnrepository.com/artifact/com.cloudinary/cloudinary-core-->
         <dependency>
             <groupId>com.cloudinary</groupId>
             <artifactId>cloudinary-taglib</artifactId>

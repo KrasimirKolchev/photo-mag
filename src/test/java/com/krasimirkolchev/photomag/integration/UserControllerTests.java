@@ -1,7 +1,10 @@
 package com.krasimirkolchev.photomag.integration;
 
 import com.krasimirkolchev.photomag.models.bindingModels.UserRegBindingModel;
+import com.krasimirkolchev.photomag.models.bindingModels.UserRoleAddBindingModel;
+import com.krasimirkolchev.photomag.models.entities.Role;
 import com.krasimirkolchev.photomag.models.entities.User;
+import com.krasimirkolchev.photomag.repositories.RoleRepository;
 import com.krasimirkolchev.photomag.repositories.UserRepository;
 import com.krasimirkolchev.photomag.web.controllers.UserController;
 import org.junit.Assert;
@@ -29,6 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.security.Principal;
+import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -49,6 +53,8 @@ public class UserControllerTests {
     private UserController controller;
     @Autowired
     private BCryptPasswordEncoder encoder;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @BeforeEach
     public void init() {
@@ -117,6 +123,7 @@ public class UserControllerTests {
     public void userProfileReturnsCorrectView() throws Exception {
         Principal principal = Mockito.mock(Principal.class);
         Mockito.when(principal.getName()).thenReturn("admina");
+
         repository.deleteAll();
         User user = new User();
         user.setUsername("admina");
@@ -129,7 +136,7 @@ public class UserControllerTests {
 
         mockMvc.perform(get("/users/profile"))
                 .andExpect(status().is2xxSuccessful())
-        .andExpect(view().name("profile"));
+                .andExpect(view().name("profile"));
     }
 
     @Test
@@ -180,6 +187,73 @@ public class UserControllerTests {
         )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/users/profile"));
+    }
+
+    @Test
+    @WithMockUser(username = "admina", roles = {"USER", "ADMIN"})
+    public void deleteUserSetDeletedTrue() throws Exception {
+        Principal principal = Mockito.mock(Principal.class);
+        Mockito.when(principal.getName()).thenReturn("admina");
+
+        repository.deleteAll();
+
+        User user = new User();
+        user.setUsername("admina");
+        user.setEmail("asd@asd.as");
+        user.setFirstName("admina");
+        user.setLastName("adminova");
+        user.setPassword(encoder.encode("password"));
+        user.setProfilePhoto("file");
+        user.setDeleted(false);
+        User u = repository.save(user);
+
+        this.mockMvc.perform(get("/users/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/logout"));
+
+        User deleted = repository.findAllByDeletedIsTrue().get(0);
+        Assert.assertTrue(deleted.isDeleted());
+    }
+
+    @Test
+    @WithMockUser(username = "admina", roles = {"ROOT_ADMIN", "ADMIN"})
+    public void addRoleToUserReturnsCorrectView() throws Exception {
+        this.mockMvc.perform(get("/users/roles/add"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user-add-role"));
+    }
+
+    @Test
+    @WithMockUser(username = "admina", roles = {"ROOT_ADMIN", "ADMIN"})
+    public void addRoleToUserConfAddsRole() throws Exception {
+        Principal principal = Mockito.mock(Principal.class);
+        Mockito.when(principal.getName()).thenReturn("admina");
+
+        repository.deleteAll();
+
+        User u = new User();
+        u.setUsername("admin");
+        u.setEmail("aaaa@asd.as");
+        u.setFirstName("admin");
+        u.setLastName("adminov");
+        u.setPassword(encoder.encode("password"));
+        u.setProfilePhoto("file");
+        u.setAuthorities(Set.of(roleRepository.saveAndFlush(new Role("ROLE_USER"))));
+        u = repository.saveAndFlush(u);
+
+        Assert.assertEquals(1, u.getAuthorities().size());
+
+        roleRepository.saveAndFlush(new Role("ROLE_ADMIN"));
+
+        this.mockMvc.perform(post("/users/roles/add")
+                .param("username", "admin")
+                .param("role", "ROLE_ADMIN")
+        )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/home"));
+
+        User test = repository.findByUsername("admin").orElse(null);
+        Assert.assertEquals(2, test.getAuthorities().size());
     }
 
 }

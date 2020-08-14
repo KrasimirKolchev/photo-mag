@@ -13,9 +13,8 @@ import java.util.Map;
 @Service
 public class StripeServiceImpl implements StripeService {
     private static final String STRIPE_SECRET_KEY = "sk_test_51H6HJBKfodfbToz7yUxp2YNryEreisl4yJLE4UsZcem3AcCKzDiMuFXzqO4yUyToIecW9NEzAkSpkQpUkDNtWPTM009GtUE1aZ";
-    //valid 7 days
 
-//    @Value("${STRIPE_SECRET_KEY}") for env variable
+//    @Value("${STRIPE_SECRET_KEY}")
     @Value(STRIPE_SECRET_KEY)
     private String secretKey;
 
@@ -24,7 +23,7 @@ public class StripeServiceImpl implements StripeService {
         Stripe.apiKey = secretKey;
     }
 
-    @Override
+
     public Charge charge(ChargeRequest chargeRequest)
             throws CardException, APIException, AuthenticationException, InvalidRequestException, APIConnectionException {
 
