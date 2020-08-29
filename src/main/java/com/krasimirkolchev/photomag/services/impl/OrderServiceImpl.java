@@ -66,8 +66,8 @@ public class OrderServiceImpl implements OrderService {
                 .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
 
         OrderServiceModel orderServiceModel = new OrderServiceModel();
-        List<OrderItemServiceModel> orderitems = generateOrderItems(userServiceModel.getShoppingCart().getItems());
-        orderServiceModel.setOrderItems(orderitems);
+        List<OrderItemServiceModel> orderItems = generateOrderItems(userServiceModel.getShoppingCart().getItems());
+        orderServiceModel.setOrderItems(orderItems);
 
         orderServiceModel.setUser(userServiceModel);
         orderServiceModel.setChargeId(charge.getId());

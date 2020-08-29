@@ -8,6 +8,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
+import static com.krasimirkolchev.photomag.common.CommonMessages.*;
+
 @Component
 public class ProductAddValidation implements Validator {
     private final ProductRepository productRepository;
@@ -27,32 +29,32 @@ public class ProductAddValidation implements Validator {
         ProductAddBindingModel productAddBindingModel = (ProductAddBindingModel) target;
 
         if (productAddBindingModel.getName().length() < 12 || productAddBindingModel.getName().length() > 60) {
-            errors.rejectValue("name", "Product name must be between 12 and 60 symbols long!", "Product name must be between 12 and 60 symbols long!");
+            errors.rejectValue("name", PRODUCT_NAME_LENGTH, PRODUCT_NAME_LENGTH);
         }
         if (this.productRepository.existsByName(productAddBindingModel.getName())) {
-            errors.rejectValue("name", "Product already exist!", "Product already exist!");
+            errors.rejectValue("name", PRODUCT_NAME_EXIST, PRODUCT_NAME_EXIST);
         }
         if (productAddBindingModel.getDescription().length() < 20) {
-            errors.rejectValue("description", "Description must be at least 20 symbols long!", "Description must be at least 20 symbols long!");
+            errors.rejectValue("description", PRODUCT_DESCRIPTION_LENGTH, PRODUCT_DESCRIPTION_LENGTH);
         }
         if (productAddBindingModel.getQuantity() == null || productAddBindingModel.getQuantity() < 1) {
-            errors.rejectValue("quantity", "Quantity must be more than 1!", "Quantity must be more than 1!");
+            errors.rejectValue("quantity", PRODUCT_QUANTITY_ERR, PRODUCT_QUANTITY_ERR);
         }
         if (productAddBindingModel.getPrice() == null || productAddBindingModel.getPrice() < 1.0) {
-            errors.rejectValue("price", "Price must be more than 1.0!", "Price must be more than 1!");
+            errors.rejectValue("price", PRODUCT_PRICE_ERR, PRODUCT_PRICE_ERR);
         }
         if (productAddBindingModel.getProductCategory() == null || productAddBindingModel.getProductCategory().isBlank()) {
-            errors.rejectValue("productCategory", "Product category must be selected!", "Product category must be selected!");
+            errors.rejectValue("productCategory", PRODUCT_CATEGORY_ERR, PRODUCT_CATEGORY_ERR);
         }
         if (productAddBindingModel.getBrand() == null || productAddBindingModel.getBrand().isBlank()) {
-            errors.rejectValue("brand", "Brand must be selected!", "Brand must be selected!");
+            errors.rejectValue("brand", PRODUCT_BRAND_ERR, PRODUCT_BRAND_ERR);
         }
         if (productAddBindingModel.getProductGallery().get(0).getOriginalFilename().isEmpty()) {
-            errors.rejectValue("productGallery", "Select images for the gallery!", "Select images for the gallery!");
+            errors.rejectValue("productGallery", PRODUCT_GALLERY_ERR, PRODUCT_GALLERY_ERR);
         } else {
             for (MultipartFile file : productAddBindingModel.getProductGallery()) {
                 if (file == null || file.isEmpty() || file.getOriginalFilename().length() == 0) {
-                    errors.rejectValue("productGallery", "Some images are corrupted!", "Some images are corrupted!");
+                    errors.rejectValue("productGallery", PRODUCT_GALLERY_IMAGES_ERR, PRODUCT_GALLERY_IMAGES_ERR);
                 }
             }
         }

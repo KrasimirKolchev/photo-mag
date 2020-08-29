@@ -1,7 +1,6 @@
 package com.krasimirkolchev.photomag.services.impl;
 
 import com.krasimirkolchev.photomag.error.ProductCategoryNotFoundException;
-import com.krasimirkolchev.photomag.models.bindingModels.CategoryAddBindingModel;
 import com.krasimirkolchev.photomag.models.entities.ProductCategory;
 import com.krasimirkolchev.photomag.models.serviceModels.ProductCategoryServiceModel;
 import com.krasimirkolchev.photomag.repositories.ProductCategoryRepository;
@@ -16,6 +15,8 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.krasimirkolchev.photomag.common.CommonMessages.*;
 
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
@@ -33,12 +34,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @PostConstruct
     private void init() {
         if (this.productCategoryRepository.count() == 0) {
-            ProductCategory dslrCamera = new ProductCategory("DSLR Cameras", "https://p1.akcdn.net/full/431753403.canon-eos-800d-ef-s-18-55mm-is-stm.jpg");
-            ProductCategory lenses = new ProductCategory("Camera lenses", "https://magazin.photosynthesis.bg/152584-thickbox_default/obektiv-olympus-70-300mm-f-4-56.jpg");
-            ProductCategory flashes = new ProductCategory("Camera flashes", "https://magazin.photosynthesis.bg/169553-thickbox_default/godox-tt350c-canon.jpg");
-            ProductCategory bags = new ProductCategory("Camera bags", "https://magazin.photosynthesis.bg/139123-thickbox_default/chanta-lowepro-format-tlz-20-cheren.jpg");
-            ProductCategory accessories = new ProductCategory("Accessories", "https://magazin.photosynthesis.bg/153795-thickbox_default/aksesoar-giottos-cl1001-komplekt-za-pochistvane-ot-5-chasti.jpg");
-            ProductCategory tripods = new ProductCategory("Tripods", "https://magazin.photosynthesis.bg/148921-thickbox_default/stativ-velbon-m-47-tripod-kit.jpg");
+            ProductCategory dslrCamera = new ProductCategory("DSLR Cameras", DSLR_CAMERA_URL);
+            ProductCategory lenses = new ProductCategory("Camera lenses", CAMERA_LENSES_URL);
+            ProductCategory flashes = new ProductCategory("Camera flashes", CAMERA_FLASHES_URL);
+            ProductCategory bags = new ProductCategory("Camera bags", CAMERA_BAGS_URL);
+            ProductCategory accessories = new ProductCategory("Accessories", CAMERA_ACCESSORIES);
+            ProductCategory tripods = new ProductCategory("Tripods", CAMERA_TRIPODS);
 
             this.productCategoryRepository.saveAll(List.of(dslrCamera, lenses, flashes, bags, accessories, tripods));
         }

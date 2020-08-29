@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import static com.krasimirkolchev.photomag.common.CommonMessages.*;
+
 @Component
 public class UserRegisterValidation implements Validator {
     private final UserRepository userRepository;
@@ -26,29 +28,29 @@ public class UserRegisterValidation implements Validator {
         UserRegBindingModel userRegBindingModel = (UserRegBindingModel) target;
 
         if (userRegBindingModel.getUsername().isBlank() || userRegBindingModel.getUsername().length() < 6 || userRegBindingModel.getUsername().length() > 16) {
-            errors.rejectValue("username", "Username must be between 6 and 16 symbols!", "Username must be between 6 and 16 symbols");
+            errors.rejectValue("username", USER_USERNAME_LENGTH, USER_USERNAME_LENGTH);
         }
         if (userRegBindingModel.getPassword().length() < 6 || userRegBindingModel.getPassword().length() > 12) {
-            errors.rejectValue("password", "Password must be between 6 and 12 characters", "Password must be between 6 and 12 characters");
+            errors.rejectValue("password", USER_PASSWORD_LENGTH, USER_PASSWORD_LENGTH);
         }
         if (!userRegBindingModel.getPassword().equals(userRegBindingModel.getConfirmPassword())) {
-            errors.rejectValue("password", "Invalid Password", "Passwords do not match!");
+            errors.rejectValue("password", USER_PASSWORD_ERR, USER_PASSWORD_ERR);
         }
         if (this.userRepository.existsByUsername(userRegBindingModel.getUsername())) {
-            errors.rejectValue("username", "Username already exists", "Username already exists!");
+            errors.rejectValue("username", USER_USERNAME_EXIST, USER_USERNAME_EXIST);
         }
         if (this.userRepository.existsByEmail(userRegBindingModel.getEmail())) {
-            errors.rejectValue("email", "Email already exists", "Email already exists!");
+            errors.rejectValue("email", USER_EMAIL_EXIST, USER_EMAIL_EXIST);
         }
         if (userRegBindingModel.getFirstName().length() < 3 || userRegBindingModel.getFirstName().length() > 16) {
-            errors.rejectValue("firstName", "First name must be between 3 and 16 symbols!", "First name must be between 3 and 16 symbols!");
+            errors.rejectValue("firstName", USER_FIRSTNAME_LENGTH, USER_FIRSTNAME_LENGTH);
         }
         if (userRegBindingModel.getLastName().length() < 3 || userRegBindingModel.getLastName().length() > 16) {
-            errors.rejectValue("lastName", "Last name must be between 3 and 16 symbols!", "Last name must be between 3 and 16 symbols!");
+            errors.rejectValue("lastName", USER_LASTNAME_LENGTH, USER_LASTNAME_LENGTH);
         }
         if (userRegBindingModel.getFile() == null || userRegBindingModel.getFile().isEmpty()
                 || userRegBindingModel.getFile().getOriginalFilename().length() == 0) {
-            errors.rejectValue("file", "Select image file!", "Select image file!");
+            errors.rejectValue("file", USER_IMAGE_ERR, USER_IMAGE_ERR);
         }
 
     }

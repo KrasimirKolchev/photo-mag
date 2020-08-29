@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import static com.krasimirkolchev.photomag.common.CommonMessages.*;
+
 @Component
 public class UserEditValidation implements Validator {
     private final UserRepository userRepository;
@@ -31,24 +33,24 @@ public class UserEditValidation implements Validator {
         User user = this.userRepository.getOne(userEditBindingModel.getId());
 
         if (!this.encoder.matches(userEditBindingModel.getOldPassword(), user.getPassword())) {
-            errors.rejectValue("oldPassword", "Old Password not match!", "Old Password not match!");
+            errors.rejectValue("oldPassword", USER_OLD_PASSWORD_NOT_MATCH, USER_OLD_PASSWORD_NOT_MATCH);
         }
         if (userEditBindingModel.getOldPassword().length() < 6 || userEditBindingModel.getOldPassword().length() > 12) {
-            errors.rejectValue("oldPassword", "Old Password must be between 6 and 12 symbols!", "Old Password must be between 6 and 12 symbols");
+            errors.rejectValue("oldPassword", USER_OLD_PASSWORD_LENGTH, USER_OLD_PASSWORD_LENGTH);
         }
         if (!userEditBindingModel.getPassword().isBlank()){
             if (userEditBindingModel.getPassword().length() < 6 || userEditBindingModel.getPassword().length() > 12) {
-                errors.rejectValue("password", "Password must be between 6 and 12 characters", "Password must be between 6 and 12 characters");
+                errors.rejectValue("password", USER_PASSWORD_LENGTH, USER_PASSWORD_LENGTH);
             }
             if (!userEditBindingModel.getPassword().equals(userEditBindingModel.getConfirmPassword()) && !userEditBindingModel.getPassword().isBlank()) {
-                errors.rejectValue("password", "Invalid Password", "Passwords do not match!");
+                errors.rejectValue("password", USER_PASSWORD_ERR, USER_PASSWORD_ERR);
             }
         }
         if (!userEditBindingModel.getFirstName().isBlank() && userEditBindingModel.getFirstName().length() < 3 || userEditBindingModel.getFirstName().length() > 16) {
-            errors.rejectValue("firstName", "First name must be between 3 and 16 symbols!", "First name must be between 3 and 16 symbols!");
+            errors.rejectValue("firstName", USER_FIRSTNAME_LENGTH, USER_FIRSTNAME_LENGTH);
         }
         if (!userEditBindingModel.getLastName().isBlank() && userEditBindingModel.getLastName().length() < 3 || userEditBindingModel.getLastName().length() > 16) {
-            errors.rejectValue("lastName", "Last name must be between 3 and 16 symbols!", "Last name must be between 3 and 16 symbols!");
+            errors.rejectValue("lastName", USER_LASTNAME_LENGTH, USER_LASTNAME_LENGTH);
         }
     }
 }

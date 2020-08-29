@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import static com.krasimirkolchev.photomag.common.CommonMessages.*;
+
 @Component
 public class CategoryValidation implements Validator {
     private final ProductCategoryRepository categoryRepository;
@@ -26,14 +28,14 @@ public class CategoryValidation implements Validator {
         CategoryAddBindingModel categoryAddBindingModel = (CategoryAddBindingModel) target;
 
         if (categoryAddBindingModel.getName().length() < 4 || categoryAddBindingModel.getName().length() > 20) {
-            errors.rejectValue("name", "Category name must be between 4 and 20 symbols!", "Category name must be between 4 and 20 symbols!");
+            errors.rejectValue("name", CATEGORY_NAME_LENGTH, CATEGORY_NAME_LENGTH);
         }
         if (this.categoryRepository.existsByName(categoryAddBindingModel.getName())) {
-            errors.rejectValue("name", "Category already exist!");
+            errors.rejectValue("name", CATEGORY_NAME_EXIST, CATEGORY_NAME_EXIST);
         }
         if (categoryAddBindingModel.getPhoto() == null || categoryAddBindingModel.getPhoto().isEmpty()
                 || categoryAddBindingModel.getPhoto().getOriginalFilename().length() == 0) {
-            errors.rejectValue("photo", "Select image file!", "Select image file!");
+            errors.rejectValue("photo", CATEGORY_IMAGE_MISSING, CATEGORY_IMAGE_MISSING);
         }
     }
 }

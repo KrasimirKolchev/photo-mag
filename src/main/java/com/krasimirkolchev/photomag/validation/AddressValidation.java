@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import static com.krasimirkolchev.photomag.common.CommonMessages.*;
+
 @Component
 public class AddressValidation implements Validator {
     private final AddressRepository addressRepository;
@@ -26,13 +28,13 @@ public class AddressValidation implements Validator {
         AddressAddBindingModel addressAddBindingModel = (AddressAddBindingModel) target;
 
         if (addressAddBindingModel.getCountry().length() < 3 || addressAddBindingModel.getCountry().length() > 20) {
-            errors.rejectValue("country", "Country name must be between 3 and 20 symbols!", "Country name must be between 3 and 20 symbols!");
+            errors.rejectValue("country", COUNTRY_NAME_LENGTH, COUNTRY_NAME_LENGTH);
         }
         if (addressAddBindingModel.getCity().length() < 3 || addressAddBindingModel.getCity().length() > 20) {
-            errors.rejectValue("city", "City name must be between 3 and 20 symbols!", "City name must be between 3 and 20 symbols!");
+            errors.rejectValue("city", CITY_NAME_LENGTH, CITY_NAME_LENGTH);
         }
         if (addressAddBindingModel.getStreet().length() < 3 || addressAddBindingModel.getStreet().length() > 50) {
-            errors.rejectValue("street", "Street name must be between 3 and 50 symbols!", "Street name must be between 3 and 50 symbols!");
+            errors.rejectValue("street", STREET_NAME_LENGTH, STREET_NAME_LENGTH);
         }
     }
 }

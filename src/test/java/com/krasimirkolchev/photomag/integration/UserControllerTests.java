@@ -107,7 +107,7 @@ public class UserControllerTests {
                 .param("email", "asd")
         )
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/register"));
+                .andExpect(view().name("redirect:/users/register"));
     }
 
     @Test
