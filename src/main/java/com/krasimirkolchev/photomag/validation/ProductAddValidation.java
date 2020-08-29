@@ -47,13 +47,13 @@ public class ProductAddValidation implements Validator {
         if (productAddBindingModel.getBrand() == null || productAddBindingModel.getBrand().isBlank()) {
             errors.rejectValue("brand", "Brand must be selected!", "Brand must be selected!");
         }
-        if (productAddBindingModel.getProductGallery() == null || productAddBindingModel.getProductGallery().size() == 0) {
-            errors.rejectValue("file", "Select images for the gallery!", "Select images for the gallery!");
-        }
-
-        for (MultipartFile file : productAddBindingModel.getProductGallery()) {
-            if (file == null || file.isEmpty() || file.getOriginalFilename().length() == 0) {
-                errors.rejectValue("file", "Some images are corrupted!", "Some images are corrupted!");
+        if (productAddBindingModel.getProductGallery().get(0).getOriginalFilename().isEmpty()) {
+            errors.rejectValue("productGallery", "Select images for the gallery!", "Select images for the gallery!");
+        } else {
+            for (MultipartFile file : productAddBindingModel.getProductGallery()) {
+                if (file == null || file.isEmpty() || file.getOriginalFilename().length() == 0) {
+                    errors.rejectValue("productGallery", "Some images are corrupted!", "Some images are corrupted!");
+                }
             }
         }
 
