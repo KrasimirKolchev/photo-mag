@@ -33,6 +33,9 @@ public class UserRegisterValidation implements Validator {
         if (userRegBindingModel.getPassword().length() < 6 || userRegBindingModel.getPassword().length() > 12) {
             errors.rejectValue("password", USER_PASSWORD_LENGTH, USER_PASSWORD_LENGTH);
         }
+        if (!userRegBindingModel.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,12}$")) {
+            errors.rejectValue("password", USER_PASSWORD_MATCHER, USER_PASSWORD_MATCHER);
+        }
         if (!userRegBindingModel.getPassword().equals(userRegBindingModel.getConfirmPassword())) {
             errors.rejectValue("password", USER_PASSWORD_ERR, USER_PASSWORD_ERR);
         }
