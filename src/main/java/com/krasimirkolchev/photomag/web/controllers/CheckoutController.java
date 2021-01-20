@@ -70,7 +70,8 @@ public class CheckoutController {
         chargeRequest.setCurrency(Currency.BGN);
         Charge charge = this.stripeService.charge(chargeRequest);
 
-        OrderServiceModel orderServiceModel = this.orderService.generateOrder(charge, principal, session.getAttribute("addressId").toString());
+        OrderServiceModel orderServiceModel = this.orderService
+                .generateOrder(charge, principal, session.getAttribute("addressId").toString());
 
         return "redirect:/orders/all";
     }

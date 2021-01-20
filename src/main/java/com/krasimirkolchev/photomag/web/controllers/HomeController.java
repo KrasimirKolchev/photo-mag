@@ -19,7 +19,7 @@ public class HomeController {
     @PageTitle("Index")
     public String index(Model model) {
         if (!model.containsAttribute("products")) {
-            model.addAttribute("products", this.productService.getAllProducts());
+            model.addAttribute("products", this.productService.getAllActiveProducts());
         }
         return "home";
     }
@@ -29,7 +29,7 @@ public class HomeController {
     @PreAuthorize("isAuthenticated()")
     public String home(Model model) {
         if (!model.containsAttribute("products")) {
-            model.addAttribute("products", this.productService.getAllProducts());
+            model.addAttribute("products", this.productService.getAllActiveProducts());
         }
         return "home";
     }

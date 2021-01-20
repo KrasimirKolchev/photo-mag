@@ -14,7 +14,9 @@
             <div class="form-group col-md-12 mb-3">
                 <label for="firstName" class="text-white font-weight-bold">First Name</label>
                 <input th:field="*{firstName}" id="firstName" name="firstName" type="text" class="form-control"
-                       placeholder="First name" />
+                       placeholder="First name" data-bs-toggle="tooltip"
+                       title="Username should be between 6 and 16 symbols."
+                       data-bs-placement="top"/>
                 <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="errors alert alert-danger">First name</p>
             </div>
         </div>
@@ -30,7 +32,9 @@
             <div class="form-group col-md-12 mb-3">
                 <label for="password" class="text-white font-weight-bold">Password</label>
                 <input id="password" type="password" name="password" class="form-control"
-                       placeholder="Password" />
+                       placeholder="Password" data-bs-toggle="tooltip"
+                       title="Password should contain at least one small latin letter, one large latin leter, one digit and between 6 and 12 symbols."
+                        data-bs-placement="top"/>
                 <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="errors alert alert-danger">Password</p>
             </div>
         </div>

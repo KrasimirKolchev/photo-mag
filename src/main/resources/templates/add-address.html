@@ -13,7 +13,7 @@
               class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" >
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
-                    <label for="name" class="text-white font-weight-bold">Country</label>
+                    <label for="country" class="text-white font-weight-bold">Country</label>
                     <input th:field="*{country}" id="country" name="country" type="text" class="form-control"
                            placeholder="Country name" />
                     <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="errors alert alert-danger">Country.</p>

@@ -4,6 +4,7 @@ import com.krasimirkolchev.photomag.models.bindingModels.UserEditBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.UserLoginBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.UserRegBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.UserRoleAddBindingModel;
+import com.krasimirkolchev.photomag.models.serviceModels.OrderServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.services.UserService;
 import com.krasimirkolchev.photomag.services.impl.CloudinaryServiceImpl;

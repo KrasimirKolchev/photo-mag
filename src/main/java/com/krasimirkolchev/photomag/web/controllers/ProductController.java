@@ -3,8 +3,6 @@ package com.krasimirkolchev.photomag.web.controllers;
 import com.krasimirkolchev.photomag.models.bindingModels.CartItemAddBindModel;
 import com.krasimirkolchev.photomag.models.bindingModels.ProductAddBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.ProductEditBindingModel;
-import com.krasimirkolchev.photomag.models.entities.ProductCategory;
-import com.krasimirkolchev.photomag.models.serviceModels.ProductCategoryServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.ProductServiceModel;
 import com.krasimirkolchev.photomag.services.BrandService;
 import com.krasimirkolchev.photomag.services.ProductCategoryService;
@@ -21,9 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -143,6 +139,15 @@ public class ProductController {
 
         this.productService.deleteProduct(id);
         return "redirect:/categories";
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
+    public String allProducts(Model model) {
+        if (!model.containsAttribute("products")) {
+            model.addAttribute("products", this.productService.getAllProducts());
+        }
+        return "products";
     }
 
 }

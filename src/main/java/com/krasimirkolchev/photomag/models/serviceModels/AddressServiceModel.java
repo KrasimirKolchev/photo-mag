@@ -31,4 +31,9 @@ public class AddressServiceModel extends BaseServiceModel {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    @Override
+    public String toString() {
+        return this.getCountry() + ", " + this.getCity() + ", " + this.getStreet();
+    }
 }

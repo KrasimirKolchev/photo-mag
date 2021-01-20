@@ -111,11 +111,11 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .filter(u -> {
                     for (Role r : u.getAuthorities()) {
-                        if (r.getAuthority().equals("ROLE_ROOT_ADMIN")) {
-                            return true;
+                        if (r.getAuthority().contains("ROLE_ROOT_ADMIN")) {
+                            return false;
                         }
                     }
-                    return false;
+                    return true;
                 })
                 .map(u -> this.modelMapper.map(u, UserServiceModel.class))
                 .collect(Collectors.toList());

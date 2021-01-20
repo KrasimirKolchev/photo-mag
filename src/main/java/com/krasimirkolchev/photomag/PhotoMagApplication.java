@@ -25,38 +25,38 @@ public class PhotoMagApplication {
 
     //SSL certificate and https config settings because of the Stripe service
 
-    @Bean
-    public ServletWebServerFactory servletContainer() {
-        // Enable SSL Traffic
-        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
-            @Override
-            protected void postProcessContext(Context context) {
-                SecurityConstraint securityConstraint = new SecurityConstraint();
-                securityConstraint.setUserConstraint("CONFIDENTIAL");
-                SecurityCollection collection = new SecurityCollection();
-                collection.addPattern("/*");
-                securityConstraint.addCollection(collection);
-                context.addConstraint(securityConstraint);
-            }
-        };
-
-        // Add HTTP to HTTPS redirect
-        tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
-
-        return tomcat;
-    }
+//    @Bean
+//    public ServletWebServerFactory servletContainer() {
+//        // Enable SSL Traffic
+//        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+//            @Override
+//            protected void postProcessContext(Context context) {
+//                SecurityConstraint securityConstraint = new SecurityConstraint();
+//                securityConstraint.setUserConstraint("CONFIDENTIAL");
+//                SecurityCollection collection = new SecurityCollection();
+//                collection.addPattern("/*");
+//                securityConstraint.addCollection(collection);
+//                context.addConstraint(securityConstraint);
+//            }
+//        };
+//
+//        // Add HTTP to HTTPS redirect
+//        tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
+//
+//        return tomcat;
+//    }
 //
 //    /*
 //    We need to redirect from HTTP to HTTPS. Without SSL, this application used
 //    port 8080. With SSL it will use port 8443. So, any request for 8080 needs to be
 //    redirected to HTTPS on 8443.
 //     */
-    private Connector httpToHttpsRedirectConnector() {
-        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-        connector.setScheme("http");
-        connector.setPort(8080);
-        connector.setSecure(false);
-        connector.setRedirectPort(8443);
-        return connector;
-    }
+//    private Connector httpToHttpsRedirectConnector() {
+//        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+//        connector.setScheme("http");
+//        connector.setPort(8080);
+//        connector.setSecure(false);
+//        connector.setRedirectPort(8443);
+//        return connector;
+//    }
 }

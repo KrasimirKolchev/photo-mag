@@ -26,7 +26,7 @@ public class ShoppingCart extends BaseEntity {
 
     @Column(name = "total_cart_amount", nullable = false)
     public Double getTotalCartAmount() {
-        return totalCartAmount;
+        return this.getItems().stream().mapToDouble(CartItem::getSubTotal).sum();
     }
 
     public void setTotalCartAmount(Double totalCartAmount) {

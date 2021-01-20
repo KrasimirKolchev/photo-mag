@@ -248,7 +248,7 @@ class ProductServiceImplTest {
 
         Mockito.when(repository.getAllByQuantityIsGreaterThanAndDeletedFalseOrderByBrandName(0)).thenReturn(List.of(p1, p2));
 
-        List<ProductServiceModel> act = service.getAllProducts();
+        List<ProductServiceModel> act = service.getAllActiveProducts();
 
         assertEquals(act.size(), 2);
         assertEquals(act.get(0).getBrand().getName(), "a");
