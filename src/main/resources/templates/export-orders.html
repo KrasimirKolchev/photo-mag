@@ -1,49 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:include="~{fragments/head}"></head>
-<body class="bg-dark">
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head th:include="~{fragments/head}"></head>-->
+<!--<body class="bg-dark">-->
 
-<nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>
+<!--<nav th:include="~{fragments/menu}" class="navbar navbar-expand-lg navbar-dark fixed-top"></nav>-->
 
 
-<div class="container-fluid bg">
-    <div class="container justify-content-center">
-        <h2 class="form-title text-left text-white">Export orders for period</h2>
-        <form th:object="${expOrdersDatesBindingModel}" th:action="@{/orders/export}" th:method="POST"
-              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" >
-            <p th:if="${NotFound}" th:text="${NotFound}" class="errors alert alert-danger" >There are no orders for selected period!</p>
-            <br/>
-            <div class="row">
-                <div class="form-group col-md-12 mb-3">
-                    <label for="expFrom" class="text-white font-weight-bold">From Date</label>
-                    <input th:field="*{expFrom}" id="expFrom" name="expFrom" type="date" class="form-control"
-                           placeholder="From Date" required/>
-                    <p th:if="${#fields.hasErrors('expFrom')}" th:errors="*{expFrom}" class="errors alert alert-danger"></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-12 mb-3">
-                    <label for="expTo" class="text-white font-weight-bold">To Date</label>
-                    <input th:field="*{expTo}" id="expTo" name="expTo" type="date" class="form-control"
-                           placeholder="To Date" required/>
-                    <p th:if="${#fields.hasErrors('expTo')}" th:errors="*{expTo}" class="errors alert alert-danger"></p>
-                </div>
-            </div>
+<!--<div class="container-fluid bg">-->
+<!--    <div class="container justify-content-center">-->
+<!--        <h2 class="form-title text-left text-white">Export orders for period</h2>-->
+<!--        <form th:object="${expOrdersDatesBindingModel}" th:action="@{/orders/export}" th:method="POST"-->
+<!--              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" >-->
+<!--            <p th:if="${NotFound}" th:text="${NotFound}" class="errors alert alert-danger" >There are no orders for selected period!</p>-->
+<!--            <br/>-->
+<!--            <div class="row">-->
+<!--                <div class="form-group col-md-12 mb-3">-->
+<!--                    <label for="expFrom" class="text-white font-weight-bold">From Date</label>-->
+<!--                    <input th:field="*{expFrom}" id="expFrom" name="expFrom" type="date" class="form-control"-->
+<!--                           placeholder="From Date" required/>-->
+<!--                    <p th:if="${#fields.hasErrors('expFrom')}" th:errors="*{expFrom}" class="errors alert alert-danger"></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="form-group col-md-12 mb-3">-->
+<!--                    <label for="expTo" class="text-white font-weight-bold">To Date</label>-->
+<!--                    <input th:field="*{expTo}" id="expTo" name="expTo" type="date" class="form-control"-->
+<!--                           placeholder="To Date" required/>-->
+<!--                    <p th:if="${#fields.hasErrors('expTo')}" th:errors="*{expTo}" class="errors alert alert-danger"></p>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="btn">
-                <div class="col col-md-12">
-                    <div class="button-holder d-flex justify-content-center">
-                        <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="btn">-->
+<!--                <div class="col col-md-12">-->
+<!--                    <div class="button-holder d-flex justify-content-center">-->
+<!--                        <input type="submit" class="btn btn-info btn-lg" value="Submit"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
-        </form>
-    </div>
-</div>
-<footer th:include="~{fragments/footer}"></footer>
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<footer th:include="~{fragments/footer}"></footer>-->
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
 
 

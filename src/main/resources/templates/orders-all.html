@@ -9,7 +9,8 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h3 th:if="${#lists.isEmpty(orders)}" class="text-center text-white">You don't have any orders yest!</h3>
+                <h3 th:if="${#lists.isEmpty(orders)}" class="text-center text-white">You don't have any orders
+                    yest!</h3>
 
                 <div class="accordion flex-column" id="ordersAccordion" th:object="${orders}">
 
@@ -18,14 +19,17 @@
                         <div class="card" th:each="order : ${orders}">
                             <div class="card-header bg-dark" th:id="'heading' + ${order.id}">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-                                            th:data-target="'#collapse'+${order.id}" aria-expanded="false" th:aria-controls="'collapse'+${order.id}">
+                                    <button class="btn btn-link btn-block text-left" type="button"
+                                            data-toggle="collapse"
+                                            th:data-target="'#collapse'+${order.id}" aria-expanded="false"
+                                            th:aria-controls="'collapse'+${order.id}">
                                         <p class="text-white d-flex" th:text="|Order date: ${#temporals.format(order.purchaseDateTime, 'dd-MM-yyyy HH:mm')} //
                                    Total amount: ${#numbers.formatDecimal(order.totalAmount, 1, 2)}BGN|"></p>
                                     </button>
                                 </h2>
                             </div>
-                            <div th:id="'collapse' + ${order.id}" class="collapse" th:aria-labelledby="'heading'+${order.id}" data-parent="#ordersAccordion">
+                            <div th:id="'collapse' + ${order.id}" class="collapse"
+                                 th:aria-labelledby="'heading'+${order.id}" data-parent="#ordersAccordion">
 
                                 <div class="card-body text-dark">
                                     <div class="row">
@@ -38,10 +42,12 @@
                                     </div>
                                     <div class="row text-dark" th:each="item : ${order.orderItems}">
                                         <div class="col-8 card-item border-top border-dark">
-                                            <div class="col-sm-2"><img th:src="${item.orderItem.mainPhoto}" class="img-thumbnail" alt="Product img"></div>
+                                            <div class="col-sm-2"><img th:src="${item.orderItem.mainPhoto}"
+                                                                       class="img-thumbnail" alt="Product img"></div>
                                             <div class="col-sm-7"><p th:text="${item.orderItem.name}"></div>
                                             <div class="col-sm-1 text-center"><p th:text="${item.quantity}"></div>
-                                            <div class="col-sm-2 text-center"><p th:text="|${#numbers.formatDecimal(item.subTotal, 1, 2)}BGN|"></div>
+                                            <div class="col-sm-2 text-center"><p
+                                                    th:text="|${#numbers.formatDecimal(item.subTotal, 1, 2)}BGN|"></div>
                                         </div>
                                     </div>
                                 </div>

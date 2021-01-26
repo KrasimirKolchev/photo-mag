@@ -9,14 +9,16 @@
     <div class="container">
         <h2 class="form-title text-left text-white">Add Product</h2>
         <form th:object="${productAddBindingModel}" th:action="@{/products/add}" th:method="POST"
-              class="main-form product-form mx-auto col-md-8 d-flex flex-column justify-content-center" enctype="multipart/form-data">
+              class="main-form product-form mx-auto col-md-8 d-flex flex-column justify-content-center"
+              enctype="multipart/form-data">
 
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="name" class="text-white font-weight-bold">Product name</label>
                     <input th:field="*{name}" id="name" name="name" type="text" class="form-control"
-                           placeholder="Product name" />
-                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">Name</p>
+                           placeholder="Product name"/>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">
+                        Name</p>
                 </div>
             </div>
             <div class="row">
@@ -26,7 +28,8 @@
                         <option value="">Select Brand</option>
                         <option th:each="b : ${brands}" th:value="${b.id}" th:text="${b.name}"></option>
                     </select>
-                    <p th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}" class="errors alert alert-danger">Brand.</p>
+                    <p th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}" class="errors alert alert-danger">
+                        Brand.</p>
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="productCategory" class="text-white font-weight-bold">Product category</label>
@@ -34,37 +37,45 @@
                         <option value="">Select Category</option>
                         <option th:each="c : ${productCategory}" th:value="${c.id}" th:text="${c.name}"></option>
                     </select>
-                    <p th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}" class="errors alert alert-danger">Category.</p>
+                    <p th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}"
+                       class="errors alert alert-danger">Category.</p>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="quantity" class="text-white font-weight-bold">Quantity</label>
                     <input id="quantity" type="number" min="1" step="1" name="quantity" class="form-control"
-                           placeholder="Quantity" />
-                    <p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" class="errors alert alert-danger">Quantity.</p>
+                           placeholder="Quantity"/>
+                    <p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"
+                       class="errors alert alert-danger">Quantity.</p>
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="price" class="text-white font-weight-bold">Price</label>
                     <input id="price" type="number" min="1.0" step=".01" name="price" class="form-control"
-                           placeholder="Price" />
-                    <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="errors alert alert-danger">Price</p>
+                           placeholder="Price"/>
+                    <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="errors alert alert-danger">
+                        Price</p>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="description" class="text-white font-weight-bold">Description</label>
-                    <textarea rows="8" wrap="hard"  th:field="*{description}" id="description" name="description" type="text" class="form-control"
+                    <textarea rows="8" wrap="hard" th:field="*{description}" id="description" name="description"
+                              type="text" class="form-control"
                               placeholder="Description"></textarea>
-                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="errors alert alert-danger">Description</p>
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                       class="errors alert alert-danger">Description</p>
                 </div>
             </div>
             <div class="row" style="margin: 0">
                 <div class="form-group col-md-12 mb-3">
-                    <label for="productGallery" class="custom-file-label text-white font-weight-bold">Product gallery</label>
-                    <input name="productGallery" type="file" class="custom-file-input form-control-file" id="productGallery"
+                    <label for="productGallery" class="custom-file-label text-white font-weight-bold">Product
+                        gallery</label>
+                    <input name="productGallery" type="file" class="custom-file-input form-control-file"
+                           id="productGallery"
                            placeholder="Choose product gallery" accept="image/*" multiple>
-                    <p th:if="${#fields.hasErrors('productGallery')}" th:errors="*{productGallery}" class="errors alert alert-danger">Gallery</p>
+                    <p th:if="${#fields.hasErrors('productGallery')}" th:errors="*{productGallery}"
+                       class="errors alert alert-danger">Gallery</p>
                 </div>
             </div>
 

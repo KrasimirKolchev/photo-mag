@@ -9,13 +9,15 @@
     <div class="container">
         <h2 class="form-title text-left text-white ">Brand add</h2>
         <form th:object="${brandAddBindingModel}" th:action="@{/brands/add}" th:method="POST"
-              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data">
+              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center"
+              enctype="multipart/form-data">
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="name" class="text-white font-weight-bold">Brand name</label>
                     <input th:field="*{name}" id="name" name="name" type="text" class="form-control"
-                           placeholder="Brand name" />
-                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">Brand name</p>
+                           placeholder="Brand name"/>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">Brand
+                        name</p>
                 </div>
             </div>
 

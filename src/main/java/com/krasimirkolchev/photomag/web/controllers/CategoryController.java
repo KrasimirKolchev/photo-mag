@@ -57,7 +57,7 @@ public class CategoryController {
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     public String addCategoryConf(@ModelAttribute("categoryAddBindingModel")
-                  CategoryAddBindingModel categoryAddBindingModel, BindingResult result, RedirectAttributes attributes) throws IOException {
+                                          CategoryAddBindingModel categoryAddBindingModel, BindingResult result, RedirectAttributes attributes) throws IOException {
 
         this.categoryValidation.validate(categoryAddBindingModel, result);
 

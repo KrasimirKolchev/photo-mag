@@ -51,11 +51,23 @@ public class OrderControllerTests {
 
         Order order = new Order();
         order.setChargeId("asd123");
-        order.setAddress(new Address(){{setId("123"); setStreet("str"); setCountry("country"); setCity("city");}});
+        order.setAddress(new Address() {{
+            setId("123");
+            setStreet("str");
+            setCountry("country");
+            setCity("city");
+        }});
         order.setUser(new User());
         order.setPurchaseDateTime(LocalDateTime.now());
         order.setTotalAmount(123.22);
-        order.setOrderItems(List.of(new OrderItems(){{setId("321"); setSubTotal(123.22); setQuantity(1); setOrderItem(new Product(){{setId("222");}});}}));
+        order.setOrderItems(List.of(new OrderItems() {{
+            setId("321");
+            setSubTotal(123.22);
+            setQuantity(1);
+            setOrderItem(new Product() {{
+                setId("222");
+            }});
+        }}));
         repository.save(order);
     }
 
@@ -67,7 +79,6 @@ public class OrderControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(view().name("orders-all"));
     }
-
 
 
 }

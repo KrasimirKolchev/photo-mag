@@ -9,46 +9,52 @@
     <div class="container justify-content-center">
         <h2 class="form-title text-left text-white">Edit User</h2>
         <form th:object="${userEditBindingModel}" action="/users/edit" th:method="POST"
-              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data">
+              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center"
+              enctype="multipart/form-data">
             <div class="row">
                 <input type="hidden" name="id" th:value="*{id}">
                 <div class="form-group col-md-12 mb-3">
                     <label for="firstName" class="text-white font-weight-bold">First Name</label>
                     <input th:field="*{firstName}" id="firstName" name="firstName" type="text" class="form-control"
-                           placeholder="First name" />
-                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="errors alert alert-danger">First name</p>
+                           placeholder="First name"/>
+                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                       class="errors alert alert-danger">First name</p>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="lastName" class="text-white font-weight-bold">Last Name</label>
                     <input th:field="*{lastName}" id="lastName" name="lastName" type="text" class="form-control"
-                           placeholder="Last name" />
-                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="errors alert alert-danger">Last name</p>
+                           placeholder="Last name"/>
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                       class="errors alert alert-danger">Last name</p>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="oldPassword" class="text-white font-weight-bold">Old password</label>
                     <input id="oldPassword" type="password" name="oldPassword" class="form-control"
-                           placeholder="New password" />
-                    <p th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}" class="errors alert alert-danger">Password</p>
+                           placeholder="New password"/>
+                    <p th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}"
+                       class="errors alert alert-danger">Password</p>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="password" class="text-white font-weight-bold">New password</label>
                     <input id="password" type="password" name="password" class="form-control"
-                           placeholder="New password" />
-                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="errors alert alert-danger">Password</p>
+                           placeholder="New password"/>
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                       class="errors alert alert-danger">Password</p>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="confirmPassword" class="text-white font-weight-bold">Confirm password</label>
                     <input id="confirmPassword" type="password" name="confirmPassword" class="form-control"
-                           placeholder="Confirm password" />
-                    <p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="errors alert alert-danger">Password</p>
+                           placeholder="Confirm password"/>
+                    <p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"
+                       class="errors alert alert-danger">Password</p>
                 </div>
             </div>
 

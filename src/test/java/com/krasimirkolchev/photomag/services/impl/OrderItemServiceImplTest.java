@@ -14,7 +14,9 @@ import com.stripe.model.OrderItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+
 import static org.mockito.ArgumentMatchers.*;
+
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
@@ -34,16 +36,18 @@ class OrderItemServiceImplTest {
     @BeforeEach
     void setUp() {
         modelMapper = Mockito.mock(ModelMapper.class);
-        ProductServiceModel product = new ProductServiceModel(){{
+        ProductServiceModel product = new ProductServiceModel() {{
             setName("Product 123456");
             setPrice(3.00);
             setQuantity(1);
             setDescription("asdasdasdasdasdasda");
             setMainPhoto("mainphoto.jpg");
-            setBrand(new BrandServiceModel(){{setName("Canon");}});
+            setBrand(new BrandServiceModel() {{
+                setName("Canon");
+            }});
             setId("123");
         }};
-        item = new OrderItemServiceModel(){{
+        item = new OrderItemServiceModel() {{
             setOrderItem(product);
             setSubTotal(3.00);
             setQuantity(1);

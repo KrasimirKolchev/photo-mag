@@ -69,13 +69,17 @@ class ProductServiceImplTest {
 
     @Test
     void addProduct() throws IOException {
-        Product p11 = new Product(){{
-            setBrand(new Brand(){{setName("a");}});
+        Product p11 = new Product() {{
+            setBrand(new Brand() {{
+                setName("a");
+            }});
             setQuantity(12);
             setDescription("asd");
             setName("item");
             setPrice(12.01);
-            setProductCategory(new ProductCategory(){{setName("aa");}});
+            setProductCategory(new ProductCategory() {{
+                setName("aa");
+            }});
             setMainPhoto("asd");
             setProductGallery(new ArrayList<>());
         }};
@@ -89,7 +93,7 @@ class ProductServiceImplTest {
 
     @Test
     void getProductsByCategoryName() {
-        Product p1 = new Product(){{
+        Product p1 = new Product() {{
             setId("1");
             setBrand(new Brand());
             setMainPhoto("photo");
@@ -97,7 +101,9 @@ class ProductServiceImplTest {
             setQuantity(3);
             setPrice(12.00);
             setName("Item 12341234");
-            setProductCategory(new ProductCategory(){{setName("a");}});
+            setProductCategory(new ProductCategory() {{
+                setName("a");
+            }});
             setProductGallery(new ArrayList<>());
             setDeleted(false);
         }};
@@ -113,9 +119,11 @@ class ProductServiceImplTest {
 
     @Test
     void getProductByIdReturnProductIfExist() {
-        Product p1 = new Product(){{
+        Product p1 = new Product() {{
             setId("1");
-            setBrand(new Brand(){{setName("a");}});
+            setBrand(new Brand() {{
+                setName("a");
+            }});
             setMainPhoto("photo");
             setDescription("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             setQuantity(3);
@@ -141,13 +149,17 @@ class ProductServiceImplTest {
 
     @Test
     void decreaseProductQtyShouldDecrease() {
-        ProductServiceModel p11 = new ProductServiceModel(){{
-            setBrand(new BrandServiceModel(){{setName("a");}});
+        ProductServiceModel p11 = new ProductServiceModel() {{
+            setBrand(new BrandServiceModel() {{
+                setName("a");
+            }});
             setQuantity(12);
             setDescription("asd");
             setName("item");
             setPrice(12.01);
-            setProductCategory(new ProductCategoryServiceModel(){{setName("aa");}});
+            setProductCategory(new ProductCategoryServiceModel() {{
+                setName("aa");
+            }});
             setMainPhoto("asd");
             setProductGallery(new ArrayList<>());
         }};
@@ -161,13 +173,17 @@ class ProductServiceImplTest {
 
     @Test
     void increaseProductQuantityShouldIncrease() {
-        ProductServiceModel p11 = new ProductServiceModel(){{
-            setBrand(new BrandServiceModel(){{setName("a");}});
+        ProductServiceModel p11 = new ProductServiceModel() {{
+            setBrand(new BrandServiceModel() {{
+                setName("a");
+            }});
             setQuantity(12);
             setDescription("asd");
             setName("item");
             setPrice(12.01);
-            setProductCategory(new ProductCategoryServiceModel(){{setName("aa");}});
+            setProductCategory(new ProductCategoryServiceModel() {{
+                setName("aa");
+            }});
             setMainPhoto("asd");
             setProductGallery(new ArrayList<>());
         }};
@@ -181,9 +197,11 @@ class ProductServiceImplTest {
 
     @Test
     void editProduct() {
-        Product p1 = new Product(){{
+        Product p1 = new Product() {{
             setId("1");
-            setBrand(new Brand(){{setName("a");}});
+            setBrand(new Brand() {{
+                setName("a");
+            }});
             setMainPhoto("photo");
             setDescription("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             setQuantity(3);
@@ -221,9 +239,11 @@ class ProductServiceImplTest {
 
     @Test
     void getAllProductsReturnProducts() {
-        Product p1 = new Product(){{
+        Product p1 = new Product() {{
             setId("1");
-            setBrand(new Brand(){{setName("a");}});
+            setBrand(new Brand() {{
+                setName("a");
+            }});
             setMainPhoto("photo");
             setDescription("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             setQuantity(3);
@@ -233,9 +253,11 @@ class ProductServiceImplTest {
             setProductGallery(new ArrayList<>());
             setDeleted(false);
         }};
-        Product p2 = new Product(){{
+        Product p2 = new Product() {{
             setId("2");
-            setBrand(new Brand(){{setName("b");}});
+            setBrand(new Brand() {{
+                setName("b");
+            }});
             setMainPhoto("photo2");
             setDescription("2aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             setQuantity(2);

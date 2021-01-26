@@ -23,11 +23,11 @@ import java.util.List;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-        private final ShoppingCartRepository shoppingCartRepository;
-        private final CartItemService cartItemService;
-        private final ProductService productService;
-        private final UserService userService;
-        private final ModelMapper modelMapper;
+    private final ShoppingCartRepository shoppingCartRepository;
+    private final CartItemService cartItemService;
+    private final ProductService productService;
+    private final UserService userService;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository,

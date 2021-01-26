@@ -68,11 +68,11 @@ public class OrderController {
     @PageTitle("Add order details")
     @PreAuthorize("isAuthenticated()")
     public String addOrderDetails(Model model, Principal principal) {
-            if (!model.containsAttribute("addressGetBindingModel")) {
-                model.addAttribute("addressGetBindingModel", new AddressGetBindingModel());
-            }
-            model.addAttribute("addresses", this.userService
-                    .getUserByUsername(principal.getName()).getAddresses());
+        if (!model.containsAttribute("addressGetBindingModel")) {
+            model.addAttribute("addressGetBindingModel", new AddressGetBindingModel());
+        }
+        model.addAttribute("addresses", this.userService
+                .getUserByUsername(principal.getName()).getAddresses());
         return "add-order-details";
     }
 
@@ -129,10 +129,10 @@ public class OrderController {
 
         attributes.addFlashAttribute("expOrdersDatesBindingModel", expOrdersDatesBindingModel);
 
-        return "redirect:/orders/attachment";
+        return "redirect:/orders/orderexport";
     }
 
-    @GetMapping(value = "/attachment")
+    @GetMapping(value = "/orderexport")
     @PreAuthorize("hasAnyRole('ROOT_ADMIN', 'ADMIN')")
     public ResponseEntity<FileSystemResource> getAttachment(@ModelAttribute("expOrdersDates")
                     ExpOrdersDatesBindingModel expOrdersDatesBindingModel) throws IOException {

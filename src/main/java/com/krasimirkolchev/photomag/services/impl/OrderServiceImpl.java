@@ -9,14 +9,11 @@ import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.repositories.OrderRepository;
 import com.krasimirkolchev.photomag.services.*;
 import com.stripe.model.Charge;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +30,6 @@ import java.util.stream.Collectors;
 @Service
 public class OrderServiceImpl implements OrderService {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
 
     private final OrderRepository orderRepository;
     private final UserService userService;
@@ -119,9 +115,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public File exportOrdersForPeriod(ExpOrdersDatesBindingModel expOrdersDatesBindingModel) throws IOException {
 
-        XSSFWorkbook workbook = this.createExpOrderForPeriod(expOrdersDatesBindingModel);
+        Workbook workbook = this.createExpOrderForPeriod(expOrdersDatesBindingModel);
 
-        File file = new File("src/main/resources/static/files/exportedOrders.xlsx");
+        File file = new File("exportedOrders.xlsx");
 
         FileOutputStream fos = new FileOutputStream(file, false);
 
@@ -132,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
         return file;
     }
 
-    private XSSFWorkbook createExpOrderForPeriod(ExpOrdersDatesBindingModel expOrdersDatesBM) {
+    private Workbook createExpOrderForPeriod(ExpOrdersDatesBindingModel expOrdersDatesBM) {
         LocalDateTime from = LocalDateTime
                 .parse(expOrdersDatesBM.getExpFrom() + "T00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         LocalDateTime to = LocalDateTime
@@ -145,112 +141,110 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
 
 
-        XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet();
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet();
 
-        this.createMainRow(workbook, sheet);
+        this.createMainRow(sheet);
 
         int rowIndex = 1;
 
         for (OrderServiceModel order : ordersToExport) {
 
-            XSSFRow rowDate = sheet.createRow(rowIndex);
+            Row rowDate = sheet.createRow(rowIndex);
 
-            this.createCell(rowDate, 1, formatter.format(order.getPurchaseDateTime()), null);
-
+            this.createCell(rowDate, 1, formatter.format(order.getPurchaseDateTime()));
 
             rowIndex++;
 
-            this.fillUserData(workbook, sheet, rowIndex, order);
+            this.fillUserData(sheet, rowIndex, order);
 
             rowIndex++;
 
             for (OrderItemServiceModel orderItem : order.getOrderItems()) {
-                this.fillOrderItemData(workbook, sheet, rowIndex, orderItem);
+                this.fillOrderItemData(sheet, rowIndex, orderItem);
 
                 rowIndex++;
             }
 
             rowIndex++;
 
-            XSSFRow row2 = sheet.createRow(rowIndex);
+            Row row2 = sheet.createRow(rowIndex);
 
-            this.createCell(row2, 8, order.getTotalAmount(), null);
+            this.createCell(row2, 8, order.getTotalAmount());
 
             rowIndex += 2;
 
         }
 
-
         return workbook;
     }
 
-    private void fillOrderItemData(XSSFWorkbook workbook, XSSFSheet sheet, int rowIndex, OrderItemServiceModel orderItem) {
-        XSSFRow row1 = sheet.createRow(rowIndex);
+    private void fillOrderItemData(Sheet sheet, int rowIndex, OrderItemServiceModel orderItem) {
+        Row row1 = sheet.createRow(rowIndex);
 
-        XSSFCellStyle userInfoRowStyle = workbook.createCellStyle();
-        userInfoRowStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(0, 203, 61)));
-        userInfoRowStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//        XSSFCellStyle userInfoRowStyle = workbook.createCellStyle();
+//        userInfoRowStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(0, 203, 61)));
+//        userInfoRowStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-        this.createCell(row1, 4, orderItem.getOrderItem().getName(), userInfoRowStyle);
-        this.createCell(row1, 5, orderItem.getQuantity(), userInfoRowStyle);
-        this.createCell(row1, 6, orderItem.getOrderItem().getPrice(), userInfoRowStyle);
-        this.createCell(row1, 7, orderItem.getSubTotal(), userInfoRowStyle);
+        this.createCell(row1, 4, orderItem.getOrderItem().getName());
+        this.createCell(row1, 5, orderItem.getQuantity());
+        this.createCell(row1, 6, orderItem.getOrderItem().getPrice());
+        this.createCell(row1, 7, orderItem.getSubTotal());
     }
 
-    private void fillUserData(XSSFWorkbook workbook, XSSFSheet sheet, int rowIndex, OrderServiceModel order) {
-        XSSFRow row = sheet.createRow(rowIndex);
+    private void fillUserData(Sheet sheet, int rowIndex, OrderServiceModel order) {
+        Row row = sheet.createRow(rowIndex);
+//
+//        XSSFCellStyle userInfoRowStyle = workbook.createCellStyle();
+//        userInfoRowStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(11, 255, 85)));
+//        userInfoRowStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-        XSSFCellStyle userInfoRowStyle = workbook.createCellStyle();
-        userInfoRowStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(11, 255, 85)));
-        userInfoRowStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-        this.createCell(row, 0, order.getUser().getFirstName(), userInfoRowStyle);
-        this.createCell(row, 1, order.getUser().getLastName(), userInfoRowStyle);
-        this.createCell(row, 2, order.getUser().getEmail(), userInfoRowStyle);
-        this.createCell(row, 3, order.getAddress().toString(), userInfoRowStyle);
+        this.createCell(row, 0, order.getUser().getFirstName());
+        this.createCell(row, 1, order.getUser().getLastName());
+        this.createCell(row, 2, order.getUser().getEmail());
+        this.createCell(row, 3, order.getAddress().toString());
     }
 
-    private void createMainRow(XSSFWorkbook workbook, XSSFSheet sheet) {
-        XSSFRow mainRow = sheet.createRow(0);
+    private void createMainRow(Sheet sheet) {
+        Row mainRow = sheet.createRow(0);
 
-        XSSFCellStyle mainRowStyle = workbook.createCellStyle();
-        mainRowStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(196, 176, 176)));
-        mainRowStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//        XSSFCellStyle mainRowStyle = workbook.createCellStyle();
+//        mainRowStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(196, 176, 176)));
+//        mainRowStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-        this.createCell(mainRow, 0, "First Name", mainRowStyle);
-        this.createCell(mainRow, 1, "Last Name", mainRowStyle);
-        this.createCell(mainRow, 2, "Email", mainRowStyle);
-        this.createCell(mainRow, 3, "Address", mainRowStyle);
-        this.createCell(mainRow, 4, "Item Name", mainRowStyle);
-        this.createCell(mainRow, 5, "Item Quantity", mainRowStyle);
-        this.createCell(mainRow, 6, "Item Price", mainRowStyle);
-        this.createCell(mainRow, 7, "Item Sub Total", mainRowStyle);
-        this.createCell(mainRow, 8, "Order Total", mainRowStyle);
+        this.createCell(mainRow, 0, "First Name");
+        this.createCell(mainRow, 1, "Last Name");
+        this.createCell(mainRow, 2, "Email");
+        this.createCell(mainRow, 3, "Address");
+        this.createCell(mainRow, 4, "Item Name");
+        this.createCell(mainRow, 5, "Item Quantity");
+        this.createCell(mainRow, 6, "Item Price");
+        this.createCell(mainRow, 7, "Item Sub Total");
+        this.createCell(mainRow, 8, "Order Total");
     }
 
-    private void createCell(XSSFRow row, int cellIndex, String value, XSSFCellStyle style){
-        XSSFCell cell = row.createCell(cellIndex);
+    private void createCell(Row row, int cellIndex, String value){
+        Cell cell = row.createCell(cellIndex);
         cell.setCellValue(value);
-        if (style != null) {
-            cell.setCellStyle(style);
-        }
+//        if (style != null) {
+//            cell.setCellStyle(style);
+//        }
     }
 
-    private void createCell(XSSFRow row, int cellIndex, int value, XSSFCellStyle style){
-        XSSFCell cell = row.createCell(cellIndex);
+    private void createCell(Row row, int cellIndex, int value){
+        Cell cell = row.createCell(cellIndex);
         cell.setCellValue(value);
-        if (style != null) {
-            cell.setCellStyle(style);
-        }
+//        if (style != null) {
+//            cell.setCellStyle(style);
+//        }
     }
 
-    private void createCell(XSSFRow row, int cellIndex, double value, XSSFCellStyle style){
-        XSSFCell cell = row.createCell(cellIndex);
+    private void createCell(Row row, int cellIndex, double value){
+        Cell cell = row.createCell(cellIndex);
         cell.setCellValue(value);
-        if (style != null) {
-            cell.setCellStyle(style);
-        }
+//        if (style != null) {
+//            cell.setCellStyle(style);
+//        }
     }
 
 }

@@ -9,13 +9,15 @@
     <div class="container">
         <h2 class="form-title text-left text-white ">Product Category</h2>
         <form th:object="${categoryAddBindingModel}" th:action="@{/categories/add}" th:method="POST"
-              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data">
+              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center"
+              enctype="multipart/form-data">
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="name" class="text-white font-weight-bold">Category name</label>
                     <input th:field="*{name}" id="name" name="name" type="text" class="form-control"
-                           placeholder="Category name" />
-                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">Category name</p>
+                           placeholder="Category name"/>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">
+                        Category name</p>
                 </div>
             </div>
 
@@ -23,7 +25,7 @@
                 <div class="form-group col-md-12 mb-3">
                     <label for="photo" class="file-label text-white font-weight-bold">Category photo</label>
                     <input name="photo" type="file" class="file-input form-control-file" id="photo"
-                           placeholder="Choose category photo" accept="image/*" >
+                           placeholder="Choose category photo" accept="image/*">
                 </div>
                 <p th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}" class="errors alert alert-danger">File</p>
             </div>

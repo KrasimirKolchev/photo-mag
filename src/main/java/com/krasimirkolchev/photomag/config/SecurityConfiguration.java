@@ -1,7 +1,6 @@
 package com.krasimirkolchev.photomag.config;
 
 import com.krasimirkolchev.photomag.services.impl.CustomUserDetailsService;
-import com.krasimirkolchev.photomag.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -54,7 +53,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 //        http.requiresChannel().antMatchers("/**").requiresSecure();
     }
-
 
 
 }

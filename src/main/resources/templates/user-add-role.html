@@ -17,7 +17,8 @@
                         <option value="">Select Username</option>
                         <option th:each="u : ${users}" th:value="${u.username}" th:text="${u.username}"></option>
                     </select>
-                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="errors alert alert-danger">Username</p>
+                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                       class="errors alert alert-danger">Username</p>
                 </div>
             </div>
             <div class="row">
@@ -29,7 +30,8 @@
                         <input type="radio" id="admin" name="role" value="ROLE_ADMIN">
                         <label for="admin">Admin</label><br/>
                     </div>
-                    <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="errors alert alert-danger">Role</p>
+                    <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="errors alert alert-danger">
+                        Role</p>
                 </div>
             </div>
 

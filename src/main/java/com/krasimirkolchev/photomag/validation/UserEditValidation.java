@@ -38,7 +38,7 @@ public class UserEditValidation implements Validator {
         if (userEditBindingModel.getOldPassword().length() < 6 || userEditBindingModel.getOldPassword().length() > 12) {
             errors.rejectValue("oldPassword", USER_OLD_PASSWORD_LENGTH, USER_OLD_PASSWORD_LENGTH);
         }
-        if (!userEditBindingModel.getPassword().isBlank()){
+        if (!userEditBindingModel.getPassword().isBlank()) {
             if (userEditBindingModel.getPassword().length() < 6 || userEditBindingModel.getPassword().length() > 12) {
                 errors.rejectValue("password", USER_PASSWORD_LENGTH, USER_PASSWORD_LENGTH);
             }

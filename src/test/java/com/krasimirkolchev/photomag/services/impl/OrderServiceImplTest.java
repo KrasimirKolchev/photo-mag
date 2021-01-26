@@ -3,15 +3,13 @@ package com.krasimirkolchev.photomag.services.impl;
 import com.krasimirkolchev.photomag.models.entities.*;
 import com.krasimirkolchev.photomag.models.serviceModels.*;
 import com.krasimirkolchev.photomag.repositories.OrderRepository;
-import com.krasimirkolchev.photomag.services.*;
 import com.stripe.model.Charge;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
+
 import static org.mockito.ArgumentMatchers.*;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
@@ -51,37 +49,41 @@ class OrderServiceImplTest {
         orderService = new OrderServiceImpl(orderRepository, userService, shoppingCartService, orderItemService,
                 productService, addressService, modelMapper);
 
-        ProductServiceModel product1 = new ProductServiceModel(){{
+        ProductServiceModel product1 = new ProductServiceModel() {{
             setName("Product 123456");
             setPrice(3.00);
             setDescription("asdasdasdasdasdasda");
             setMainPhoto("mainphoto.jpg");
-            setBrand(new BrandServiceModel(){{setName("Canon");}});
+            setBrand(new BrandServiceModel() {{
+                setName("Canon");
+            }});
             setId("123");
         }};
 
-        OrderItemServiceModel item1 = new OrderItemServiceModel(){{
+        OrderItemServiceModel item1 = new OrderItemServiceModel() {{
             setOrderItem(product1);
             setQuantity(1);
             setSubTotal(3.00);
         }};
 
-        ProductServiceModel product2 = new ProductServiceModel(){{
+        ProductServiceModel product2 = new ProductServiceModel() {{
             setName("Product 654321");
             setPrice(2.00);
             setDescription("asdasdasdasdasdasda");
             setMainPhoto("mainphoto.jpg");
-            setBrand(new BrandServiceModel(){{setName("Nikon");}});
+            setBrand(new BrandServiceModel() {{
+                setName("Nikon");
+            }});
             setId("321");
         }};
 
-        OrderItemServiceModel item2 = new OrderItemServiceModel(){{
+        OrderItemServiceModel item2 = new OrderItemServiceModel() {{
             setOrderItem(product2);
             setQuantity(1);
             setSubTotal(2.00);
         }};
 
-        orderEntity = new Order(){{
+        orderEntity = new Order() {{
             setId("asd123");
             setPurchaseDateTime(LocalDateTime.now());
             setUser(new User());
@@ -159,7 +161,7 @@ class OrderServiceImplTest {
 
     @Test
     void generateOrderShouldCreate() {
-        OrderServiceModel act = new OrderServiceModel(){{
+        OrderServiceModel act = new OrderServiceModel() {{
             setOrderItems(orderItems);
             setTotalAmount(456.01);
             setUser(new UserServiceModel());

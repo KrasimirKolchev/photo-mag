@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({AddressNotFoundException.class, BrandNotFoundException.class, UserNotFoundException.class,
-                            ProductCategoryNotFoundException.class, ProductNotFoundException.class})
+            ProductCategoryNotFoundException.class, ProductNotFoundException.class})
     public ModelAndView handleCustomExceptions(BaseException ex) {
         ModelAndView model = new ModelAndView("error");
         model.addObject("error", ex.getMessage());

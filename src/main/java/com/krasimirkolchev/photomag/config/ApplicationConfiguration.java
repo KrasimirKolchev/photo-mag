@@ -1,15 +1,13 @@
 package com.krasimirkolchev.photomag.config;
 
-import com.cloudinary.*;
+import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.Validation;
-import java.util.Objects;
 
 @Configuration
 public class ApplicationConfiguration {

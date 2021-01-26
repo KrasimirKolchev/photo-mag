@@ -10,29 +10,33 @@
     <div class="container justify-content-center">
         <h2 class="form-title text-left text-white">Add address</h2>
         <form th:object="${addressAddBindingModel}" th:action="@{/addresses/add}" th:method="POST"
-              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center" enctype="multipart/form-data" >
+              class="main-form mx-auto col-md-4 d-flex flex-column justify-content-center"
+              enctype="multipart/form-data">
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="country" class="text-white font-weight-bold">Country</label>
                     <input th:field="*{country}" id="country" name="country" type="text" class="form-control"
-                           placeholder="Country name" />
-                    <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="errors alert alert-danger">Country.</p>
+                           placeholder="Country name"/>
+                    <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="errors alert alert-danger">
+                        Country.</p>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="city" class="text-white font-weight-bold">City</label>
                     <input th:field="*{city}" id="city" name="city" type="text" class="form-control"
-                           placeholder="City name" />
-                    <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="errors alert alert-danger">City.</p>
+                           placeholder="City name"/>
+                    <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="errors alert alert-danger">
+                        City.</p>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-12 mb-3">
                     <label for="street" class="text-white font-weight-bold">Street</label>
                     <input th:field="*{street}" id="street" type="text" name="street" class="form-control"
-                           placeholder="Street" />
-                    <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="errors alert alert-danger">Street.</p>
+                           placeholder="Street"/>
+                    <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="errors alert alert-danger">
+                        Street.</p>
                 </div>
             </div>
 

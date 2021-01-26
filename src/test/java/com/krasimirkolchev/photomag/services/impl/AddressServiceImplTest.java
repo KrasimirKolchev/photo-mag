@@ -18,6 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import java.util.Optional;
 
 @SpringBootTest
@@ -36,14 +37,14 @@ class AddressServiceImplTest {
         this.addressService = new AddressServiceImpl(this.addressRepository, this.modelMapper);
 
 
-        this.address = new AddressServiceModel(){{
+        this.address = new AddressServiceModel() {{
             setId("1");
             setCountry("Bulgaria");
             setCity("Razlog");
             setStreet("aaaaaaaaaaaaaaaa aaaaaaaaaaa");
         }};
         Mockito.when(this.addressRepository.findById(any()))
-                .thenReturn(Optional.of(new Address(){{
+                .thenReturn(Optional.of(new Address() {{
                     setId("1");
                     setCountry("Bulgaria");
                     setCity("Razlog");

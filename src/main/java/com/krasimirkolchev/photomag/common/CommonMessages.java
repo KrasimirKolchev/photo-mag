@@ -46,5 +46,4 @@ public class CommonMessages {
     public static final String CAMERA_TRIPODS = "https://magazin.photosynthesis.bg/148921-thickbox_default/stativ-velbon-m-47-tripod-kit.jpg";
 
 
-
 }

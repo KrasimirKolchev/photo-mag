@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 
@@ -33,16 +34,18 @@ class CartItemServiceImplTest {
     @BeforeEach
     void setUp() {
         modelMapper = Mockito.mock(ModelMapper.class);
-        Product product = new Product(){{
+        Product product = new Product() {{
             setName("Product 123456");
             setPrice(3.00);
             setQuantity(1);
             setDescription("asdasdasdasdasdasda");
             setMainPhoto("mainphoto.jpg");
-            setBrand(new Brand(){{setName("Canon");}});
+            setBrand(new Brand() {{
+                setName("Canon");
+            }});
             setId("123");
         }};
-        item = new CartItem(){{
+        item = new CartItem() {{
             setItem(product);
             setSubTotal(3.00);
             setQuantity(1);
@@ -77,15 +80,18 @@ class CartItemServiceImplTest {
 
     @Test
     void saveItemSaveTheItem() {
-        ProductServiceModel prod = new ProductServiceModel(){{
+        ProductServiceModel prod = new ProductServiceModel() {{
             setName("Product 12345678");
             setPrice(12.00);
             setDescription("asdasdasdasdasdasda");
             setMainPhoto("mainphoto.jpg");
-            setBrand(new BrandServiceModel(){{setName("Canon"); setId("4321");}});
+            setBrand(new BrandServiceModel() {{
+                setName("Canon");
+                setId("4321");
+            }});
             setId("123");
         }};
-        CartItemServiceModel act = new CartItemServiceModel(){{
+        CartItemServiceModel act = new CartItemServiceModel() {{
             setItem(prod);
             setQuantity(1);
             setId("111");
@@ -98,15 +104,18 @@ class CartItemServiceImplTest {
 
     @Test
     void saveItemShouldReturnTheItem() {
-        ProductServiceModel prod = new ProductServiceModel(){{
+        ProductServiceModel prod = new ProductServiceModel() {{
             setName("Product 12345678");
             setPrice(12.00);
             setDescription("asdasdasdasdasdasda");
             setMainPhoto("mainphoto.jpg");
-            setBrand(new BrandServiceModel(){{setName("Canon"); setId("4321");}});
+            setBrand(new BrandServiceModel() {{
+                setName("Canon");
+                setId("4321");
+            }});
             setId("123");
         }};
-        CartItemServiceModel act = new CartItemServiceModel(){{
+        CartItemServiceModel act = new CartItemServiceModel() {{
             setItem(prod);
             setQuantity(1);
             setId("111");

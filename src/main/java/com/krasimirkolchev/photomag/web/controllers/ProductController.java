@@ -72,7 +72,7 @@ public class ProductController {
         ProductServiceModel productServiceModel = this.modelMapper.map(productAddBindingModel, ProductServiceModel.class);
 
         productServiceModel.setProductCategory(this.productCategoryService
-                                .getCategoryById(productAddBindingModel.getProductCategory()));
+                .getCategoryById(productAddBindingModel.getProductCategory()));
         productServiceModel.setBrand(this.brandService.getBrandById(productAddBindingModel.getBrand()));
         this.productService.addProduct(productServiceModel, productAddBindingModel.getProductGallery());
         return "redirect:/";

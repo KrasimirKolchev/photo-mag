@@ -10,8 +10,8 @@
     </parent>
     <groupId>com.krasimirkolchev</groupId>
     <artifactId>photo-mag</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <version>1.0.3-SNAPSHOT</version>
+    <packaging>war</packaging>
     <name>photo-mag</name>
     <description>Demo project for Spring Boot</description>
 
@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-            <version>2.2.3.RELEASE</version>
+            <version>2.3.1.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -99,17 +99,21 @@
             <version>1.7.30</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>4.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>4.1.1</version>
-        </dependency>
-
+                <dependency>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi</artifactId>
+                    <version>5.0.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml-full</artifactId>
+                    <version>5.0.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml</artifactId>
+                    <version>4.1.2</version>
+                </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -38,7 +38,7 @@ public class BrandControllerTests {
     private BrandRepository repository;
 
     @BeforeEach
-    public void init(){
+    public void init() {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
         repository.deleteAll();

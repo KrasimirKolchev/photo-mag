@@ -38,7 +38,7 @@ public class AddressControllerTests {
     private AddressRepository repository;
 
     @Before
-    public void init(){
+    public void init() {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
         repository.deleteAll();
@@ -55,7 +55,7 @@ public class AddressControllerTests {
 
     @Test
     @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
-    public void  addAddressConfWhenValidModelSaveInDB() throws Exception {
+    public void addAddressConfWhenValidModelSaveInDB() throws Exception {
         Principal mockPrincipal = Mockito.mock(Principal.class);
         Mockito.when(mockPrincipal.getName()).thenReturn("admin");
 

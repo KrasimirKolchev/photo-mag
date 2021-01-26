@@ -19,78 +19,83 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-md-6 col-sm-12 justify-content-center">
-                    <div class="col">
-                        <div class="product-gallery">
-                            <div id="carousel-thumb" class="carousel slide">
-                                <!--Slides-->
-                                <div class="carousel-inner">
+                    <div class="col-md-6 col-sm-12 justify-content-center">
+                        <div class="col">
+                            <div class="product-gallery">
+                                <div id="carousel-thumb" class="carousel slide">
+                                    <!--Slides-->
+                                    <div class="carousel-inner">
 
-                                    <div th:each="photo, iterstat : *{productGallery}" class="item carousel-img justify-content-center"
-                                         th:classappend="${iterstat.index} == 0 ? 'item active' : 'item'">
-                                        <img class="" th:src="${photo}" alt="Slide">
+                                        <div th:each="photo, iterstat : *{productGallery}"
+                                             class="item carousel-img justify-content-center"
+                                             th:classappend="${iterstat.index} == 0 ? 'item active' : 'item'">
+                                            <img class="" th:src="${photo}" alt="Slide">
+                                        </div>
+
                                     </div>
+                                    <!--/.Slides-->
+                                    <!--Controls-->
+                                    <a class="carousel-control-prev" href="#carousel-thumb" role="button"
+                                       data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carousel-thumb" role="button"
+                                       data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                    <!--/.Controls-->
+                                    <!--                            <ol class="carousel-indicators list-inline">-->
 
+                                    <!--                                <li th:each="photo, iterstat : *{productGallery}" data-target="#carousel-thumb" class="list-inline-item"-->
+                                    <!--                                    th:attr="data-slide-to=${iterstat.index}" th:classappend="${iterstat.index} == 0 ? 'item active' : 'item'">-->
+                                    <!--                                    <img class="d-md-block img-fluid" th:src="${photo}" alt=""></li>-->
+
+                                    <!--                            </ol>-->
+                                    <!--                            commented html not working good (do not visualize after repeat)-->
                                 </div>
-                                <!--/.Slides-->
-                                <!--Controls-->
-                                <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                                <!--/.Controls-->
-                                <!--                            <ol class="carousel-indicators list-inline">-->
-
-                                <!--                                <li th:each="photo, iterstat : *{productGallery}" data-target="#carousel-thumb" class="list-inline-item"-->
-                                <!--                                    th:attr="data-slide-to=${iterstat.index}" th:classappend="${iterstat.index} == 0 ? 'item active' : 'item'">-->
-                                <!--                                    <img class="d-md-block img-fluid" th:src="${photo}" alt=""></li>-->
-
-                                <!--                            </ol>-->
-                                <!--                            commented html not working good (do not visualize after repeat)-->
                             </div>
-                        </div>
-                        <br/>
-                        <div class="row justify-content-center" sec:authorize="hasRole('ROLE_ADMIN')">
-                            <div class="col-6">
-                                    <a class="btn btn-warning btn-md ml-5 text-white" th:href="@{/products/edit{id}(id=${product.id})}">
+                            <br/>
+                            <div class="row justify-content-center" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <div class="col-6">
+                                    <a class="btn btn-warning btn-md ml-5 text-white"
+                                       th:href="@{/products/edit{id}(id=${product.id})}">
                                         Edit product</a>
-                            </div>
-                            <div class="col-6">
-                                    <a class="btn btn-danger btn-md text-white" th:href="@{/products/delete{id}(id=${product.id})}">Delete
+                                </div>
+                                <div class="col-6">
+                                    <a class="btn btn-danger btn-md text-white"
+                                       th:href="@{/products/delete{id}(id=${product.id})}">Delete
                                         product</a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="col-4 mt-2">
-                                <label for="quantity" class="text-white font-weight-bold">Select quantity</label>
-                                <input th:field="${cartItem.quantity}" id="quantity" type="number" min="1"
-                                       th:max="*{quantity} > 5 ? 5 : *{quantity}"
-                                       step="1" name="quantity" class="form-control" placeholder="Quantity"/>
-                                <input type="hidden" name="id" id="id" th:value="${product.id}"/>
-                            </div>
-                            <div class="col-6">
-                                <div class="btn-holder mt-5 ml-5">
-                                    <div class="col">
-                                        <div class="d-flex">
-                                            <input type="submit" class="btn btn-info" value="Add To Cart">
+                            <div class="row justify-content-center">
+                                <div class="col-4 mt-2">
+                                    <label for="quantity" class="text-white font-weight-bold">Select quantity</label>
+                                    <input th:field="${cartItem.quantity}" id="quantity" type="number" min="1"
+                                           th:max="*{quantity} > 5 ? 5 : *{quantity}"
+                                           step="1" name="quantity" class="form-control" placeholder="Quantity"/>
+                                    <input type="hidden" name="id" id="id" th:value="${product.id}"/>
+                                </div>
+                                <div class="col-6">
+                                    <div class="btn-holder mt-5 ml-5">
+                                        <div class="col">
+                                            <div class="d-flex">
+                                                <input type="submit" class="btn btn-info" value="Add To Cart">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-sm-12 justify-content-center mt-5">
-                    <div class="col text-center text-white">
-                        <h4>Specifications</h4>
-                        <p th:wrap="hard" type="text" th:text="*{description}"> ... </p>
+                    <div class="col-md-6 col-sm-12 justify-content-center mt-5">
+                        <div class="col text-center text-white">
+                            <h4>Specifications</h4>
+                            <p th:wrap="hard" type="text" th:text="*{description}"> ... </p>
+                        </div>
                     </div>
-                </div>
-                <br/>
+                    <br/>
                 </div>
             </div>
         </form>
