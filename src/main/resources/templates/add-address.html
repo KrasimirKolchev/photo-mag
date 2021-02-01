@@ -16,7 +16,9 @@
                 <div class="form-group col-md-12 mb-3">
                     <label for="country" class="text-white font-weight-bold">Country</label>
                     <input th:field="*{country}" id="country" name="country" type="text" class="form-control"
-                           placeholder="Country name"/>
+                           placeholder="Country name" data-bs-toggle="tooltip"
+                           title="Country name should be between 3 and 20 symbols."
+                           data-bs-placement="top"/>
                     <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="errors alert alert-danger">
                         Country.</p>
                 </div>
@@ -25,7 +27,9 @@
                 <div class="form-group col-md-12 mb-3">
                     <label for="city" class="text-white font-weight-bold">City</label>
                     <input th:field="*{city}" id="city" name="city" type="text" class="form-control"
-                           placeholder="City name"/>
+                           placeholder="City name" data-bs-toggle="tooltip"
+                           title="City name should be between 3 and 20 symbols."
+                           data-bs-placement="top"/>
                     <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="errors alert alert-danger">
                         City.</p>
                 </div>
@@ -34,7 +38,9 @@
                 <div class="form-group col-md-12 mb-3">
                     <label for="street" class="text-white font-weight-bold">Street</label>
                     <input th:field="*{street}" id="street" type="text" name="street" class="form-control"
-                           placeholder="Street"/>
+                           placeholder="Street" data-bs-toggle="tooltip"
+                           title="Street name should be between 3 and 20 symbols."
+                           data-bs-placement="top"/>
                     <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="errors alert alert-danger">
                         Street.</p>
                 </div>

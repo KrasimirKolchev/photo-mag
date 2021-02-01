@@ -48,7 +48,7 @@ public class Order extends BaseEntity {
     }
 
     @Column(name = "purchase_date_time", nullable = false)
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     public LocalDateTime getPurchaseDateTime() {
         return purchaseDateTime;
     }

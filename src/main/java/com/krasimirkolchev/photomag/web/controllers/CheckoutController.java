@@ -55,7 +55,8 @@ public class CheckoutController {
                 .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
         int amount = (int) (user.getShoppingCart().getTotalCartAmount() * 100);
         session.setAttribute("addressId", addressGetBindingModel.getAddressId());
-        model.addAttribute("amount", amount); // in cents
+        model.addAttribute("totalAmount", user.getShoppingCart().getTotalCartAmount()); //to show in browser
+        model.addAttribute("amount", amount); // in cents for Stripe
         model.addAttribute("stripePublicKey", stripePublicKey);
         model.addAttribute("currency", Currency.BGN);
 

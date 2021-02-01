@@ -19,7 +19,7 @@ public interface OrderService {
 
     OrderServiceModel generateOrder(Charge charge, Principal principal, String addressId);
 
-    int hasOrdersForPeriod(ExpOrdersDatesBindingModel expOrdersDatesBindingModel);
+    boolean hasOrdersForPeriod(ExpOrdersDatesBindingModel expOrdersDatesBindingModel);
 
     File exportOrdersForPeriod(ExpOrdersDatesBindingModel expOrdersDatesBindingModel) throws IOException;
 }

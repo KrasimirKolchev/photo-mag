@@ -15,7 +15,8 @@
                 <div class="card-body pb-1">
                     <h3 class="card-title" th:text="*{p.name}"></h3>
                     <h4 class="card-text" th:text="*{p.brand.name}"></h4>
-                    <h4 class="card-text" th:text="|*{#numbers.formatDecimal(p.price, 1, 2)} BGN|"></h4>
+                    <h4 th:unless="*{p.quantity == 0}" class="card-text" th:text="|*{#numbers.formatDecimal(p.price, 1, 2)} BGN|"></h4>
+                    <h4 th:if="*{p.quantity == 0}" class="card-text">Out of Stock!</h4>
                 </div>
                 <div class="card-footer text-center">
                     <a class="card-link" th:href="@{/products/details/{id}(id=${p.id})}"><span>Details</span></a>

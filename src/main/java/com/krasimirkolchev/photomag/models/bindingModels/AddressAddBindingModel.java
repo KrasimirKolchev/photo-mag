@@ -1,9 +1,5 @@
 package com.krasimirkolchev.photomag.models.bindingModels;
 
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.NotBlank;
-
 public class AddressAddBindingModel {
     private String street;
     private String city;

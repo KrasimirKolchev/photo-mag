@@ -22,7 +22,7 @@ body, html {
 }
 
 .bg {
-    background-image: url("/static/img/Camera-Images-Wallpapers-006.jpg");
+    background-image: url("https://res.cloudinary.com/dk8gbxoue/image/upload/v1611657508/BG_IMAGE/Camera-Images-Wallpapers-006_j5jw1q.jpg");
     height: 100%;
     background-attachment: fixed;
     background-position: center;

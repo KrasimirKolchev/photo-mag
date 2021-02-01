@@ -5,9 +5,12 @@ import com.cloudinary.utils.ObjectUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.Validation;
+import java.util.Properties;
 
 @Configuration
 public class ApplicationConfiguration {
@@ -41,4 +44,21 @@ public class ApplicationConfiguration {
                 "api_secret", "67preLKTuPtUFxACTWRUQAOLYa8"));
     }
 
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername("photomagapp@gmail.com");
+        mailSender.setPassword("xgpspaysdemaulvi");
+
+        Properties properties = mailSender.getJavaMailProperties();
+        properties.put("mail.transport.protocol", "smtp");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.debug", "true");
+
+        return mailSender;
+    }
 }

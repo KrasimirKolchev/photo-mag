@@ -117,7 +117,7 @@ public class OrderController {
         }
 
 
-        if (this.orderService.hasOrdersForPeriod(expOrdersDatesBindingModel) == 0) {
+        if (this.orderService.hasOrdersForPeriod(expOrdersDatesBindingModel)) {
 
             attributes.addFlashAttribute("NotFound", "There are no orders for selected period!");
             attributes.addFlashAttribute("expOrdersDatesBindingModel", expOrdersDatesBindingModel);

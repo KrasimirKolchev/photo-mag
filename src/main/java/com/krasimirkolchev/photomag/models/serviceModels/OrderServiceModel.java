@@ -13,7 +13,6 @@ public class OrderServiceModel extends BaseServiceModel {
     private AddressServiceModel address;
 
     public OrderServiceModel() {
-        this.purchaseDateTime = LocalDateTime.now();
     }
 
     public List<OrderItemServiceModel> getOrderItems() {

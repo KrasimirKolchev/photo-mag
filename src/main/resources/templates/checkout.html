@@ -17,13 +17,13 @@
 
             <form action='/charge' method='POST' id='checkout-form'>
                 <div class="row">
-                    <div class="col-6 justify-content-end">
+                    <div class="col-8 justify-content-center">
                         <input type='hidden' th:value='${amount}' name='amount'/>
                         <input type='hidden' th:value='${addressGetBindingModel}' name='addressGetBindingModel'/>
                         <br/>
                         <label class="text-white">Total price:
                             <span class="text-white"
-                                  th:text='| ${#numbers.formatDecimal((amount / 100),1,2)} BGN |'></span>
+                                  th:text='|${#numbers.formatDecimal(totalAmount,1,2)} BGN|'></span>
                         </label>
 
                         <!-- NOTE: data-key/data-amount/data-currency will be rendered by Thymeleaf -->

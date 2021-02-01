@@ -17,12 +17,12 @@ public class CommonMessages {
     public static final String PRODUCT_NAME_LENGTH = "Product name must be between 12 and 60 symbols long!";
     public static final String PRODUCT_NAME_EXIST = "Product already exist!";
     public static final String PRODUCT_DESCRIPTION_LENGTH = "Description must be at least 20 symbols long!";
-    public static final String PRODUCT_QUANTITY_ERR = "Description must be at least 20 symbols long!";
-    public static final String PRODUCT_PRICE_ERR = "Description must be at least 20 symbols long!";
-    public static final String PRODUCT_CATEGORY_ERR = "Description must be at least 20 symbols long!";
-    public static final String PRODUCT_BRAND_ERR = "Description must be at least 20 symbols long!";
-    public static final String PRODUCT_GALLERY_ERR = "Description must be at least 20 symbols long!";
-    public static final String PRODUCT_GALLERY_IMAGES_ERR = "Description must be at least 20 symbols long!";
+    public static final String PRODUCT_QUANTITY_ERR = "Product quantity must be at least 1!";
+    public static final String PRODUCT_PRICE_ERR = "Product price must be at least 1.0!";
+    public static final String PRODUCT_CATEGORY_ERR = "Please select product Category!";
+    public static final String PRODUCT_BRAND_ERR = "Please select product Brand!";
+    public static final String PRODUCT_GALLERY_ERR = "Please select at least one photo for product gallery!";
+    public static final String PRODUCT_GALLERY_IMAGES_ERR = "Please select at least one photo for product gallery!";
 
     public static final String USER_USERNAME_LENGTH = "Username must be between 6 and 16 symbols!";
     public static final String USER_USERNAME_EXIST = "Username already exists";
@@ -36,6 +36,15 @@ public class CommonMessages {
 
     public static final String USER_OLD_PASSWORD_NOT_MATCH = "Old Password not match!";
     public static final String USER_OLD_PASSWORD_LENGTH = "Old Password must be between 6 and 12 symbols!";
+
+    public static final String EXP_ORDER_SELECT_DATE = "Please choose date!";
+    public static final String EXP_ORDER_DATE_FUTURE = "Date cannot be in the future!";
+    public static final String EXP_ORDER_DATE_BEFORE = "Date cannot be before Start date!";
+    public static final String EXP_ORDER_DATE_AFTER = "Date cannot be after current date!";
+
+    public static final String EMAIL_SENDER_ERR = "Please write valid email!";
+    public static final String EMAIL_SUBJECT_ERR = "Please write some subject!";
+    public static final String EMAIL_MESSAGE_ERR = "Please write some message!";
 
     // Default links
     public static final String DSLR_CAMERA_URL = "https://p1.akcdn.net/full/431753403.canon-eos-800d-ef-s-18-55mm-is-stm.jpg";

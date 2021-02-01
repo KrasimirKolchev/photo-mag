@@ -11,6 +11,6 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, String> {
     List<Order> getOrdersByUser_UsernameOrderByPurchaseDateTime(String username);
 
-    List<Order> getOrdersByPurchaseDateTimeBetweenOrderByPurchaseDateTimeAsc(LocalDateTime st, LocalDateTime end);
+    List<Order> getOrdersByPurchaseDateTimeGreaterThanAndPurchaseDateTimeLessThanOrderByPurchaseDateTimeAsc(LocalDateTime st, LocalDateTime end);
 
 }

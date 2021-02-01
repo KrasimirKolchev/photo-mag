@@ -16,7 +16,9 @@
                 <div class="form-group col-md-12 mb-3">
                     <label for="name" class="text-white font-weight-bold">Product name</label>
                     <input th:field="*{name}" id="name" name="name" type="text" class="form-control"
-                           placeholder="Product name"/>
+                           placeholder="Product name" data-bs-toggle="tooltip"
+                           title="First name should be between 12 and 60 symbols."
+                           data-bs-placement="top"/>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">
                         Name</p>
                 </div>
