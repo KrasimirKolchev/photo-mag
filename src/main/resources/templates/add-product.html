@@ -17,7 +17,7 @@
                     <label for="name" class="text-white font-weight-bold">Product name</label>
                     <input th:field="*{name}" id="name" name="name" type="text" class="form-control"
                            placeholder="Product name" data-bs-toggle="tooltip"
-                           title="First name should be between 12 and 60 symbols."
+                           title="Product name should be between 12 and 60 symbols."
                            data-bs-placement="top"/>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors alert alert-danger">
                         Name</p>
@@ -64,7 +64,9 @@
                     <label for="description" class="text-white font-weight-bold">Description</label>
                     <textarea rows="8" wrap="hard" th:field="*{description}" id="description" name="description"
                               type="text" class="form-control"
-                              placeholder="Description"></textarea>
+                              placeholder="Description" data-bs-toggle="tooltip"
+                              title="Product description should be at least 20 symbols."
+                              data-bs-placement="top"></textarea>
                     <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                        class="errors alert alert-danger">Description</p>
                 </div>
