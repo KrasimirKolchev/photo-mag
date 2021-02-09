@@ -3,6 +3,7 @@ package com.krasimirkolchev.photomag.config;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,12 +15,6 @@ import java.util.Properties;
 
 @Configuration
 public class ApplicationConfiguration {
-//    @Value("${cloudinary.cloud-name}")
-//    private String cloudApiName;
-//    @Value("${cloudinary.api-key}")
-//    private String cloudApiKey;
-//    @Value("${cloudinary.api-secret}")
-//    private String cloudApiSecret;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -36,22 +31,36 @@ public class ApplicationConfiguration {
         return new Validation();
     }
 
+    @Value("${cloudinary-cloud-name}")
+    private String cloudApiName;
+    @Value("${cloudinary-api-key}")
+    private String cloudApiKey;
+    @Value("${cloudinary-api-secret}")
+    private String cloudApiSecret;
     @Bean
     public Cloudinary cloudinary() {
         return new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "dk8gbxoue",
-                "api_key", "311932535255713",
-                "api_secret", "67preLKTuPtUFxACTWRUQAOLYa8"));
+                "cloud_name", cloudApiName,
+                "api_key", cloudApiKey,
+                "api_secret", cloudApiSecret));
     }
 
+    @Value("${spring.mail.host}")
+    private String smtpServer;
+    @Value("${spring.mail.port}")
+    private int mailPort;
+    @Value("${spring.mail.username}")
+    private String mailUserName;
+    @Value("${spring.mail.password}")
+    private String mailPass;
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        mailSender.setHost(smtpServer);
+        mailSender.setPort(mailPort);
 
-        mailSender.setUsername("photomagapp@gmail.com");
-        mailSender.setPassword("xgpspaysdemaulvi");
+        mailSender.setUsername(mailUserName);
+        mailSender.setPassword(mailPass);
 
         Properties properties = mailSender.getJavaMailProperties();
         properties.put("mail.transport.protocol", "smtp");

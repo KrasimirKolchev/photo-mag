@@ -3,7 +3,6 @@ package com.krasimirkolchev.photomag.services.impl;
 import com.krasimirkolchev.photomag.models.bindingModels.SendEmailBindingModel;
 import com.krasimirkolchev.photomag.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;

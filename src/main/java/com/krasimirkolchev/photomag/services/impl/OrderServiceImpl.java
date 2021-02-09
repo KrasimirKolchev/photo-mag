@@ -78,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
                 .map(this.userService.getUserByUsername(principal.getName()), UserServiceModel.class);
 
         OrderServiceModel orderServiceModel = new OrderServiceModel();
-        List<OrderItemServiceModel> orderItems = generateOrderItems(userServiceModel.getShoppingCart().getItems());
+        List<OrderItemServiceModel> orderItems = this.generateOrderItems(userServiceModel.getShoppingCart().getItems());
         orderServiceModel.setOrderItems(orderItems);
 
         orderServiceModel.setPurchaseDateTime(LocalDateTime.now());
