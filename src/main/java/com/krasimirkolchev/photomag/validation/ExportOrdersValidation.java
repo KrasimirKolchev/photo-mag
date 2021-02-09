@@ -40,7 +40,7 @@ public class ExportOrdersValidation implements Validator {
         if (expOrdersDatesBindingModel.getExpTo().isBlank()) {
             errors.rejectValue("expTo", EXP_ORDER_SELECT_DATE, EXP_ORDER_SELECT_DATE);
         }
-        if (from.isAfter(LocalDateTime.now().plusDays(1L))) {
+        if (from.isAfter(LocalDateTime.now())) {
             errors.rejectValue("expFrom", EXP_ORDER_DATE_FUTURE, EXP_ORDER_DATE_FUTURE);
         }
         if (to.isBefore(from)) {

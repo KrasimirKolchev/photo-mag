@@ -25,11 +25,12 @@ public class CommonMessages {
     public static final String PRODUCT_GALLERY_IMAGES_ERR = "Please select at least one photo for product gallery!";
 
     public static final String USER_USERNAME_LENGTH = "Username must be between 6 and 16 symbols!";
-    public static final String USER_USERNAME_EXIST = "Username already exists";
-    public static final String USER_PASSWORD_LENGTH = "Password must be between 6 and 12 characters";
+    public static final String USER_USERNAME_EXIST = "Username already exists!";
+    public static final String USER_PASSWORD_LENGTH = "Password must be between 6 and 12 characters!";
     public static final String USER_PASSWORD_MATCHER = "Password must contain at least one uppercase letter, one lowercase letter and one number";
     public static final String USER_PASSWORD_ERR = "Passwords do not match!";
-    public static final String USER_EMAIL_EXIST = "Email already exists";
+    public static final String USER_EMAIL_EXIST = "Email already exists!";
+    public static final String USER_EMAIL_EMPTY = "Email must not be empty!";
     public static final String USER_FIRSTNAME_LENGTH = "First name must be between 3 and 16 symbols!";
     public static final String USER_LASTNAME_LENGTH = "Last name must be between 3 and 16 symbols!";
     public static final String USER_IMAGE_ERR = "Select image file!";

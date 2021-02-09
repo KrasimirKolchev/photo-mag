@@ -42,6 +42,9 @@ public class UserRegisterValidation implements Validator {
         if (this.userRepository.existsByUsername(userRegBindingModel.getUsername())) {
             errors.rejectValue("username", USER_USERNAME_EXIST, USER_USERNAME_EXIST);
         }
+        if (userRegBindingModel.getEmail().isBlank()) {
+            errors.rejectValue("email", USER_EMAIL_EMPTY, USER_EMAIL_EMPTY);
+        }
         if (this.userRepository.existsByEmail(userRegBindingModel.getEmail())) {
             errors.rejectValue("email", USER_EMAIL_EXIST, USER_EMAIL_EXIST);
         }
@@ -52,7 +55,7 @@ public class UserRegisterValidation implements Validator {
             errors.rejectValue("lastName", USER_LASTNAME_LENGTH, USER_LASTNAME_LENGTH);
         }
         if (userRegBindingModel.getFile() == null || userRegBindingModel.getFile().isEmpty()
-                || userRegBindingModel.getFile().getOriginalFilename().length() == 0) {
+                || userRegBindingModel.getFile().getOriginalFilename().isBlank()) {
             errors.rejectValue("file", USER_IMAGE_ERR, USER_IMAGE_ERR);
         }
 

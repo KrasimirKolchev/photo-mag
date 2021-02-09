@@ -16,7 +16,7 @@
                     <label for="firstName" class="text-white font-weight-bold">First Name</label>
                     <input th:field="*{firstName}" id="firstName" name="firstName" type="text" class="form-control"
                            placeholder="First name" data-bs-toggle="tooltip"
-                           title="First name should be between 6 and 16 symbols."
+                           title="First name should be between 3 and 16 symbols."
                            data-bs-placement="top"/>
                     <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
                        class="errors alert alert-danger">First name</p>
@@ -27,7 +27,7 @@
                     <label for="lastName" class="text-white font-weight-bold">Last Name</label>
                     <input th:field="*{lastName}" id="lastName" name="lastName" type="text" class="form-control"
                            placeholder="Last name" data-bs-toggle="tooltip"
-                           title="Last name should be between 6 and 16 symbols."
+                           title="Last name should be between 3 and 16 symbols."
                            data-bs-placement="top"/>
                     <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
                        class="errors alert alert-danger">Last name</p>

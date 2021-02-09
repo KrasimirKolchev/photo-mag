@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductServiceModel> getAllActiveProducts() {
-        return this.productRepository.getAllByQuantityIsGreaterThanAndDeletedFalseOrderByBrandName(0)
+        return this.productRepository.getAllByQuantityIsGreaterThanOrderByBrandNameAsc(0)
                 .stream()
                 .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
                 .collect(Collectors.toList());
