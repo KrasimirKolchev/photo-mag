@@ -4,6 +4,7 @@ import com.krasimirkolchev.photomag.models.bindingModels.UserRoleAddBindingModel
 import com.krasimirkolchev.photomag.models.entities.User;
 import com.krasimirkolchev.photomag.models.serviceModels.AddressServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
+import com.krasimirkolchev.photomag.models.serviceModels.VoucherServiceModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +25,8 @@ public interface UserService {
     UserServiceModel editUser(UserServiceModel userServiceModel, String oldPsw, String username);
 
     List<UserServiceModel> getAllUsers();
+
+    List<String> getAllUsersEmail();
 
     void addRoleToUser(UserRoleAddBindingModel userRoleAddBindingModel);
 

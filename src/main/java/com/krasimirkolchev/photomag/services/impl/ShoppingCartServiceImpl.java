@@ -4,22 +4,20 @@ import com.krasimirkolchev.photomag.models.bindingModels.CartItemAddBindModel;
 import com.krasimirkolchev.photomag.models.entities.CartItem;
 import com.krasimirkolchev.photomag.models.entities.Product;
 import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
-import com.krasimirkolchev.photomag.models.entities.User;
-import com.krasimirkolchev.photomag.models.serviceModels.CartItemServiceModel;
-import com.krasimirkolchev.photomag.models.serviceModels.ProductServiceModel;
-import com.krasimirkolchev.photomag.models.serviceModels.ShoppingCartServiceModel;
-import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
+import com.krasimirkolchev.photomag.models.serviceModels.*;
 import com.krasimirkolchev.photomag.repositories.ShoppingCartRepository;
 import com.krasimirkolchev.photomag.services.CartItemService;
 import com.krasimirkolchev.photomag.services.ProductService;
 import com.krasimirkolchev.photomag.services.ShoppingCartService;
 import com.krasimirkolchev.photomag.services.UserService;
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -111,5 +109,4 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         cartItemIds.forEach(this.cartItemService::deleteItem);
     }
-
 }

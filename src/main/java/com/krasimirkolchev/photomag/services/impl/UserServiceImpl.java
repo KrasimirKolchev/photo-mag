@@ -4,9 +4,7 @@ import com.krasimirkolchev.photomag.models.bindingModels.UserRoleAddBindingModel
 import com.krasimirkolchev.photomag.models.entities.Role;
 import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
 import com.krasimirkolchev.photomag.models.entities.User;
-import com.krasimirkolchev.photomag.models.serviceModels.AddressServiceModel;
-import com.krasimirkolchev.photomag.models.serviceModels.RoleServiceModel;
-import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
+import com.krasimirkolchev.photomag.models.serviceModels.*;
 import com.krasimirkolchev.photomag.repositories.UserRepository;
 import com.krasimirkolchev.photomag.services.AddressService;
 import com.krasimirkolchev.photomag.services.RoleService;
@@ -68,7 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void setUserRole(UserServiceModel userEntity) {
-        if (userRepository.count() == 0) {
+        if (this.userRepository.count() == 0) {
             userEntity.setAuthorities(this.roleService.getAllRoles());
         } else {
             RoleServiceModel role = this.roleService.findByName("ROLE_USER");
@@ -121,6 +119,25 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    //to get all users emails, not included ROOT_ADMIN and ADMIN
+    @Override
+    public List<String> getAllUsersEmail() {
+        return this.userRepository.findAllByDeletedIsFalse()
+                .stream()
+                .filter(u -> {
+                    if (u.getAuthorities().size() == 1) {
+                        for (Role r : u.getAuthorities()) {
+                            if (r.getAuthority().contains("ROLE_USER")) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                })
+                .map(User::getEmail)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public void addRoleToUser(UserRoleAddBindingModel userRoleAddBindingModel) {
         UserServiceModel userServiceModel = this.modelMapper
@@ -150,5 +167,4 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-
 }

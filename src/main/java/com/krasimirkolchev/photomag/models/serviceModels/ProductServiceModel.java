@@ -1,7 +1,5 @@
 package com.krasimirkolchev.photomag.models.serviceModels;
 
-import com.krasimirkolchev.photomag.models.entities.ProductCategory;
-
 import java.util.List;
 
 public class ProductServiceModel extends BaseServiceModel {

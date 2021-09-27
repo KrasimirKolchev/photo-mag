@@ -36,7 +36,8 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService, UserRegisterValidation userRegisterValidation,
-                          UserEditValidation userEditValidation, UserAddRoleValidation userAddRoleValidation, CloudinaryServiceImpl cloudinaryService, ModelMapper modelMapper) {
+                          UserEditValidation userEditValidation, UserAddRoleValidation userAddRoleValidation,
+                          CloudinaryServiceImpl cloudinaryService, ModelMapper modelMapper) {
         this.userService = userService;
         this.userRegisterValidation = userRegisterValidation;
         this.userEditValidation = userEditValidation;

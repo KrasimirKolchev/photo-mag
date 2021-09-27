@@ -1,6 +1,6 @@
 package com.krasimirkolchev.photomag.web.controllers;
 
-import com.krasimirkolchev.photomag.models.bindingModels.AddressGetBindingModel;
+import com.krasimirkolchev.photomag.models.bindingModels.OrderDetailsGetBindingModel;
 import com.krasimirkolchev.photomag.models.bindingModels.ExpOrdersDatesBindingModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
 import com.krasimirkolchev.photomag.services.OrderService;
@@ -68,8 +68,8 @@ public class OrderController {
     @PageTitle("Add order details")
     @PreAuthorize("isAuthenticated()")
     public String addOrderDetails(Model model, Principal principal) {
-        if (!model.containsAttribute("addressGetBindingModel")) {
-            model.addAttribute("addressGetBindingModel", new AddressGetBindingModel());
+        if (!model.containsAttribute("orderDetailsGetBindingModel")) {
+            model.addAttribute("orderDetailsGetBindingModel", new OrderDetailsGetBindingModel());
         }
         model.addAttribute("addresses", this.userService
                 .getUserByUsername(principal.getName()).getAddresses());
@@ -78,17 +78,17 @@ public class OrderController {
 
     @PostMapping("/add-details")
     @PreAuthorize("isAuthenticated()")
-    public String addOrderDetailsConf(@ModelAttribute("addressGetBindingModel") AddressGetBindingModel addressGetBindingModel,
+    public String addOrderDetailsConf(@ModelAttribute("orderDetailsGetBindingModel") OrderDetailsGetBindingModel orderDetailsGetBindingModel,
                                       BindingResult result, RedirectAttributes attributes, Model model) {
 
         if (result.hasErrors()) {
-            attributes.addFlashAttribute("addressGetBindingModel", addressGetBindingModel);
-            attributes.addFlashAttribute("org.springframework.validation.BindingResult.addressGetBindingModel"
+            attributes.addFlashAttribute("orderDetailsGetBindingModel", orderDetailsGetBindingModel);
+            attributes.addFlashAttribute("org.springframework.validation.BindingResult.orderDetailsGetBindingModel"
                     , result);
             return "redirect:/orders/add-details";
         }
 
-        model.addAttribute("addressGetBindingModel", addressGetBindingModel);
+        model.addAttribute("orderDetailsGetBindingModel", orderDetailsGetBindingModel);
         return "redirect:/checkout";
     }
 
@@ -115,7 +115,6 @@ public class OrderController {
                     , result);
             return "redirect:/orders/export";
         }
-
 
         if (this.orderService.hasOrdersForPeriod(expOrdersDatesBindingModel)) {
 

@@ -47,6 +47,17 @@ public class CommonMessages {
     public static final String EMAIL_SUBJECT_ERR = "Please write some subject!";
     public static final String EMAIL_MESSAGE_ERR = "Please write some message!";
 
+    public static final String VOUCHER_NAME_LENGTH = "Voucher name must be between 4 and 20 symbols!";
+    public static final String VOUCHER_EXISTS = "Voucher with that name exists!";
+    public static final String VOUCHER_SELECT_DATE = "Please choose date!";
+    public static final String VOUCHER_DATE_PAST = "Date cannot be in the past!";
+    public static final String VOUCHER_DATE_BEFORE = "Date cannot be before Start date!";
+    public static final String VOUCHER_DATE_AFTER = "Date cannot be after current date!";
+    public static final String VOUCHER_PERCENTS = "Discount percents must be greater than 0 and less than 100!";
+    public static final String VOUCHER_CATEGORY_ERR = "Please select product Category!";
+    public static final String VOUCHER_BRAND_ERR = "Please select product Brand!";
+
+
     // Default links
     public static final String DSLR_CAMERA_URL = "https://p1.akcdn.net/full/431753403.canon-eos-800d-ef-s-18-55mm-is-stm.jpg";
     public static final String CAMERA_LENSES_URL = "https://magazin.photosynthesis.bg/152584-thickbox_default/obektiv-olympus-70-300mm-f-4-56.jpg";
