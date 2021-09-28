@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
         ModelAndView model = new ModelAndView("error");
         model.addObject("error", ex.getMessage());
         //to know if some issue happens
-        this.emailService.sendExeptionOnMyEmail(ex.getMessage() + "--->" + Arrays.toString(ex.getStackTrace()));
+        this.emailService.sendExceptionOnMyEmail(ex.getMessage() + "--->" + Arrays.toString(ex.getStackTrace()));
 
         ex.printStackTrace();
         return model;

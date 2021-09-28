@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -62,7 +63,7 @@ public class DiscountController {
     @PostMapping("/voucher/create")
     @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     public String createVoucherConf(@ModelAttribute("voucherAddBindingModel") VoucherAddBindingModel voucherAddBindingModel,
-                                    BindingResult result, RedirectAttributes attributes) {
+                                    BindingResult result, RedirectAttributes attributes) throws MessagingException {
 
         this.voucherAddValidation.validate(voucherAddBindingModel, result);
 

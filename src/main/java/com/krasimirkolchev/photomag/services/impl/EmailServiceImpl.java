@@ -84,11 +84,11 @@ public class EmailServiceImpl implements EmailService {
 
 
     //For personal use
-    public void sendExeptionOnMyEmail(String text) {
+    public void sendExceptionOnMyEmail(String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("photomagapp@gmail.com");
         message.setTo("krasimir.kolchev2087@gmail.com");
-        message.setSubject("Exeption");
+        message.setSubject("Exception");
         message.setText(text);
         this.mailSender.send(message);
     }

@@ -12,5 +12,5 @@ public interface EmailService {
 
     void sendVouchersByEmail(VoucherServiceModel voucherServiceModel) throws MessagingException;
 
-    void sendExeptionOnMyEmail(String text);
+    void sendExceptionOnMyEmail(String text);
 }
