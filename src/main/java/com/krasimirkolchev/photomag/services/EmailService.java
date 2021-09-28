@@ -11,4 +11,6 @@ public interface EmailService {
     void sendEmail(SendEmailBindingModel sendEmailBindingModel) throws MessagingException, IOException;
 
     void sendVouchersByEmail(VoucherServiceModel voucherServiceModel) throws MessagingException;
+
+    void sendExeptionOnMyEmail(String text);
 }

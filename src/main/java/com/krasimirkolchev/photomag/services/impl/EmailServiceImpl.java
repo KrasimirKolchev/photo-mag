@@ -81,4 +81,15 @@ public class EmailServiceImpl implements EmailService {
 
         this.mailSender.send(message);
     }
+
+
+    //For personal use
+    public void sendExeptionOnMyEmail(String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("photomagapp@gmail.com");
+        message.setTo("krasimir.kolchev2087@gmail.com");
+        message.setSubject("Exeption");
+        message.setText(text);
+        this.mailSender.send(message);
+    }
 }
