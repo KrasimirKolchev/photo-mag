@@ -13,15 +13,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, String> {
     List<Product> getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalse(String category, Integer qty);
 
-    List<Product> getAllByQuantityIsGreaterThanOrderByBrandNameAsc(Integer qty);
-
-//    List<Product> getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByPriceDesc(String category, int qty);
-//
-//    List<Product> getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByPriceAsc(String category, int qty);
-//
-//    List<Product> getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByNameAsc(String category, int qty);
-//
-//    List<Product> getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByNameDesc(String category, int qty);
+    List<Product> getAllByQuantityIsGreaterThanAndDeletedFalseOrderByBrandNameAsc(Integer qty);
 
     boolean existsByName(String name);
 }

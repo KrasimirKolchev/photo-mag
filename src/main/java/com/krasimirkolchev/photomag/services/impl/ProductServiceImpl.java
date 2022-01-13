@@ -7,6 +7,7 @@ import com.krasimirkolchev.photomag.repositories.ProductRepository;
 import com.krasimirkolchev.photomag.services.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -86,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductServiceModel> getAllActiveProducts() {
-        return this.productRepository.getAllByQuantityIsGreaterThanOrderByBrandNameAsc(0)
+        return this.productRepository.getAllByQuantityIsGreaterThanAndDeletedFalseOrderByBrandNameAsc(0)
                 .stream()
                 .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
                 .collect(Collectors.toList());
@@ -100,23 +101,4 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public List<ProductServiceModel> getProductsOrderedBy(String category, String order) {
-//        switch (order) {
-//            case "priced":
-//                return this.productRepository
-//                        .getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByPriceDesc(category, 0)
-//                        .stream()
-//                        .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
-//                        .collect(Collectors.toList());
-//
-//            case "pricea":
-//                return this.productRepository
-//                        .getAllByProductCategory_NameAndQuantityIsGreaterThanAndDeletedFalseOrderByPriceAsc(category, 0)
-//                        .stream()
-//                        .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
-//                        .collect(Collectors.toList());
-//        }
-//        return null;
-//    }
 }

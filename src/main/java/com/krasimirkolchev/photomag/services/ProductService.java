@@ -1,6 +1,7 @@
 package com.krasimirkolchev.photomag.services;
 
 import com.krasimirkolchev.photomag.models.serviceModels.ProductServiceModel;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

@@ -12,6 +12,7 @@ import com.krasimirkolchev.photomag.validation.ProductEditValidation;
 import com.krasimirkolchev.photomag.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -133,7 +134,7 @@ public class ProductController {
         return "redirect:/products/details/" + productServiceModel.getId();
     }
 
-    @GetMapping("/delete{id}")
+    @DeleteMapping("/delete{id}")
     @PreAuthorize("hasAnyRole('ROOT_ADMIN, ADMIN')")
     public String deleteProduct(@PathVariable("id") String id) {
 
