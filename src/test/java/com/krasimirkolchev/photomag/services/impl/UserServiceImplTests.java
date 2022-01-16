@@ -1,11 +1,7 @@
 package com.krasimirkolchev.photomag.services.impl;
 
-import com.krasimirkolchev.photomag.error.ProductNotFoundException;
-import com.krasimirkolchev.photomag.error.UserNotFoundException;
 import com.krasimirkolchev.photomag.models.bindingModels.UserRoleAddBindingModel;
-import com.krasimirkolchev.photomag.models.entities.Address;
 import com.krasimirkolchev.photomag.models.entities.Role;
-import com.krasimirkolchev.photomag.models.entities.ShoppingCart;
 import com.krasimirkolchev.photomag.models.entities.User;
 import com.krasimirkolchev.photomag.models.serviceModels.RoleServiceModel;
 import com.krasimirkolchev.photomag.models.serviceModels.UserServiceModel;
@@ -22,17 +18,13 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.LinkedHashSet;
@@ -41,7 +33,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

@@ -81,7 +81,7 @@ public class UserControllerTests {
         RedirectAttributes attributes = null;
 
         UserRegBindingModel model = new UserRegBindingModel();
-        model.setUsername("aadmin");
+        model.setUsername("admina");
         model.setEmail("aaa@asd.as");
         model.setFirstName("admin");
         model.setLastName("adminov");
@@ -90,9 +90,9 @@ public class UserControllerTests {
         model.setFile(file);
 
         BindingResult result = new BeanPropertyBindingResult(model, "userRegBindingModel");
-        controller.userRegisterConf(model, result, attributes);
+        controller.userRegisterConf(model, result, null);
 
-        Assert.assertEquals(1, repository.count());
+        Assert.assertEquals(1L, repository.count());
     }
 
     @Test

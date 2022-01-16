@@ -16,6 +16,8 @@ public class StripeServiceImpl implements StripeService {
     @Value("${stripe-secret-key}")
     private String secretKey;
 
+//    private String secretKey = "sk_test_51H6HJBKfodfbToz7yUxp2YNryEreisl4yJLE4UsZcem3AcCKzDiMuFXzqO4yUyToIecW9NEzAkSpkQpUkDNtWPTM009GtUE1aZ";
+
     @PostConstruct
     public void init() {
         Stripe.apiKey = secretKey;

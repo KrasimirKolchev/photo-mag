@@ -37,6 +37,10 @@ public class ApplicationConfiguration {
     private String cloudApiKey;
     @Value("${cloudinary-api-secret}")
     private String cloudApiSecret;
+
+//    private String cloudApiName = "dk8gbxoue";
+//    private String cloudApiKey = "311932535255713";
+//    private String cloudApiSecret = "67preLKTuPtUFxACTWRUQAOLYa8";
     @Bean
     public Cloudinary cloudinary() {
         return new Cloudinary(ObjectUtils.asMap(
@@ -53,6 +57,11 @@ public class ApplicationConfiguration {
     private String mailUserName;
     @Value("${spring.mail.password}")
     private String mailPass;
+
+//    private String smtpServer = "smtp.gmail.com";
+//    private int mailPort = 587;
+//    private String mailUserName = "photomagapp@gmail.com";
+//    private String mailPass = "kivwygeasrxawsuk";
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

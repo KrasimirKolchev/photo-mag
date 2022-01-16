@@ -30,6 +30,7 @@ public class CheckoutController {
 
     @Value("${stripe-public-key}")
     private String stripePublicKey;
+//    private String stripePublicKey = "pk_test_51H6HJBKfodfbToz72uIVEVq5B6FF5GGRtEqYU3eOxQFlntqhki9gGFpZZIhTZ2IabsRaooc2O2v6Ha2A1EPCtAAu0099yu2S3i";
 
     private final StripeService stripeService;
     private final OrderService orderService;
